@@ -27,7 +27,7 @@ To share a mission, export it from the editor and send the `.json` file. The oth
 
 ## Credits
 
-Under Our Sun is designed by Maximilian Lichtner and David Poluda and published by tabletopper games. This tool is unofficial and is not endorsed by the publisher. It holds no rulebook text and no official card art. You need the game to play any mission made with it.
+Under Our Sun is designed by Maximilian Lichtner and David Poluda and published by tabletopper games ([official game page](https://tabletopper.games/under-our-sun/)). This tool is unofficial and is not endorsed by the publisher. It holds no rulebook text and no official card art. You need the game to play any mission made with it.
 
 - Barlow and Barlow Condensed fonts, SIL Open Font License (`assets/fonts/OFL.txt`)
 - jsPDF, MIT License (`vendor/jspdf-LICENSE.txt`)
