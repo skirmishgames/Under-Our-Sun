@@ -31,7 +31,7 @@ export const HEADING_SUGGESTIONS = ['BRIEFING', 'INTRODUCTION', 'SETUP', 'SPECIA
 export const ART_PRESETS = [
   { value: 'dunes', label: 'Dunes at dusk' },
   { value: 'wasteland', label: 'Wasteland by day' },
-  { value: 'ruins', label: 'Ruined city' },
+  { value: 'ruins', label: 'Wreckage and trestle' },
   { value: 'canyon', label: 'Canyon' },
   { value: 'storm', label: 'Solar storm' },
   { value: 'night', label: 'Desert night' }

@@ -48,16 +48,63 @@ function ridge(ctx, w, h, base, amp, colour, rand, steps = 9) {
   ctx.fill();
 }
 
-function ruins(ctx, w, h, base, colour, rand, scale = 1) {
+// Low desert wreckage: shacks, leaning poles, a water tower, wrecked vehicles.
+// Nothing tall: the game world is open desert, not a city.
+function wreckage(ctx, w, h, base, colour, rand, scale = 1) {
+  ctx.save();
   ctx.fillStyle = colour;
-  let x = -w * 0.02;
+  ctx.strokeStyle = colour;
+  const u = Math.min(w, h) * scale;
+  let x = w * rand() * 0.08;
   while (x < w) {
-    const bw = w * (0.04 + rand() * 0.07);
-    const bh = h * (0.06 + rand() * 0.22) * scale;
-    ctx.fillRect(x, base - bh, bw, bh + h);
-    if (rand() > 0.6) ctx.fillRect(x + bw * 0.3, base - bh - h * 0.05, bw * 0.12, h * 0.05);
-    x += bw + w * rand() * 0.03;
+    const pick = rand();
+    if (pick < 0.35) {
+      // shack with a slanted roof
+      const sw = u * (0.1 + rand() * 0.1), sh = u * (0.05 + rand() * 0.05);
+      ctx.beginPath();
+      ctx.moveTo(x, base); ctx.lineTo(x, base - sh); ctx.lineTo(x + sw * 0.5, base - sh - u * 0.03 * rand()); ctx.lineTo(x + sw, base - sh * 0.8); ctx.lineTo(x + sw, base);
+      ctx.closePath(); ctx.fill();
+      x += sw + u * (0.05 + rand() * 0.15);
+    } else if (pick < 0.55) {
+      // leaning utility pole
+      const ph = u * (0.12 + rand() * 0.08), lean = (rand() - 0.5) * u * 0.06;
+      ctx.lineWidth = Math.max(1, u * 0.008);
+      ctx.beginPath(); ctx.moveTo(x, base); ctx.lineTo(x + lean, base - ph);
+      ctx.moveTo(x + lean - u * 0.025, base - ph * 0.9); ctx.lineTo(x + lean + u * 0.025, base - ph * 0.92); ctx.stroke();
+      x += u * (0.08 + rand() * 0.15);
+    } else if (pick < 0.7) {
+      // water tower on legs
+      const tw = u * 0.06, th = u * 0.12;
+      ctx.lineWidth = Math.max(1, u * 0.006);
+      ctx.beginPath(); ctx.moveTo(x, base); ctx.lineTo(x + tw * 0.2, base - th); ctx.moveTo(x + tw, base); ctx.lineTo(x + tw * 0.8, base - th); ctx.stroke();
+      ctx.fillRect(x, base - th - u * 0.045, tw, u * 0.045);
+      x += tw + u * (0.1 + rand() * 0.15);
+    } else {
+      // wrecked vehicle hull, half buried
+      const vw = u * (0.12 + rand() * 0.08), vh = u * 0.035;
+      ctx.beginPath();
+      ctx.moveTo(x, base); ctx.lineTo(x + vw * 0.08, base - vh); ctx.lineTo(x + vw * 0.35, base - vh); ctx.lineTo(x + vw * 0.45, base - vh * 1.8);
+      ctx.lineTo(x + vw * 0.75, base - vh * 1.8); ctx.lineTo(x + vw * 0.85, base - vh); ctx.lineTo(x + vw, base - vh * 0.7); ctx.lineTo(x + vw, base);
+      ctx.closePath(); ctx.fill();
+      x += vw + u * (0.08 + rand() * 0.18);
+    }
   }
+  ctx.restore();
+}
+
+// Rusted trestle bridge, low and broken.
+function trestle(ctx, w, h, base, colour, rand) {
+  ctx.save();
+  ctx.strokeStyle = colour; ctx.lineWidth = Math.max(1, Math.min(w, h) * 0.006);
+  const x0 = w * (0.05 + rand() * 0.3), span = w * (0.35 + rand() * 0.2), top = base - Math.min(w, h) * 0.09;
+  ctx.beginPath(); ctx.moveTo(x0, top); ctx.lineTo(x0 + span * 0.82, top); ctx.lineTo(x0 + span * 0.9, top + Math.min(w, h) * 0.03);
+  for (let i = 0; i <= 8; i++) {
+    const bx = x0 + (span * 0.8 / 8) * i;
+    ctx.moveTo(bx, top); ctx.lineTo(bx, base);
+    if (i < 8) { ctx.moveTo(bx, top); ctx.lineTo(bx + span * 0.1, base); }
+  }
+  ctx.stroke();
+  ctx.restore();
 }
 
 const PRESETS = {
@@ -75,17 +122,17 @@ const PRESETS = {
     for (let i = 0; i < 5; i++) { const cx = w * r(), cy = h * (0.08 + r() * 0.22); ctx.beginPath(); ctx.ellipse(cx, cy, w * (0.12 + r() * 0.12), h * 0.025, 0, 0, Math.PI * 2); ctx.fill(); }
     ctx.globalAlpha = 1;
     sun(ctx, w * (0.15 + r() * 0.2), h * 0.18, Math.min(w, h) * 0.05, '#fffbea', 'rgba(255,250,220,0.5)');
-    ruins(ctx, w, h, h * 0.6, 'rgba(120,110,105,0.5)', r, 0.45);
     ridge(ctx, w, h, h * 0.62, h * 0.05, '#cfa874', r);
-    ruins(ctx, w, h, h * 0.72, 'rgba(92,70,52,0.85)', r, 0.35);
+    wreckage(ctx, w, h, h * 0.7, 'rgba(92,70,52,0.85)', r, 0.9);
     ridge(ctx, w, h, h * 0.76, h * 0.07, '#b88a55', r);
     ridge(ctx, w, h, h * 0.88, h * 0.06, '#8f6538', r);
   },
   ruins(ctx, w, h, r) {
     sky(ctx, w, h, [[0, '#4a3b36'], [0.45, '#c27a46'], [0.75, '#efc07a'], [1, '#e9b56f']]);
     sun(ctx, w * (0.25 + r() * 0.5), h * 0.36, Math.min(w, h) * 0.08, '#fff4d8', 'rgba(255,220,160,0.6)');
-    ruins(ctx, w, h, h * 0.6, 'rgba(92,58,42,0.75)', r);
-    ruins(ctx, w, h, h * 0.66, '#5a3527', r);
+    ridge(ctx, w, h, h * 0.62, h * 0.05, '#8e4a33', r);
+    trestle(ctx, w, h, h * 0.66, 'rgba(70,40,28,0.9)', r);
+    wreckage(ctx, w, h, h * 0.7, '#5a3527', r);
     ridge(ctx, w, h, h * 0.78, h * 0.08, '#3a2219', r);
   },
   canyon(ctx, w, h, r) {
