@@ -1,7 +1,7 @@
 // Canvas card renderer. All positions are in millimetres.
 // Front: 70 x 120 mm portrait. Back: 120 x 70 mm landscape.
-import { DIFFICULTY, MODES, BLOCK_KINDS, ICON_TOKENS, missionName } from './data/schema.js?v=db8d446a';
-import { drawPreset, loadImage, drawCover } from './art.js?v=db8d446a';
+import { DIFFICULTY, MODES, BLOCK_KINDS, ICON_TOKENS, missionName } from './data/schema.js?v=865bb7a4';
+import { drawPreset, loadImage, drawCover } from './art.js?v=865bb7a4';
 
 export const CARD_W = 70;
 export const CARD_H = 120;
@@ -181,7 +181,7 @@ export function drawIcon(ctx, name, x, y, s) {
 
 // ---------- shapes ----------
 
-function roundRect(ctx, x, y, w, h, r) {
+export function roundRect(ctx, x, y, w, h, r) {
   r = Math.min(r, w / 2, h / 2);
   ctx.beginPath();
   ctx.moveTo(x + r, y);
@@ -192,7 +192,7 @@ function roundRect(ctx, x, y, w, h, r) {
   ctx.closePath();
 }
 
-function hexagon(ctx, cx, cy, r) {
+export function hexagon(ctx, cx, cy, r) {
   ctx.beginPath();
   for (let i = 0; i < 6; i++) {
     const a = Math.PI / 6 + (Math.PI / 3) * i;

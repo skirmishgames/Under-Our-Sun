@@ -12,4 +12,7 @@ Items to verify with the community or the designers.
 | Icon set | Rulebook V2.0 pp. 9 and 16 | Dice colours green, yellow, blue, red; karma die; water and the seven resources. Icons are drawn for the tool, not copied from the game. Ask whether any other symbols are wanted on mission cards (success symbol, map tile, enemy, camp). |
 | Dice icon | Crafting overview V2.1 | The game draws dice as hexagons. The tool now does too, with its own drawing. |
 | CP01 items | Crafting overview V2.1 | Condenser, distillery, bear trap, gauntlet, stealth cloak, slingshot, taser and blowgun are marked CP01. Missions 13 and 14 also carry CP01 in their footer. Confirm what CP01 is called so the label can say so. |
+| Survivor log fields | Character Upgrade Tracking (roguelike save sheet) | Same fields as the official sheet: character, player, HP, water, star points, 2 conditions, 6 dice upgrades with colour, item, gear, 3 items or resources. Added a missions played strip and a notes line. Colour is ticked on four die hexagons instead of written. |
+| German labels | Survivor log | Gegenstand, Ausrüstung, Gegenstände / Ressourcen, Gespielte Missionen, Notizen and Punkte are my wording. The official sheet keeps ITEM and GEAR in English. Ask a German player to check against the German edition's card terms. |
+| Survivor log size | Survivor log | 135 x 100 mm, chosen so four fit on Letter and A4 landscape. Tarot size was too small for handwriting. |
 | Merchant cards | Merchant scans | Out of scope for now. The scans were reviewed for layout only. |

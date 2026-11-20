@@ -7,7 +7,7 @@
   <meta name="description" content="Write and print fan-made missions for the Under Our Sun board game.">
   <meta name="theme-color" content="#b5583a">
   <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/styles.css?v=db8d446a">
+  <link rel="stylesheet" href="css/styles.css?v=865bb7a4">
   <script>
     try { var t = localStorage.getItem('uos.theme'); if (t && JSON.parse(t) === 'dark') document.documentElement.dataset.theme = 'dark'; } catch (e) {}
   </script>
@@ -27,6 +27,7 @@
     <a href="#library" data-tab="library">Missions</a>
     <a href="#edit" data-tab="edit">Editor</a>
     <a href="#print" data-tab="print">Print</a>
+    <a href="#sheet" data-tab="sheet">Survivor log</a>
     <a href="#guide" data-tab="guide">Guide</a>
     <a href="#about" data-tab="about">About</a>
   </nav>
@@ -121,6 +122,21 @@
       </div>
     </section>
 
+    <!-- Survivor log -->
+    <section id="view-sheet" class="view" hidden>
+      <h1>Survivor log</h1>
+      <p class="muted small">A save card for roguelike play. One card tracks one character between missions: health, water, points, conditions, dice upgrades, items and the missions played. Cards are 135 x 100 mm, four to a page. Print at 100% and cut along the marks, or keep the page whole as a group sheet.</p>
+      <div class="sheet-layout">
+        <div class="panel form-grid" id="sheetOptions"></div>
+        <div class="preview-stage"><canvas id="sheetCanvas" aria-label="Survivor log preview"></canvas></div>
+      </div>
+      <div class="toolbar-actions">
+        <button class="btn primary" id="sheetPdf" type="button">Make PDF</button>
+        <button class="btn" id="sheetPng" type="button">Download PNG</button>
+        <span id="sheetStatus" class="muted small" aria-live="polite"></span>
+      </div>
+    </section>
+
     <!-- Guide -->
     <section id="view-guide" class="view prose" hidden>
       <h1>Guide</h1>
@@ -174,7 +190,7 @@
 
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 
-  <script src="vendor/jspdf.umd.min.js?v=db8d446a" defer></script>
-  <script type="module" src="js/app.js?v=db8d446a"></script>
+  <script src="vendor/jspdf.umd.min.js?v=865bb7a4" defer></script>
+  <script type="module" src="js/app.js?v=865bb7a4"></script>
 </body>
 </html>

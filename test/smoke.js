@@ -98,6 +98,13 @@ const check = (ok, msg) => { console.log((ok ? 'PASS ' : 'FAIL ') + msg); if (!o
   const pages = (buf.toString('latin1').match(/\/Type \/Page[^s]/g) || []).length;
   check(buf.slice(0, 4).toString() === '%PDF' && pages >= 4, `PDF builds (${pages} pages, ${Math.round(buf.length / 1024)} KB)`);
 
+  // survivor log
+  await page.click('.tabs a[data-tab=sheet]');
+  await page.waitForTimeout(800);
+  await page.click('#sheetOptions .seg button >> nth=1');
+  const [sheet] = await Promise.all([page.waitForEvent('download'), page.click('#sheetPdf')]);
+  check(fs.readFileSync(await sheet.path()).slice(0, 4).toString() === '%PDF' && sheet.suggestedFilename() === 'survivor-log-de.pdf', 'German survivor log PDF builds');
+
   // mobile
   await page.setViewportSize({ width: 390, height: 844 });
   await page.click('.tabs a[data-tab=edit]');

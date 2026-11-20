@@ -140,3 +140,9 @@ code { background: var(--surface-2); padding: 0.05rem 0.3rem; border-radius: 4px
 .icon-table button { margin-left: auto; }
 
 .toast { position: fixed; left: 50%; bottom: 1.2rem; transform: translateX(-50%); background: var(--text); color: var(--bg); padding: 0.6rem 1rem; border-radius: 8px; z-index: 60; max-width: 90vw; box-shadow: var(--shadow); }
+
+/* survivor log */
+.sheet-layout { display: grid; gap: 0.8rem; grid-template-columns: 1fr; align-items: start; }
+@media (min-width: 900px) { .sheet-layout { grid-template-columns: 320px 1fr; } .sheet-layout .form-grid { grid-template-columns: 1fr; } }
+#sheetCanvas { max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); }
+.sheet-layout .preview-stage { margin: 0.8rem 0; }

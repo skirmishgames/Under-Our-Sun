@@ -1,11 +1,12 @@
 // App shell: views, editor, library and print.
-import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, newMission, newBlock, newPart, normaliseMission, missionName, uid } from './data/schema.js?v=db8d446a';
-import { ITEMS } from './data/items.js?v=db8d446a';
-import { sampleMission } from './data/sample.js?v=db8d446a';
-import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=db8d446a';
-import { fileToDataUrl } from './art.js?v=db8d446a';
-import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=db8d446a';
-import { buildPdf, PAPERS, layoutFor } from './print.js?v=db8d446a';
+import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, newMission, newBlock, newPart, normaliseMission, missionName, uid } from './data/schema.js?v=865bb7a4';
+import { ITEMS } from './data/items.js?v=865bb7a4';
+import { sampleMission } from './data/sample.js?v=865bb7a4';
+import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=865bb7a4';
+import { fileToDataUrl } from './art.js?v=865bb7a4';
+import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=865bb7a4';
+import { renderSheet, buildSheetPdf } from './sheet.js?v=865bb7a4';
+import { buildPdf, PAPERS, layoutFor } from './print.js?v=865bb7a4';
 
 const VERSION = '1.0.0';
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -40,13 +41,14 @@ const state = { missions: [], current: null, partIdx: 0, side: 'front', fit: [] 
 
 function route() {
   const [tab, id] = (location.hash.replace('#', '') || 'library').split('/');
-  const views = ['library', 'edit', 'print', 'guide', 'about'];
+  const views = ['library', 'edit', 'print', 'sheet', 'guide', 'about'];
   const view = views.includes(tab) ? tab : 'library';
   views.forEach(v => { $('#view-' + v).hidden = v !== view; });
   $$('.tabs a').forEach(a => a.classList.toggle('on', a.dataset.tab === view));
   if (view === 'library') renderLibrary();
   if (view === 'edit') openEditor(id);
   if (view === 'print') renderPrint();
+  if (view === 'sheet') renderSheetView();
   window.scrollTo(0, 0);
 }
 
@@ -457,6 +459,53 @@ function setupPrint() {
   });
 }
 
+// ---------- survivor log ----------
+
+const SHEET_DEFAULTS = { lang: 'en', paper: 'letter', preset: 'dunes', inkSaver: false, marks: true, pages: 1 };
+function sheetOpts() { return Object.assign({}, SHEET_DEFAULTS, getSetting('sheetOpts', {})); }
+
+function renderSheetView() {
+  const opts = sheetOpts();
+  const box = $('#sheetOptions');
+  box.innerHTML = '';
+  const save = (redraw = true) => { setSetting('sheetOpts', opts); if (redraw) drawSheetPreview(); };
+  const lang = el('div', { class: 'seg', role: 'radiogroup', 'aria-label': 'Language' },
+    [['en', 'English'], ['de', 'Deutsch']].map(([v, l]) => el('button', { type: 'button', class: opts.lang === v ? 'on' : '',
+      onclick: e => { opts.lang = v; $$('button', e.currentTarget.parentNode).forEach(b => b.classList.toggle('on', b === e.currentTarget)); save(); } }, l)));
+  const paper = el('select', { onchange: e => { opts.paper = e.target.value; save(false); } }, Object.entries(PAPERS).map(([k, p]) => el('option', { value: k, selected: opts.paper === k }, p.label + ', landscape')));
+  const preset = el('select', { onchange: e => { opts.preset = e.target.value; save(); } }, ART_PRESETS.map(p => el('option', { value: p.value, selected: opts.preset === p.value }, p.label)));
+  const pages = el('input', { type: 'number', min: 1, max: 10, value: opts.pages, onchange: e => { opts.pages = Math.max(1, Math.min(10, +e.target.value || 1)); save(false); } });
+  const chk = (label, key, redraw) => el('label', { class: 'check' }, el('input', { type: 'checkbox', checked: !!opts[key], onchange: e => { opts[key] = e.target.checked; save(redraw); } }), label);
+  box.append(
+    el('div', { class: 'field' }, el('span', { class: 'muted small', text: 'Language' }), el('div', {}, lang)),
+    field('Paper', paper), field('Header scene', preset), field('Pages (4 cards each)', pages),
+    chk('Ink saver (no header art)', 'inkSaver', true), chk('Cut marks', 'marks', false));
+  drawSheetPreview();
+}
+
+async function drawSheetPreview() {
+  const c = await renderSheet(Object.assign(sheetOpts(), { scale: 8, rounded: true }));
+  const cv = $('#sheetCanvas');
+  cv.width = c.width; cv.height = c.height;
+  cv.getContext('2d').drawImage(c, 0, 0);
+}
+
+function setupSheet() {
+  $('#sheetPdf').addEventListener('click', async () => {
+    if (!window.jspdf) { toast('The PDF library has not loaded yet. Try again in a moment.'); return; }
+    const o = sheetOpts();
+    const doc = await buildSheetPdf(o);
+    doc.save(`survivor-log-${o.lang}.pdf`);
+    $('#sheetStatus').textContent = 'PDF ready. Print at 100% scale.';
+  });
+  $('#sheetPng').addEventListener('click', async () => {
+    const o = sheetOpts();
+    const c = await renderSheet(Object.assign(o, { scale: 12 }));
+    const a = el('a', { href: c.toDataURL('image/png'), download: `survivor-log-${o.lang}.png` });
+    document.body.append(a); a.click(); a.remove();
+  });
+}
+
 // ---------- guide ----------
 
 function renderIconTable() {
@@ -501,6 +550,7 @@ async function start() {
   });
   setupEditorChrome();
   setupPrint();
+  setupSheet();
   renderIconTable();
   await ensureFonts();
   if (!getSetting('seeded', false)) {
