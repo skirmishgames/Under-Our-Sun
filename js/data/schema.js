@@ -30,6 +30,7 @@ export const HEADING_SUGGESTIONS = ['BRIEFING', 'INTRODUCTION', 'SETUP', 'SPECIA
 
 export const ART_PRESETS = [
   { value: 'dunes', label: 'Dunes at dusk' },
+  { value: 'wasteland', label: 'Wasteland by day' },
   { value: 'ruins', label: 'Ruined city' },
   { value: 'canyon', label: 'Canyon' },
   { value: 'storm', label: 'Solar storm' },
@@ -43,6 +44,11 @@ export const ICON_TOKENS = {
   blue:      { kind: 'die', colour: '#3b7fc0', label: 'Blue die' },
   red:       { kind: 'die', colour: '#c0392b', label: 'Red die' },
   karma:     { kind: 'karma', colour: '#6b4fa0', label: 'Karma die' },
+  success:   { kind: 'success', colour: '#33302c', label: 'Success' },
+  double:    { kind: 'double', colour: '#33302c', label: 'Double success' },
+  fail:      { kind: 'fail', colour: '#c0392b', label: 'Failure (red die X)' },
+  d8:        { kind: 'd8', colour: '#6f7378', label: 'Numbered d8' },
+  enemy:     { kind: 'enemy', colour: '#c8323a', label: 'Enemy symbol' },
   water:     { kind: 'drop', colour: '#3b7fc0', label: 'Water' },
   food:      { kind: 'cube', colour: '#c0392b', label: 'Food' },
   fabric:    { kind: 'cube', colour: '#e3b928', label: 'Fabric' },

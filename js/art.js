@@ -48,12 +48,12 @@ function ridge(ctx, w, h, base, amp, colour, rand, steps = 9) {
   ctx.fill();
 }
 
-function ruins(ctx, w, h, base, colour, rand) {
+function ruins(ctx, w, h, base, colour, rand, scale = 1) {
   ctx.fillStyle = colour;
   let x = -w * 0.02;
   while (x < w) {
     const bw = w * (0.04 + rand() * 0.07);
-    const bh = h * (0.06 + rand() * 0.22);
+    const bh = h * (0.06 + rand() * 0.22) * scale;
     ctx.fillRect(x, base - bh, bw, bh + h);
     if (rand() > 0.6) ctx.fillRect(x + bw * 0.3, base - bh - h * 0.05, bw * 0.12, h * 0.05);
     x += bw + w * rand() * 0.03;
@@ -67,6 +67,19 @@ const PRESETS = {
     ridge(ctx, w, h, h * 0.58, h * 0.08, '#8e4a33', r);
     ridge(ctx, w, h, h * 0.68, h * 0.1, '#6b3626', r);
     ridge(ctx, w, h, h * 0.8, h * 0.12, '#45241b', r);
+  },
+  wasteland(ctx, w, h, r) {
+    sky(ctx, w, h, [[0, '#3f78b5'], [0.35, '#8fb8dc'], [0.55, '#e8dcc4'], [1, '#d9b98a']]);
+    ctx.globalAlpha = 0.55;
+    ctx.fillStyle = '#ffffff';
+    for (let i = 0; i < 5; i++) { const cx = w * r(), cy = h * (0.08 + r() * 0.22); ctx.beginPath(); ctx.ellipse(cx, cy, w * (0.12 + r() * 0.12), h * 0.025, 0, 0, Math.PI * 2); ctx.fill(); }
+    ctx.globalAlpha = 1;
+    sun(ctx, w * (0.15 + r() * 0.2), h * 0.18, Math.min(w, h) * 0.05, '#fffbea', 'rgba(255,250,220,0.5)');
+    ruins(ctx, w, h, h * 0.6, 'rgba(120,110,105,0.5)', r, 0.45);
+    ridge(ctx, w, h, h * 0.62, h * 0.05, '#cfa874', r);
+    ruins(ctx, w, h, h * 0.72, 'rgba(92,70,52,0.85)', r, 0.35);
+    ridge(ctx, w, h, h * 0.76, h * 0.07, '#b88a55', r);
+    ridge(ctx, w, h, h * 0.88, h * 0.06, '#8f6538', r);
   },
   ruins(ctx, w, h, r) {
     sky(ctx, w, h, [[0, '#4a3b36'], [0.45, '#c27a46'], [0.75, '#efc07a'], [1, '#e9b56f']]);

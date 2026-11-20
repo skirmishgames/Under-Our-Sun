@@ -1,7 +1,7 @@
 // Canvas card renderer. All positions are in millimetres.
 // Front: 70 x 120 mm portrait. Back: 120 x 70 mm landscape.
-import { DIFFICULTY, MODES, BLOCK_KINDS, ICON_TOKENS, missionName } from './data/schema.js?v=865bb7a4';
-import { drawPreset, loadImage, drawCover } from './art.js?v=865bb7a4';
+import { DIFFICULTY, MODES, BLOCK_KINDS, ICON_TOKENS, missionName } from './data/schema.js?v=a4121861';
+import { drawPreset, loadImage, drawCover } from './art.js?v=a4121861';
 
 export const CARD_W = 70;
 export const CARD_H = 120;
@@ -36,7 +36,7 @@ export function parseMarkup(text, mission) {
     const bullet = /^\s*[-•*]\s+/.test(raw);
     const line = bullet ? raw.replace(/^\s*[-•*]\s+/, '') : raw;
     const runs = [];
-    const re = /(\*\*[^*]+\*\*|\*[^*\s][^*]*\*|\{[a-z]+\})/gi;
+    const re = /(\*\*[^*]+\*\*|\*[^*\s][^*]*\*|\{[a-z0-9]+\})/gi;
     let last = 0, mm;
     const push = (str, bold, italic) => { if (str) runs.push({ type: 'text', str, bold, italic }); };
     while ((mm = re.exec(line))) {
@@ -128,6 +128,14 @@ function drawRows(ctx, lay, x, y, width, align, colour, opts = {}) {
 
 // ---------- icons ----------
 
+function successMark(ctx, cx, cy, r, colour = '#fff') {
+  ctx.save();
+  ctx.strokeStyle = colour; ctx.lineWidth = r * 0.32; ctx.lineCap = 'round';
+  ctx.beginPath(); ctx.arc(cx, cy, r * 0.55, 0, Math.PI * 2); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(cx - r * 1.05, cy + r * 0.6); ctx.lineTo(cx + r * 1.05, cy - r * 0.6); ctx.stroke();
+  ctx.restore();
+}
+
 export function drawIcon(ctx, name, x, y, s) {
   const def = ICON_TOKENS[name];
   if (!def) return;
@@ -141,6 +149,31 @@ export function drawIcon(ctx, name, x, y, s) {
     ctx.fill(); ctx.stroke();
     ctx.fillStyle = 'rgba(255,255,255,0.3)';
     ctx.beginPath(); ctx.moveTo(cx, cy - s * 0.42); ctx.lineTo(cx + s * 0.34, cy - s * 0.2); ctx.lineTo(cx, cy); ctx.lineTo(cx - s * 0.34, cy - s * 0.2); ctx.closePath(); ctx.fill();
+    if (name === 'red') {
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = s * 0.1; ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(cx - s * 0.15, cy - s * 0.12); ctx.lineTo(cx + s * 0.15, cy + s * 0.18);
+      ctx.moveTo(cx + s * 0.15, cy - s * 0.12); ctx.lineTo(cx - s * 0.15, cy + s * 0.18); ctx.stroke();
+    } else successMark(ctx, cx, cy + s * 0.03, s * 0.17);
+  } else if (def.kind === 'success' || def.kind === 'double') {
+    ctx.beginPath(); ctx.arc(cx, cy, s * 0.47, 0, Math.PI * 2); ctx.fill();
+    if (def.kind === 'success') successMark(ctx, cx, cy, s * 0.24);
+    else { successMark(ctx, cx, cy - s * 0.17, s * 0.15); successMark(ctx, cx, cy + s * 0.17, s * 0.15); }
+  } else if (def.kind === 'fail') {
+    hexagon(ctx, cx, cy, s * 0.5); ctx.fill(); ctx.stroke();
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = s * 0.12; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(cx - s * 0.17, cy - s * 0.17); ctx.lineTo(cx + s * 0.17, cy + s * 0.17);
+    ctx.moveTo(cx + s * 0.17, cy - s * 0.17); ctx.lineTo(cx - s * 0.17, cy + s * 0.17); ctx.stroke();
+  } else if (def.kind === 'd8') {
+    hexagon(ctx, cx, cy, s * 0.5); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = '#f2e66a'; ctx.font = `700 ${s * 0.58}px ${HEAD_FONT}`; ctx.textAlign = 'center';
+    ctx.fillText('8', cx, cy + s * 0.2);
+  } else if (def.kind === 'enemy') {
+    ctx.beginPath();
+    ctx.moveTo(x + s * 0.25, y + s * 0.12); ctx.lineTo(x + s * 0.75, y + s * 0.12); ctx.lineTo(x + s, cy);
+    ctx.lineTo(x + s * 0.75, y + s * 0.88); ctx.lineTo(x + s * 0.25, y + s * 0.88); ctx.lineTo(x, cy); ctx.closePath();
+    ctx.fill(); ctx.stroke();
+    ctx.fillStyle = '#fff'; ctx.font = `700 ${s * 0.62}px ${HEAD_FONT}`; ctx.textAlign = 'center';
+    ctx.fillText('!', cx, cy + s * 0.22);
   } else if (def.kind === 'injury') {
     ctx.beginPath(); ctx.arc(cx, cy, s * 0.46, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
     ctx.strokeStyle = '#fff'; ctx.lineWidth = s * 0.13; ctx.lineCap = 'round';
