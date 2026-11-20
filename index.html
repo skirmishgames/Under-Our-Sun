@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Under Our Sun mission maker</title>
+  <meta name="description" content="Write and print fan-made missions for the Under Our Sun board game.">
+  <meta name="theme-color" content="#b5583a">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css?v=e31490fb">
+  <script>
+    try { var t = localStorage.getItem('uos.theme'); if (t && JSON.parse(t) === 'dark') document.documentElement.dataset.theme = 'dark'; } catch (e) {}
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#library" aria-label="Mission maker home">
+      <img src="assets/icons/favicon.svg" alt="" width="28" height="28">
+      <span><strong>Under Our Sun</strong> <span class="brand-sub">mission maker</span></span>
+    </a>
+    <button class="icon-btn" id="themeToggle" type="button" aria-label="Switch light or dark mode" title="Light or dark mode">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z"/></svg>
+    </button>
+  </header>
+
+  <nav class="tabs" aria-label="Sections">
+    <a href="#library" data-tab="library">Missions</a>
+    <a href="#edit" data-tab="edit">Editor</a>
+    <a href="#print" data-tab="print">Print</a>
+    <a href="#guide" data-tab="guide">Guide</a>
+    <a href="#about" data-tab="about">About</a>
+  </nav>
+
+  <main>
+    <!-- Library -->
+    <section id="view-library" class="view" hidden>
+      <div class="toolbar">
+        <h1>Missions</h1>
+        <div class="toolbar-actions">
+          <button class="btn primary" id="newMission" type="button">New mission</button>
+          <label class="btn" for="importFile">Import</label>
+          <input id="importFile" type="file" accept=".json,application/json" hidden>
+          <button class="btn" id="exportAll" type="button">Back up all</button>
+        </div>
+      </div>
+      <p class="muted small">Missions are saved in this browser only. Back them up as a file to move them to another device or share them.</p>
+      <div id="libraryGrid" class="grid"></div>
+    </section>
+
+    <!-- Editor -->
+    <section id="view-edit" class="view" hidden>
+      <div id="editorEmpty" class="empty" hidden>
+        <p>No mission open. Pick one from <a href="#library">Missions</a> or start a new one.</p>
+      </div>
+      <div id="editor" class="editor" hidden>
+        <div class="editor-main">
+          <div class="toolbar">
+            <h1 id="editorTitle">Mission</h1>
+            <div class="toolbar-actions">
+              <span id="saveState" class="muted small" aria-live="polite"></span>
+              <button class="btn" id="exportOne" type="button">Export</button>
+              <button class="btn" id="printOne" type="button">Print</button>
+            </div>
+          </div>
+
+          <details class="panel" id="detailsPanel" open>
+            <summary>Mission details</summary>
+            <div class="form-grid" id="detailsForm"></div>
+          </details>
+
+          <details class="panel" id="artPanel">
+            <summary>Card art</summary>
+            <div id="artForm"></div>
+          </details>
+
+          <div class="parts-head">
+            <h2>Parts</h2>
+            <button class="btn" id="addPart" type="button">Add part</button>
+          </div>
+          <div id="partsList"></div>
+
+          <details class="panel">
+            <summary>Author notes (not printed)</summary>
+            <textarea id="notesField" rows="3" placeholder="Playtest notes, ideas, credits"></textarea>
+          </details>
+        </div>
+
+        <aside class="preview" id="preview" aria-label="Card preview">
+          <div class="preview-head">
+            <div class="seg" role="tablist" aria-label="Card side">
+              <button type="button" data-side="front" class="on">Front</button>
+              <button type="button" data-side="back">Back</button>
+            </div>
+            <select id="previewPart" aria-label="Part to preview"></select>
+            <button class="icon-btn preview-close" id="previewClose" type="button" aria-label="Close preview">&times;</button>
+          </div>
+          <div class="preview-stage" id="previewStage">
+            <canvas id="previewCanvas" aria-label="Card preview"></canvas>
+          </div>
+          <p id="fitNote" class="small" aria-live="polite"></p>
+          <button class="btn small-btn" id="downloadPng" type="button">Download this card as PNG</button>
+        </aside>
+        <button class="btn primary fab" id="previewOpen" type="button">Preview</button>
+      </div>
+    </section>
+
+    <!-- Print -->
+    <section id="view-print" class="view" hidden>
+      <h1>Print</h1>
+      <p class="muted small">Print the PDF at 100% (actual size). For double-sided cards, print on both sides and flip on the long edge.</p>
+      <div class="panel form-grid" id="printOptions"></div>
+      <div class="panel">
+        <div class="parts-head"><h2>Missions to print</h2>
+          <div><button class="btn" id="printAll" type="button">All</button> <button class="btn" id="printNone" type="button">None</button></div>
+        </div>
+        <div id="printList" class="check-list"></div>
+      </div>
+      <div class="toolbar-actions">
+        <button class="btn primary" id="makePdf" type="button">Make PDF</button>
+        <span id="printStatus" class="muted small" aria-live="polite"></span>
+      </div>
+    </section>
+
+    <!-- Guide -->
+    <section id="view-guide" class="view prose" hidden>
+      <h1>Guide</h1>
+      <h2>How a mission is built</h2>
+      <p>A mission is a short deck of numbered parts. Players read part 1 at setup and each part tells them when to read the next one. The editor starts every new mission from the community mission template: briefing, setup, special rules, mission goal and objectives on part 1, story on the middle parts, success and failure on the last part.</p>
+      <p>Empty blocks are left off the card, so you can keep the template blocks you do not need without them printing.</p>
+      <h2>Block types</h2>
+      <ul>
+        <li><strong>Section with heading</strong>: a panel with a heading such as BRIEFING, SETUP or SPECIAL RULES.</li>
+        <li><strong>Story text</strong>: narrative with no heading.</li>
+        <li><strong>Mission goal, Objectives, Bonus objective, Success, Failure</strong>: centred text under a coloured label.</li>
+        <li><strong>Picture</strong>: a map setup diagram or similar, with an optional caption.</li>
+      </ul>
+      <h2>Text formatting</h2>
+      <table class="cheat">
+        <tr><th>Type</th><th>Result</th></tr>
+        <tr><td><code>**Stack 1:**</code></td><td><strong>Stack 1:</strong></td></tr>
+        <tr><td><code>*whispered*</code></td><td><em>whispered</em></td></tr>
+        <tr><td><code>- 5 random tiles</code></td><td>a bullet point</td></tr>
+        <tr><td>a blank line</td><td>a small gap between paragraphs</td></tr>
+        <tr><td><code>{mission}</code></td><td>the mission name and number, for example "Mission 14"</td></tr>
+      </table>
+      <p>Use <code>Read **{mission} - Part 3**.</code> in objectives. If you renumber the mission later, every part link updates.</p>
+      <h2>Icons</h2>
+      <div id="iconTable" class="icon-table"></div>
+      <h2>Text that does not fit</h2>
+      <p>Text sits at the bottom of the card and the art shows above it. When a part gets long, the font shrinks a little to fit. If it still does not fit, the editor marks the part in red. Split it into another part or trim it.</p>
+      <h2>Sharing missions</h2>
+      <p>Export a mission from the editor to get a <code>.json</code> file with its text and pictures. Anyone can import that file on the Missions page. Use "Back up all" now and then, because clearing browser data deletes saved missions.</p>
+    </section>
+
+    <!-- About -->
+    <section id="view-about" class="view prose" hidden>
+      <h1>About</h1>
+      <p>A fan-made tool for writing and printing missions for Under Our Sun. It is not affiliated with or endorsed by the publisher.</p>
+      <p>Under Our Sun is designed by Maximilian Lichtner and David Poluda and published by tabletopper games. You need the game, its rulebook and its components to play any mission made here. <a href="https://gamefound.com/en/projects/tabletopper-games/under-our-sun" target="_blank" rel="noopener">Game info</a>.</p>
+      <p>Missions you write belong to you. They are saved in your browser and nothing is sent to a server.</p>
+      <h2>Credits</h2>
+      <ul>
+        <li>Barlow and Barlow Condensed fonts by Jeremy Tribby, SIL Open Font License.</li>
+        <li>PDF output by jsPDF, MIT License.</li>
+        <li>Card layout and default scenes drawn for this tool.</li>
+      </ul>
+      <h2>Contact</h2>
+      <p>Questions, bugs or ideas: <a href="mailto:games@staroversky.com">games@staroversky.com</a></p>
+      <p class="muted small" id="versionLine"></p>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="vendor/jspdf.umd.min.js?v=e31490fb" defer></script>
+  <script type="module" src="js/app.js?v=e31490fb"></script>
+</body>
+</html>
