@@ -51,6 +51,8 @@ export const ICON_TOKENS = {
   wood:      { kind: 'cube', colour: '#d9822b', label: 'Wood' },
   alcohol:   { kind: 'cube', colour: '#3f9e4d', label: 'Alcohol' },
   plastic:   { kind: 'cube', colour: '#e07ab0', label: 'Plastic' },
+  injury:    { kind: 'injury', colour: '#c0392b', label: 'Injury' },
+  infection: { kind: 'infection', colour: '#c0392b', label: 'Infection' },
   hp:        { kind: 'tag', colour: '#b0352b', label: 'Health point', text: 'HP' },
   ap:        { kind: 'tag', colour: '#3d3d3d', label: 'Action point', text: 'AP' }
 };

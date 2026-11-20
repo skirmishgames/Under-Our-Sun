@@ -1,7 +1,7 @@
 // Canvas card renderer. All positions are in millimetres.
 // Front: 70 x 120 mm portrait. Back: 120 x 70 mm landscape.
-import { DIFFICULTY, MODES, BLOCK_KINDS, ICON_TOKENS, missionName } from './data/schema.js?v=e31490fb';
-import { drawPreset, loadImage, drawCover } from './art.js?v=e31490fb';
+import { DIFFICULTY, MODES, BLOCK_KINDS, ICON_TOKENS, missionName } from './data/schema.js?v=db8d446a';
+import { drawPreset, loadImage, drawCover } from './art.js?v=db8d446a';
 
 export const CARD_W = 70;
 export const CARD_H = 120;
@@ -137,11 +137,23 @@ export function drawIcon(ctx, name, x, y, s) {
   ctx.fillStyle = def.colour;
   const cx = x + s / 2, cy = y + s / 2;
   if (def.kind === 'die') {
-    ctx.beginPath();
-    ctx.moveTo(cx, y); ctx.lineTo(x + s, cy); ctx.lineTo(cx, y + s); ctx.lineTo(x, cy); ctx.closePath();
+    hexagon(ctx, cx, cy, s * 0.5);
     ctx.fill(); ctx.stroke();
-    ctx.strokeStyle = 'rgba(255,255,255,0.55)';
-    ctx.beginPath(); ctx.moveTo(x + s * 0.2, cy); ctx.lineTo(x + s * 0.8, cy); ctx.stroke();
+    ctx.fillStyle = 'rgba(255,255,255,0.3)';
+    ctx.beginPath(); ctx.moveTo(cx, cy - s * 0.42); ctx.lineTo(cx + s * 0.34, cy - s * 0.2); ctx.lineTo(cx, cy); ctx.lineTo(cx - s * 0.34, cy - s * 0.2); ctx.closePath(); ctx.fill();
+  } else if (def.kind === 'injury') {
+    ctx.beginPath(); ctx.arc(cx, cy, s * 0.46, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = s * 0.13; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(cx - s * 0.18, cy - s * 0.18); ctx.lineTo(cx + s * 0.18, cy + s * 0.18);
+    ctx.moveTo(cx + s * 0.18, cy - s * 0.18); ctx.lineTo(cx - s * 0.18, cy + s * 0.18); ctx.stroke();
+  } else if (def.kind === 'infection') {
+    ctx.beginPath(); ctx.arc(cx, cy, s * 0.46, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = '#fff';
+    for (let i = 0; i < 3; i++) {
+      const a = -Math.PI / 2 + i * 2 * Math.PI / 3;
+      ctx.beginPath(); ctx.arc(cx + Math.cos(a) * s * 0.17, cy + Math.sin(a) * s * 0.17, s * 0.12, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.fillStyle = def.colour; ctx.beginPath(); ctx.arc(cx, cy, s * 0.07, 0, Math.PI * 2); ctx.fill();
   } else if (def.kind === 'karma') {
     ctx.beginPath(); ctx.rect(x + s * 0.08, y + s * 0.08, s * 0.84, s * 0.84); ctx.fill(); ctx.stroke();
     ctx.fillStyle = '#fff'; ctx.font = `700 ${s * 0.7}px ${HEAD_FONT}`; ctx.textAlign = 'center';

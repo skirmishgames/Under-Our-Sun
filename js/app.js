@@ -1,10 +1,11 @@
 // App shell: views, editor, library and print.
-import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, newMission, newBlock, newPart, normaliseMission, missionName, uid } from './data/schema.js?v=e31490fb';
-import { sampleMission } from './data/sample.js?v=e31490fb';
-import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=e31490fb';
-import { fileToDataUrl } from './art.js?v=e31490fb';
-import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=e31490fb';
-import { buildPdf, PAPERS, layoutFor } from './print.js?v=e31490fb';
+import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, newMission, newBlock, newPart, normaliseMission, missionName, uid } from './data/schema.js?v=db8d446a';
+import { ITEMS } from './data/items.js?v=db8d446a';
+import { sampleMission } from './data/sample.js?v=db8d446a';
+import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=db8d446a';
+import { fileToDataUrl } from './art.js?v=db8d446a';
+import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=db8d446a';
+import { buildPdf, PAPERS, layoutFor } from './print.js?v=db8d446a';
 
 const VERSION = '1.0.0';
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -327,11 +328,15 @@ function blockEditor(part, b, k, partIdx) {
   const ta = bindText(el('textarea', { rows: 4, placeholder }), b, 'text');
   const iconSel = el('select', { class: 'mini', 'aria-label': 'Insert icon', onchange: e => { if (e.target.value) insertAtCursor(ta, `{${e.target.value}}`); e.target.value = ''; } },
     el('option', { value: '' }, 'Insert icon'), Object.entries(ICON_TOKENS).map(([v, d]) => el('option', { value: v }, d.label)));
+  const cats = [...new Set(ITEMS.map(i => i.cat))];
+  const itemSel = el('select', { class: 'mini', 'aria-label': 'Insert item name', onchange: e => { if (e.target.value) insertAtCursor(ta, `**${e.target.value}**`); e.target.value = ''; } },
+    el('option', { value: '' }, 'Insert item'),
+    cats.map(c => el('optgroup', { label: c }, ITEMS.filter(i => i.cat === c).map(i => el('option', { value: i.name }, i.name + (i.cp01 ? ' (CP01)' : ''))))));
   const nextPart = Math.min(m.parts.length, partIdx + 2);
   wrap.append(ta, el('div', { class: 'block-tools' },
     el('button', { class: 'btn mini', type: 'button', title: 'Bold the selected text', onclick: () => { const s = ta.selectionStart, e = ta.selectionEnd; const sel = ta.value.slice(s, e) || 'bold'; ta.setSelectionRange(s, e); insertAtCursor(ta, `**${sel}**`); } }, 'Bold'),
     el('button', { class: 'btn mini', type: 'button', onclick: () => insertAtCursor(ta, `Read **{mission} - Part ${nextPart}**.`) }, `Link to part ${nextPart}`),
-    iconSel));
+    iconSel, itemSel));
   return wrap;
 }
 

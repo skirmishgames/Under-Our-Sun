@@ -1,0 +1,43 @@
+// Craftable items and gear, names only.
+// Source: Crafting overview V2.1 (incl. CP01). cp01 marks items from the CP01 set.
+export const ITEM_SOURCE = 'Crafting overview V2.1';
+
+export const ITEMS = [
+  { cat: 'Tool', name: 'Water bottle' },
+  { cat: 'Tool', name: 'Lighter' },
+  { cat: 'Tool', name: 'Rope' },
+  { cat: 'Tool', name: 'Small animal trap' },
+  { cat: 'Tool', name: 'Flashlight' },
+  { cat: 'Tool', name: 'Sun paste' },
+  { cat: 'Tool', name: 'Tent' },
+  { cat: 'Tool', name: 'Multitool' },
+  { cat: 'Tool', name: 'Binoculars' },
+  { cat: 'Tool', name: 'Condenser', cp01: true },
+  { cat: 'Tool', name: 'Distillery', cp01: true },
+  { cat: 'Tool', name: 'Bear trap', cp01: true },
+  { cat: 'Tool', name: 'Campfire' },
+  { cat: 'Tool', name: 'Cooking pit' },
+  { cat: 'Gear', name: 'Carrying bag' },
+  { cat: 'Gear', name: 'Sun cape' },
+  { cat: 'Gear', name: 'Tactical belt' },
+  { cat: 'Gear', name: 'Backpack' },
+  { cat: 'Gear', name: 'Light armor' },
+  { cat: 'Gear', name: 'Heavy armor' },
+  { cat: 'Gear', name: 'Gauntlet', cp01: true },
+  { cat: 'Gear', name: 'Stealth cloak', cp01: true },
+  { cat: 'Healing', name: 'Stimulant' },
+  { cat: 'Healing', name: 'Antibiotic' },
+  { cat: 'Healing', name: 'Bandage' },
+  { cat: 'Healing', name: 'Medkit' },
+  { cat: 'Healing', name: 'A.E.D.' },
+  { cat: 'Weapon', name: 'Club' },
+  { cat: 'Weapon', name: 'Crowbar' },
+  { cat: 'Weapon', name: 'Knife' },
+  { cat: 'Weapon', name: 'Spear' },
+  { cat: 'Weapon', name: 'Bow and arrow' },
+  { cat: 'Weapon', name: 'Slingshot', cp01: true },
+  { cat: 'Weapon', name: 'Taser', cp01: true },
+  { cat: 'Weapon', name: 'Blowgun', cp01: true },
+  { cat: 'Ammunition', name: 'Arrows' },
+  { cat: 'Ammunition', name: 'Ammunition' }
+];
