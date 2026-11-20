@@ -1,12 +1,12 @@
 // App shell: views, editor, library and print.
-import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, newMission, newBlock, newPart, normaliseMission, missionName, uid } from './data/schema.js?v=8d016490';
-import { ITEMS } from './data/items.js?v=8d016490';
-import { sampleMission } from './data/sample.js?v=8d016490';
-import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=8d016490';
-import { fileToDataUrl } from './art.js?v=8d016490';
-import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=8d016490';
-import { renderSheet, buildSheetPdf } from './sheet.js?v=8d016490';
-import { buildPdf, PAPERS, layoutFor } from './print.js?v=8d016490';
+import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, newMission, newBlock, newPart, normaliseMission, missionName, uid } from './data/schema.js?v=68220c4f';
+import { ITEMS } from './data/items.js?v=68220c4f';
+import { sampleMission } from './data/sample.js?v=68220c4f';
+import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=68220c4f';
+import { fileToDataUrl } from './art.js?v=68220c4f';
+import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=68220c4f';
+import { renderSheet, buildSheetPdf } from './sheet.js?v=68220c4f';
+import { buildPdf, PAPERS, layoutFor } from './print.js?v=68220c4f';
 
 const VERSION = '1.0.0';
 const $ = (sel, root = document) => root.querySelector(sel);
