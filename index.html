@@ -7,7 +7,7 @@
   <meta name="description" content="Write and print fan-made missions for the Under Our Sun board game.">
   <meta name="theme-color" content="#b5583a">
   <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/styles.css?v=165ac91a">
+  <link rel="stylesheet" href="css/styles.css?v=5e233d51">
   <script>
     try { var t = localStorage.getItem('uos.theme'); if (t && JSON.parse(t) === 'dark') document.documentElement.dataset.theme = 'dark'; } catch (e) {}
   </script>
@@ -185,7 +185,7 @@
     <!-- Mission index -->
     <section id="view-index" class="view mindex" hidden>
       <h1>Mission index</h1>
-      <p class="muted small">Every official mission in the base game and Content Pack 01, with what it is about and what kind of mission it is. Premises only cover the start of each mission. "How it is built" lists the mechanics each mission uses and contains spoilers.</p>
+      <p class="muted small">Every official mission in the base game and Content Pack 01, with what it is about and what kind of mission it is. Premises only cover the start of each mission, so nothing is spoiled.</p>
       <div class="chips" id="indexFilters" role="toolbar" aria-label="Filter missions"></div>
       <p id="indexCount" class="muted small" aria-live="polite"></p>
       <div id="indexList" class="mgrid"></div>
@@ -394,7 +394,7 @@
 
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 
-  <script src="vendor/jspdf.umd.min.js?v=165ac91a" defer></script>
-  <script type="module" src="js/app.js?v=165ac91a"></script>
+  <script src="vendor/jspdf.umd.min.js?v=5e233d51" defer></script>
+  <script type="module" src="js/app.js?v=5e233d51"></script>
 </body>
 </html>
