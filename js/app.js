@@ -1,17 +1,17 @@
 // App shell: views, editor, library and print.
-import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, MISSION_TAGS, newMission, newBlock, newPart, normaliseMission, missionName, partLabel, partTotal, uid } from './data/schema.js?v=fa0ed634';
-import { PATTERNS } from './data/patterns.js?v=fa0ed634';
-import { ITEMS } from './data/items.js?v=fa0ed634';
-import { sampleMission } from './data/sample.js?v=fa0ed634';
-import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=fa0ed634';
-import { fileToDataUrl } from './art.js?v=fa0ed634';
-import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=fa0ed634';
-import { DISPATCHES, DISPATCH_STATUS } from './data/dispatches.js?v=fa0ed634';
-import { OFFICIAL_MISSIONS, COMMUNITY_MISSIONS, MISSION_TYPES } from './data/missions-index.js?v=fa0ed634';
-import { rollSpark } from './data/design.js?v=fa0ed634';
-import { FAQ, FAQ_TOPICS, FAQ_SOURCES, FAQ_LINKS, CONTENTS_1E } from './data/faq.js?v=fa0ed634';
-import { renderSheet, buildSheetPdf, ROGUELIKE_TEXT } from './sheet.js?v=fa0ed634';
-import { buildPdf, PAPERS, layoutFor } from './print.js?v=fa0ed634';
+import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, MISSION_TAGS, newMission, newBlock, newPart, normaliseMission, missionName, partLabel, partTotal, uid } from './data/schema.js?v=1b762e9b';
+import { PATTERNS } from './data/patterns.js?v=1b762e9b';
+import { ITEMS } from './data/items.js?v=1b762e9b';
+import { sampleMission } from './data/sample.js?v=1b762e9b';
+import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=1b762e9b';
+import { fileToDataUrl } from './art.js?v=1b762e9b';
+import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=1b762e9b';
+import { DISPATCHES, DISPATCH_STATUS } from './data/dispatches.js?v=1b762e9b';
+import { OFFICIAL_MISSIONS, COMMUNITY_MISSIONS, MISSION_TYPES } from './data/missions-index.js?v=1b762e9b';
+import { rollSpark } from './data/design.js?v=1b762e9b';
+import { FAQ, FAQ_TOPICS, FAQ_SOURCES, FAQ_LINKS, CONTENTS_1E } from './data/faq.js?v=1b762e9b';
+import { renderSheet, buildSheetPdf, ROGUELIKE_TEXT } from './sheet.js?v=1b762e9b';
+import { buildPdf, PAPERS, layoutFor } from './print.js?v=1b762e9b';
 
 const VERSION = '1.0.0';
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -49,9 +49,11 @@ function route() {
   const first = !getSetting('visited', false);
   if (!location.hash) { setSetting('visited', true); history.replaceState(null, '', first ? '#design' : '#library'); }
   const [tab, id] = (location.hash.replace('#', '') || 'library').split('/');
+  // Old links: Dispatches is now Stories.
+  if (tab === 'dispatches') { history.replaceState(null, '', '#stories' + (id ? '/' + id : '')); return route(); }
   // Old links to the Guide open the editor's Help panel.
   if (tab === 'guide') { history.replaceState(null, '', '#edit'); setTimeout(() => { const h = $('#helpPanel'); if (h) { h.open = true; h.scrollIntoView(); } }, 300); return route(); }
-  const views = ['library', 'edit', 'print', 'sheet', 'index', 'dispatches', 'design', 'faq', 'about'];
+  const views = ['library', 'edit', 'print', 'sheet', 'index', 'stories', 'design', 'faq', 'about'];
   const view = views.includes(tab) ? tab : 'library';
   views.forEach(v => { $('#view-' + v).hidden = v !== view; });
   $$('.tabs a').forEach(a => a.classList.toggle('on', a.dataset.tab === (view === 'edit' ? 'library' : view)));
@@ -61,7 +63,7 @@ function route() {
   if (view === 'sheet') renderSheetView();
   if (view === 'faq') renderFaq(id);
   if (view === 'index') renderIndex();
-  if (view === 'dispatches') renderDispatches(id);
+  if (view === 'stories') renderDispatches(id);
   if (view === 'design' && !state.spark) showSpark();
   if (!(view === 'faq' && id)) window.scrollTo(0, 0);
 }
@@ -649,7 +651,7 @@ function renderDispatches(openId) {
   const list = $('#dispatchList');
   list.innerHTML = '';
   const shown = DISPATCHES.filter(d => !dispatchState.status || d.status === dispatchState.status);
-  if (!shown.length) list.append(el('p', { class: 'empty', text: 'No dispatches with this status yet.' }));
+  if (!shown.length) list.append(el('p', { class: 'empty', text: 'No stories with this status yet.' }));
   for (const d of shown) {
     const st = DISPATCH_STATUS[d.status];
     const front = el('canvas', { class: 'front', width: 7, height: 12, 'aria-label': 'Part 1 front' });
@@ -669,7 +671,9 @@ function renderDispatches(openId) {
       el('div', { class: 'tags' }, el('span', { class: 'tag', text: (MODES.find(x => x.value === d.mode) || MODES[0]).label }), d.types.map(t => el('span', { class: 'tag', text: MISSION_TYPES[t] }))),
       el('p', { text: d.premise }),
       el('div', { class: 'thumbs' }, front, back),
-      d.status === 'untested' ? el('p', { class: 'focus' }, el('strong', { text: 'Playtest focus: ' }), d.testFocus) : null,
+      d.status === 'untested' ? el('details', { class: 'focus' }, el('summary', {}, el('strong', { text: `What to test (${d.testNotes.length})` })),
+        el('ol', {}, d.testNotes.map(t => el('li', { text: t })))) : null,
+      d.changes && d.changes.length ? el('p', { class: 'muted small', text: 'Changes: ' + d.changes.join(' ') }) : null,
       el('div', { class: 'tile-actions', style: 'padding:0' },
         el('button', { class: 'btn mini primary', type: 'button', onclick: async e => {
           const btn = e.currentTarget; btn.disabled = true;
@@ -686,8 +690,8 @@ function renderDispatches(openId) {
           const got = await importJson(JSON.stringify(exportPayload([m])));
           toast(`"${got[0].title}" added to My missions.`);
         } }, 'Add to My missions'),
-        el('a', { class: 'btn mini', href: `mailto:games@staroversky.com?subject=${encodeURIComponent(`Playtest: Dispatch ${d.number} ${d.title} v${d.version}`)}` }, 'Send feedback'),
-        el('a', { class: 'btn mini', href: '#dispatches/' + d.id, title: 'Link to this dispatch' }, 'Link')),
+        el('a', { class: 'btn mini', href: `mailto:games@staroversky.com?subject=${encodeURIComponent(`Playtest: Dispatch ${d.number} ${d.title} v${d.version}`)}&body=${encodeURIComponent(['Players:', 'Characters:', 'Game mode (co-op or semi-co-op):', 'Playing time:', 'Result (won or lost, and on which part):', '', ...(d.testNotes || []).map((t, k) => `${k + 1}. ${t}\nAnswer:\n`), 'Anything else:'].join('\n'))}` }, 'Send feedback'),
+        el('a', { class: 'btn mini', href: '#stories/' + d.id, title: 'Link to this story' }, 'Link')),
       d.playtests.length ? el('p', { class: 'muted small', text: `Playtested ${d.playtests.length} time${d.playtests.length === 1 ? '' : 's'}.` }) : null,
       spoil);
     list.append(card);

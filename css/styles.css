@@ -224,3 +224,6 @@ mark { background: color-mix(in srgb, var(--warn) 35%, transparent); color: inhe
 .dcard .all-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 0.5rem; margin-top: 0.5rem; }
 .dcard .all-cards canvas { width: 100%; height: auto; border-radius: 6px; }
 .dcard .focus { font-size: 0.85rem; background: var(--surface-2); border-radius: 8px; padding: 0.45rem 0.6rem; }
+.dcard .focus summary { cursor: pointer; }
+.dcard .focus ol { margin: 0.4rem 0 0.1rem; padding-left: 1.2rem; }
+.dcard .focus li { margin: 0.25rem 0; }

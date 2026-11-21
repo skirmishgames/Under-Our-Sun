@@ -16,7 +16,7 @@
    "players": "1-6",
    "playtime": "90-150",
    "summary": "Someone is broadcasting a promise of clean water. Find the voice before the desperate follow it.",
-   "notes": "Dispatch 01. Base game components only.",
+   "notes": "Dispatch 01, version 1.1. Base game components only. 1.1: enemies can attack Ida.",
    "types": [
     "rescue",
     "escort",
@@ -180,7 +180,7 @@
        "id": "b-section-22809511",
        "kind": "section",
        "heading": "MISSION RULES",
-       "text": "- **Free Ida:** 2 AP and a Dexterity check on the target map tile. Ida has 4 HP, tracked with HP cubes on this card. She moves with one character, who pays +1 AP for each map tile.\n- **Silence the signal (optional):** 2 AP and a Strength check on the target map tile. Remove the objective token.\n- **Reinforcements:** in each preparation phase, spawn 1 **SoL Soldier** on the target map tile. SoL enemies move 1 map tile toward Ida instead of rolling for movement.",
+       "text": "- **Free Ida:** 2 AP and a Dexterity check on the target map tile. Ida has 4 HP, tracked with HP cubes on this card. She moves with one character, who pays +1 AP for each map tile. Enemies on her tile can attack her like a character.\n- **Silence the signal (optional):** 2 AP and a Strength check on the target map tile. Remove the objective token.\n- **Reinforcements:** in each preparation phase, spawn 1 **SoL Soldier** on the target map tile. SoL enemies move 1 map tile toward Ida instead of rolling for movement.",
        "image": null,
        "caption": ""
       },

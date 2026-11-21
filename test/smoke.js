@@ -121,7 +121,7 @@ const check = (ok, msg) => { console.log((ok ? 'PASS ' : 'FAIL ') + msg); if (!o
   check((await page.locator('#indexList .mcard').count()) === 3, 'easy and competitive shows 3');
 
   // dispatches
-  await page.click('.tabs a[data-tab=dispatches]');
+  await page.click('.tabs a[data-tab=stories]');
   await page.waitForSelector('#dispatchList .dcard');
   await page.waitForTimeout(800);
   const before2 = (await page.evaluate(async () => (await (await import('./js/store.js')).listMissions()).length));

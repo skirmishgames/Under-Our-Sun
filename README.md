@@ -16,7 +16,7 @@ Live at [underoursun.skirmishgames.app](https://underoursun.skirmishgames.app).
 - Prints PDF sheets at 100% scale on Letter or A4, with crop marks and mirrored backs for long-edge duplex printing.
 - Prints a survivor log for roguelike play in English or German: one 135 x 100 mm card per character, four to a page.
 - A mission index of all 14 official missions with premise, type and how each is built, plus community missions.
-- Dispatches: new missions written for the site, marked Needs playtest or Playtested, ready to print or add to your own missions.
+- Stories: new missions written for the site (numbered dispatches), marked Needs playtest or Playtested, each with notes on what to test, ready to print or add to your own missions.
 - A mission design guide with a spark generator for hooks, goals, complications and twists.
 - A searchable rules FAQ, sorted by topic, built from the BoardGameGeek FAQ and the designer's forum answers.
 - Keeps a library of missions in the browser, with JSON export and import for sharing and backups. Pictures travel inside the file.
@@ -35,6 +35,8 @@ Under Our Sun is designed by Maximilian Lichtner and David Poluda and published 
 
 - Barlow and Barlow Condensed fonts, SIL Open Font License (`assets/fonts/OFL.txt`)
 - jsPDF, MIT License (`vendor/jspdf-LICENSE.txt`)
+
+Made by Ivan ([slyfoxbgg on BoardGameGeek](https://boardgamegeek.com/profile/slyfoxbgg)).
 
 Contact: games@staroversky.com
 
