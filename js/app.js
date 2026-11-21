@@ -1,16 +1,16 @@
 // App shell: views, editor, library and print.
-import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, MISSION_TAGS, newMission, newBlock, newPart, normaliseMission, missionName, partLabel, partTotal, uid } from './data/schema.js?v=5e233d51';
-import { PATTERNS } from './data/patterns.js?v=5e233d51';
-import { ITEMS } from './data/items.js?v=5e233d51';
-import { sampleMission } from './data/sample.js?v=5e233d51';
-import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=5e233d51';
-import { fileToDataUrl } from './art.js?v=5e233d51';
-import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=5e233d51';
-import { OFFICIAL_MISSIONS, COMMUNITY_MISSIONS, MISSION_TYPES } from './data/missions-index.js?v=5e233d51';
-import { rollSpark } from './data/design.js?v=5e233d51';
-import { FAQ, FAQ_TOPICS, FAQ_SOURCES, FAQ_LINKS, CONTENTS_1E } from './data/faq.js?v=5e233d51';
-import { renderSheet, buildSheetPdf, ROGUELIKE_TEXT } from './sheet.js?v=5e233d51';
-import { buildPdf, PAPERS, layoutFor } from './print.js?v=5e233d51';
+import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, MISSION_TAGS, newMission, newBlock, newPart, normaliseMission, missionName, partLabel, partTotal, uid } from './data/schema.js?v=b57b33be';
+import { PATTERNS } from './data/patterns.js?v=b57b33be';
+import { ITEMS } from './data/items.js?v=b57b33be';
+import { sampleMission } from './data/sample.js?v=b57b33be';
+import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=b57b33be';
+import { fileToDataUrl } from './art.js?v=b57b33be';
+import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=b57b33be';
+import { OFFICIAL_MISSIONS, COMMUNITY_MISSIONS, MISSION_TYPES } from './data/missions-index.js?v=b57b33be';
+import { rollSpark } from './data/design.js?v=b57b33be';
+import { FAQ, FAQ_TOPICS, FAQ_SOURCES, FAQ_LINKS, CONTENTS_1E } from './data/faq.js?v=b57b33be';
+import { renderSheet, buildSheetPdf, ROGUELIKE_TEXT } from './sheet.js?v=b57b33be';
+import { buildPdf, PAPERS, layoutFor } from './print.js?v=b57b33be';
 
 const VERSION = '1.0.0';
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -568,7 +568,7 @@ function renderIndex() {
   for (const m of shown) {
     const meta = [`${m.parts} part${m.parts === 1 ? '' : 's'}`, `${m.players} players`, m.time && `${m.time} min`, m.box === 'cp01' ? 'Content Pack 01' : 'Base game'].filter(Boolean).join(' · ');
     list.append(el('article', { class: 'mcard', id: 'mission-' + m.n },
-      el('header', {}, diffBadge(m.diff), el('div', {}, el('div', { class: 'num', text: `Mission ${m.n}` }), el('h3', { text: m.title }))),
+      el('header', {}, diffBadge(m.diff), el('div', {}, el('div', { class: 'num', text: `Mission ${m.n} · ${(DIFFICULTY.find(d => d.value === m.diff) || {}).label || ''}` }), el('h3', { text: m.title }))),
       el('div', { class: 'meta', text: meta + (m.author ? ` · by ${m.author}` : '') }),
       el('div', { class: 'tags' }, m.mode === 'comp' ? el('span', { class: 'tag comp', text: 'Competitive' }) : el('span', { class: 'tag', text: 'Cooperative' }),
         m.types.filter(t => t !== 'competitive').map(t => el('span', { class: 'tag', text: MISSION_TYPES[t] })),

@@ -206,3 +206,6 @@ mark { background: color-mix(in srgb, var(--warn) 35%, transparent); color: inhe
 .title-row h1 { margin: 0; }
 .help .prose h3 { font-size: 1rem; margin: 1rem 0 0.4rem; }
 .help .prose { max-width: none; }
+.dkey { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1rem; color: var(--muted); }
+.dkey > span { display: inline-flex; align-items: center; gap: 0.35rem; }
+.dhex.sm { width: 26px; height: 22px; font-size: 0.72rem; }
