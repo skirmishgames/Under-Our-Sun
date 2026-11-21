@@ -1,0 +1,233 @@
+{
+ "format": "uos-missions",
+ "version": 1,
+ "exported": "2026-11-21T02:00:35Z",
+ "missions": [
+  {
+   "schema": 1,
+   "id": "dispatch-01-ghost-signal",
+   "title": "Ghost Signal",
+   "label": "Dispatch",
+   "number": "01",
+   "author": "",
+   "community": false,
+   "difficulty": 2,
+   "mode": "both",
+   "players": "1-6",
+   "playtime": "90-150",
+   "summary": "Someone is broadcasting a promise of clean water. Find the voice before the desperate follow it.",
+   "notes": "Dispatch 01. Base game components only.",
+   "types": [
+    "rescue",
+    "escort",
+    "timed"
+   ],
+   "art": {
+    "preset": "ruins",
+    "front": null,
+    "back": null,
+    "frontPos": {
+     "x": 50,
+     "y": 40,
+     "zoom": 1
+    },
+    "backPos": {
+     "x": 50,
+     "y": 50,
+     "zoom": 1
+    }
+   },
+   "parts": [
+    {
+     "id": "p-75725212",
+     "label": "",
+     "art": null,
+     "blocks": [
+      {
+       "id": "b-section-92453943",
+       "kind": "section",
+       "heading": "BRIEFING",
+       "text": "Old Tomas swears he heard it on the crystal set he hides under the workshop floor: a woman's voice, clear as water, repeating a bearing to the east and one promise.\n*\"Clean water for anyone who comes. You are not alone.\"*\nThree families have already packed. The council wants you out there first, before anyone else walks into the desert after a voice.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-section-86669225",
+       "kind": "section",
+       "heading": "SETUP",
+       "text": "Form 2 stacks of map tiles and shuffle each:\n- **Stack 1:** 5 random map tiles\n- **Stack 2:** 5 random map tiles + 1 target map tile\nPlace stack 1 on top of stack 2.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-section-74715461",
+       "kind": "section",
+       "heading": "SPECIAL RULES",
+       "text": "**Listen in:** once per day, a character on a map tile with no enemies may spend 2 AP to follow the signal. Look at the top 2 map tiles of the stack and put them back in any order.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-goal-82443901",
+       "kind": "goal",
+       "heading": "",
+       "text": "Find the source of the signal. If all characters are dead, read **{mission} - Part 5: Failure**.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-objectives-67261558",
+       "kind": "objectives",
+       "heading": "",
+       "text": "Once the target map tile is revealed, read **{mission} - Part 2**.",
+       "image": null,
+       "caption": ""
+      }
+     ]
+    },
+    {
+     "id": "p-73525982",
+     "label": "",
+     "art": null,
+     "blocks": [
+      {
+       "id": "b-section-59423587",
+       "kind": "section",
+       "heading": "THE TOWER",
+       "text": "Above the heat haze stands a radio mast, bent like a dry reed, with a tin shack at its foot. A wire runs from the mast into the shack, and the voice seems to come from everywhere at once. A campfire still smoulders by the door. Someone was here this morning.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-section-71140569",
+       "kind": "section",
+       "heading": "SETUP",
+       "text": "Place 1 objective token (the transmitter) and 1 campfire marker on the target map tile.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-objectives-34517540",
+       "kind": "objectives",
+       "heading": "",
+       "text": "As soon as a character enters the target map tile, read **{mission} - Part 3**. Characters who sneaked onto the tile stay hidden.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-tip-54894378",
+       "kind": "tip",
+       "heading": "",
+       "text": "Sneaking in pays off.",
+       "image": null,
+       "caption": ""
+      }
+     ]
+    },
+    {
+     "id": "p-33777370",
+     "label": "",
+     "art": null,
+     "blocks": [
+      {
+       "id": "b-section-83476469",
+       "kind": "section",
+       "heading": "THE TRAP",
+       "text": "Inside the shack an old reel-to-reel player turns slowly, her voice looping on worn tape. There is no water here. There never was.\nBoots scrape on the roof. The Sons of Liberty have been waiting for whoever the signal brought in.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-section-29964730",
+       "kind": "section",
+       "heading": "SETUP",
+       "text": "Spawn **1 SoL Elite** and **SoL Soldiers** equal to the number of players minus 1 (at least 1) on the target map tile. Every character on the tile who is not hidden faces an initial combat round.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-section-36266542",
+       "kind": "section",
+       "heading": "SPECIAL RULES",
+       "text": "A hidden character's first attack against these enemies adds 1 {yellow}.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-objectives-31301742",
+       "kind": "objectives",
+       "heading": "",
+       "text": "Defeat every enemy on the target map tile, then read **{mission} - Part 4**.",
+       "image": null,
+       "caption": ""
+      }
+     ]
+    },
+    {
+     "id": "p-86955864",
+     "label": "",
+     "art": null,
+     "blocks": [
+      {
+       "id": "b-section-60684855",
+       "kind": "section",
+       "heading": "THE VOICE",
+       "text": "Behind a curtain of sacking, a woman sits chained to the mast. *\"My name is Ida. I built that transmitter to find free people. They found me first. Every few days someone follows my voice, and the Sons take them.\"*\nShe looks at the machine, then at you. *\"More of them come at dawn.\"*",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-section-22809511",
+       "kind": "section",
+       "heading": "MISSION RULES",
+       "text": "- **Free Ida:** 2 AP and a Dexterity check on the target map tile. Ida has 4 HP, tracked with HP cubes on this card. She moves with one character, who pays +1 AP for each map tile.\n- **Silence the signal (optional):** 2 AP and a Strength check on the target map tile. Remove the objective token.\n- **Reinforcements:** in each preparation phase, spawn 1 **SoL Soldier** on the target map tile. SoL enemies move 1 map tile toward Ida instead of rolling for movement.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-objectives-98740377",
+       "kind": "objectives",
+       "heading": "",
+       "text": "Bring Ida to New Haven before the **morning of day 5**, then read **{mission} - Part 5: Success**. If Ida's HP drops to 0, or day 5 begins, read **{mission} - Part 5: Failure**.",
+       "image": null,
+       "caption": ""
+      }
+     ]
+    },
+    {
+     "id": "p-530840",
+     "label": "",
+     "art": null,
+     "blocks": [
+      {
+       "id": "b-success-94415894",
+       "kind": "success",
+       "heading": "",
+       "text": "Ida limps through the gate on your shoulder, and all of New Haven turns out to see the woman from the radio. That night she draws a map in the dust. The bearing on her tape was real: far to the east, under an old enclave, the water still runs.\n**If the signal still plays:** somewhere out there, another family is packing to follow it.\nWhen Tomas asks why the Sons kept her alive, she goes quiet. *\"Because Mr. Liberty wants that well too.\"*",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-roguelike-56211901",
+       "kind": "roguelike",
+       "heading": "",
+       "text": "The group receives 1 additional {star}. If the signal was silenced, the group also takes **Binoculars** from the item deck.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-failure-38964349",
+       "kind": "failure",
+       "heading": "",
+       "text": "The tape keeps turning in the empty shack. A week later, three families leave New Haven to follow the voice east. Nobody hears from them again.",
+       "image": null,
+       "caption": ""
+      }
+     ]
+    }
+   ],
+   "created": "2026-11-21T02:00:35Z",
+   "updated": "2026-11-21T02:00:35Z"
+  }
+ ]
+}

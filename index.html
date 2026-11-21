@@ -7,7 +7,7 @@
   <meta name="description" content="Write and print fan-made missions for the Under Our Sun board game.">
   <meta name="theme-color" content="#b5583a">
   <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/styles.css?v=48d399f9">
+  <link rel="stylesheet" href="css/styles.css?v=5058b115">
   <script>
     try { var t = localStorage.getItem('uos.theme'); if (t && JSON.parse(t) === 'dark') document.documentElement.dataset.theme = 'dark'; } catch (e) {}
   </script>
@@ -29,6 +29,7 @@
     <a href="#print" data-tab="print">Print</a>
     <span class="tab-sep" aria-hidden="true"></span>
     <a href="#index" data-tab="index">Mission index</a>
+    <a href="#dispatches" data-tab="dispatches">Dispatches</a>
     <a href="#sheet" data-tab="sheet">Survivor log</a>
     <a href="#faq" data-tab="faq">FAQ</a>
     <span class="tab-sep" aria-hidden="true"></span>
@@ -195,8 +196,17 @@
       <h2 id="indexOfficialHead">In the box</h2>
       <div id="indexList" class="mgrid"></div>
       <div id="indexCommunityHead"><h2>Fan-made missions</h2>
-      <p class="muted small">Missions written by players and shared in the community, not printed in the box. Missions 13 and 14 above were written by community members and printed in Content Pack 01, so the Community filter shows them too.</p></div>
+      <p class="muted small">Missions written by players and shared in the community, not printed in the box. Missions 13 and 14 above were written by community members and printed in Content Pack 01, so the Community filter shows them too. New missions written for this site are on the <a href="#dispatches">Dispatches</a> page.</p></div>
       <div id="indexCommunity" class="mgrid"></div>
+    </section>
+
+    <!-- Dispatches -->
+    <section id="view-dispatches" class="view mindex" hidden>
+      <h1>Dispatches</h1>
+      <p>New missions written for this site, free to play and print. Missions marked <strong>Needs playtest</strong> have not been played yet: try one, then tell us how it went so it can be tuned and marked <strong>Playtested</strong>.</p>
+      <div class="index-filters dispatch-filters" id="dispatchFilters" role="group" aria-label="Filter dispatches"></div>
+      <div id="dispatchList" class="mgrid"></div>
+      <p class="muted small">Playtest feedback: <a href="mailto:games@staroversky.com">games@staroversky.com</a>. Tell us the player count, which characters you used, how long it took, whether you won, and anything that felt unclear or unfair.</p>
     </section>
 
     <!-- Design -->
@@ -399,7 +409,7 @@
 
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 
-  <script src="vendor/jspdf.umd.min.js?v=48d399f9" defer></script>
-  <script type="module" src="js/app.js?v=48d399f9"></script>
+  <script src="vendor/jspdf.umd.min.js?v=5058b115" defer></script>
+  <script type="module" src="js/app.js?v=5058b115"></script>
 </body>
 </html>

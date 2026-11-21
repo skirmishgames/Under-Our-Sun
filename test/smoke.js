@@ -120,6 +120,18 @@ const check = (ok, msg) => { console.log((ok ? 'PASS ' : 'FAIL ') + msg); if (!o
   await page.locator('#indexFilters select').nth(1).selectOption('1');
   check((await page.locator('#indexList .mcard').count()) === 3, 'easy and competitive shows 3');
 
+  // dispatches
+  await page.click('.tabs a[data-tab=dispatches]');
+  await page.waitForSelector('#dispatchList .dcard');
+  await page.waitForTimeout(800);
+  const before2 = (await page.evaluate(async () => (await (await import('./js/store.js')).listMissions()).length));
+  await page.click('#dispatchList .dcard >> text=Add to My missions');
+  await page.waitForTimeout(600);
+  const after2 = (await page.evaluate(async () => (await (await import('./js/store.js')).listMissions()).length));
+  check(after2 === before2 + 1, 'dispatch can be added to My missions');
+  const [dpdf] = await Promise.all([page.waitForEvent('download', { timeout: 60000 }), page.click('#dispatchList .dcard >> text=Print cards')]);
+  check(fs.readFileSync(await dpdf.path()).slice(0, 4).toString() === '%PDF', 'dispatch prints to PDF');
+
   // design
   await page.click('.tabs a[data-tab=design]');
   await page.waitForSelector('#sparkOut dd');
@@ -141,7 +153,7 @@ const check = (ok, msg) => { console.log((ok ? 'PASS ' : 'FAIL ') + msg); if (!o
   await page.goto(url + '#guide');
   await page.waitForTimeout(900);
   check(await page.evaluate(() => document.getElementById('helpPanel').open === true), 'old Guide link opens the editor Help panel');
-  check((await page.locator('.tabs a').count()) === 7, 'menu has 7 tabs');
+  check((await page.locator('.tabs a').count()) === 8, 'menu has 8 tabs');
 
   // mobile
   await page.setViewportSize({ width: 390, height: 844 });

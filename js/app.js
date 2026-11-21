@@ -1,16 +1,17 @@
 // App shell: views, editor, library and print.
-import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, MISSION_TAGS, newMission, newBlock, newPart, normaliseMission, missionName, partLabel, partTotal, uid } from './data/schema.js?v=48d399f9';
-import { PATTERNS } from './data/patterns.js?v=48d399f9';
-import { ITEMS } from './data/items.js?v=48d399f9';
-import { sampleMission } from './data/sample.js?v=48d399f9';
-import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=48d399f9';
-import { fileToDataUrl } from './art.js?v=48d399f9';
-import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=48d399f9';
-import { OFFICIAL_MISSIONS, COMMUNITY_MISSIONS, MISSION_TYPES } from './data/missions-index.js?v=48d399f9';
-import { rollSpark } from './data/design.js?v=48d399f9';
-import { FAQ, FAQ_TOPICS, FAQ_SOURCES, FAQ_LINKS, CONTENTS_1E } from './data/faq.js?v=48d399f9';
-import { renderSheet, buildSheetPdf, ROGUELIKE_TEXT } from './sheet.js?v=48d399f9';
-import { buildPdf, PAPERS, layoutFor } from './print.js?v=48d399f9';
+import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, MISSION_TAGS, newMission, newBlock, newPart, normaliseMission, missionName, partLabel, partTotal, uid } from './data/schema.js?v=5058b115';
+import { PATTERNS } from './data/patterns.js?v=5058b115';
+import { ITEMS } from './data/items.js?v=5058b115';
+import { sampleMission } from './data/sample.js?v=5058b115';
+import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=5058b115';
+import { fileToDataUrl } from './art.js?v=5058b115';
+import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=5058b115';
+import { DISPATCHES, DISPATCH_STATUS } from './data/dispatches.js?v=5058b115';
+import { OFFICIAL_MISSIONS, COMMUNITY_MISSIONS, MISSION_TYPES } from './data/missions-index.js?v=5058b115';
+import { rollSpark } from './data/design.js?v=5058b115';
+import { FAQ, FAQ_TOPICS, FAQ_SOURCES, FAQ_LINKS, CONTENTS_1E } from './data/faq.js?v=5058b115';
+import { renderSheet, buildSheetPdf, ROGUELIKE_TEXT } from './sheet.js?v=5058b115';
+import { buildPdf, PAPERS, layoutFor } from './print.js?v=5058b115';
 
 const VERSION = '1.0.0';
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -50,7 +51,7 @@ function route() {
   const [tab, id] = (location.hash.replace('#', '') || 'library').split('/');
   // Old links to the Guide open the editor's Help panel.
   if (tab === 'guide') { history.replaceState(null, '', '#edit'); setTimeout(() => { const h = $('#helpPanel'); if (h) { h.open = true; h.scrollIntoView(); } }, 300); return route(); }
-  const views = ['library', 'edit', 'print', 'sheet', 'index', 'design', 'faq', 'about'];
+  const views = ['library', 'edit', 'print', 'sheet', 'index', 'dispatches', 'design', 'faq', 'about'];
   const view = views.includes(tab) ? tab : 'library';
   views.forEach(v => { $('#view-' + v).hidden = v !== view; });
   $$('.tabs a').forEach(a => a.classList.toggle('on', a.dataset.tab === (view === 'edit' ? 'library' : view)));
@@ -60,6 +61,7 @@ function route() {
   if (view === 'sheet') renderSheetView();
   if (view === 'faq') renderFaq(id);
   if (view === 'index') renderIndex();
+  if (view === 'dispatches') renderDispatches(id);
   if (view === 'design' && !state.spark) showSpark();
   if (!(view === 'faq' && id)) window.scrollTo(0, 0);
 }
@@ -621,6 +623,77 @@ function renderIndex() {
       el('div', { class: 'tags' }, m.types.map(t => el('span', { class: 'tag', text: MISSION_TYPES[t] }))),
       el('p', { text: m.premise })));
   }
+}
+
+// ---------- dispatches ----------
+
+const dispatchState = { status: '' };
+const dispatchCache = new Map();
+
+async function loadDispatch(d) {
+  if (!dispatchCache.has(d.id)) {
+    dispatchCache.set(d.id, fetch(d.file).then(r => { if (!r.ok) throw new Error('Could not load ' + d.title); return r.json(); })
+      .then(j => normaliseMission((j.missions || [j])[0])));
+  }
+  return dispatchCache.get(d.id);
+}
+
+function renderDispatches(openId) {
+  const box = $('#dispatchFilters');
+  box.innerHTML = '';
+  const count = st => DISPATCHES.filter(d => !st || d.status === st).length;
+  box.append(el('label', { class: 'field' }, el('span', { text: 'Status' }),
+    el('select', { onchange: e => { dispatchState.status = e.target.value; renderDispatches(); } },
+      el('option', { value: '', selected: !dispatchState.status }, `All (${count('')})`),
+      Object.entries(DISPATCH_STATUS).map(([k, v]) => el('option', { value: k, selected: dispatchState.status === k }, `${v.label} (${count(k)})`)))));
+  const list = $('#dispatchList');
+  list.innerHTML = '';
+  const shown = DISPATCHES.filter(d => !dispatchState.status || d.status === dispatchState.status);
+  if (!shown.length) list.append(el('p', { class: 'empty', text: 'No dispatches with this status yet.' }));
+  for (const d of shown) {
+    const st = DISPATCH_STATUS[d.status];
+    const front = el('canvas', { class: 'front', width: 7, height: 12, 'aria-label': 'Part 1 front' });
+    const back = el('canvas', { class: 'back', width: 12, height: 7, 'aria-label': 'Part 1 back' });
+    const allCards = el('div', { class: 'all-cards' });
+    const spoil = el('details', { ontoggle: async e => {
+      if (!e.target.open || allCards.childElementCount) return;
+      const m = await loadDispatch(d);
+      for (let i = 0; i < m.parts.length; i++) { const c = el('canvas', {}); allCards.append(c); renderFront(m, i, { scale: 4, rounded: true, canvas: c }); }
+    } }, el('summary', { text: 'Read every card (spoilers)' }), allCards);
+    const meta = [`${d.parts} parts`, `${d.players} players`, `${d.time} min`, d.needs, `version ${d.version}`].join(' · ');
+    const card = el('article', { class: 'mcard dcard', id: 'dispatch-' + d.id },
+      el('header', {}, diffBadge(d.diff), el('div', {},
+        el('div', { class: 'num', text: `Dispatch ${d.number} · ${(DIFFICULTY.find(x => x.value === d.diff) || {}).label || ''}` }), el('h3', { text: d.title }))),
+      el('div', {}, el('span', { class: 'status status-' + d.status, title: st.note, text: st.label })),
+      el('div', { class: 'meta', text: meta }),
+      el('div', { class: 'tags' }, el('span', { class: 'tag', text: (MODES.find(x => x.value === d.mode) || MODES[0]).label }), d.types.map(t => el('span', { class: 'tag', text: MISSION_TYPES[t] }))),
+      el('p', { text: d.premise }),
+      el('div', { class: 'thumbs' }, front, back),
+      d.status === 'untested' ? el('p', { class: 'focus' }, el('strong', { text: 'Playtest focus: ' }), d.testFocus) : null,
+      el('div', { class: 'tile-actions', style: 'padding:0' },
+        el('button', { class: 'btn mini primary', type: 'button', onclick: async e => {
+          const btn = e.currentTarget; btn.disabled = true;
+          try {
+            if (!window.jspdf) throw new Error('The PDF library has not loaded yet.');
+            const m = await loadDispatch(d);
+            const opts = getSetting('printOpts', { paper: 'letter', perPage: 6, backs: true, clockwise: true, marks: true });
+            const doc = await buildPdf(m.parts.map((p, i) => ({ mission: m, part: i })), opts);
+            doc.save(`dispatch-${d.number}-${slug(d.title)}-cards.pdf`);
+          } catch (err) { toast(err.message, 5000); } finally { btn.disabled = false; }
+        } }, 'Print cards'),
+        el('button', { class: 'btn mini', type: 'button', onclick: async () => {
+          const m = JSON.parse(JSON.stringify(await loadDispatch(d)));
+          const got = await importJson(JSON.stringify(exportPayload([m])));
+          toast(`"${got[0].title}" added to My missions.`);
+        } }, 'Add to My missions'),
+        el('a', { class: 'btn mini', href: `mailto:games@staroversky.com?subject=${encodeURIComponent(`Playtest: Dispatch ${d.number} ${d.title} v${d.version}`)}` }, 'Send feedback'),
+        el('a', { class: 'btn mini', href: '#dispatches/' + d.id, title: 'Link to this dispatch' }, 'Link')),
+      d.playtests.length ? el('p', { class: 'muted small', text: `Playtested ${d.playtests.length} time${d.playtests.length === 1 ? '' : 's'}.` }) : null,
+      spoil);
+    list.append(card);
+    loadDispatch(d).then(m => { renderFront(m, 0, { scale: 4, rounded: true, canvas: front }); renderBack(m, 0, { scale: 4, rounded: true, canvas: back }); }).catch(err => toast(err.message));
+  }
+  if (openId) { const t = document.getElementById('dispatch-' + openId); if (t) t.scrollIntoView({ block: 'start' }); }
 }
 
 // ---------- design ----------

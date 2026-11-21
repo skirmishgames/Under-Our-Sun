@@ -1,5 +1,5 @@
 // Browser storage: IndexedDB for missions, localStorage for small settings.
-import { normaliseMission, uid } from './data/schema.js?v=48d399f9';
+import { normaliseMission, uid } from './data/schema.js?v=5058b115';
 
 const DB_NAME = 'uos-missions';
 const STORE = 'missions';
