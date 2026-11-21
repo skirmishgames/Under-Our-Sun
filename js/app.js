@@ -1,13 +1,14 @@
 // App shell: views, editor, library and print.
-import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, newMission, newBlock, newPart, normaliseMission, missionName, uid } from './data/schema.js?v=0922c014';
-import { ITEMS } from './data/items.js?v=0922c014';
-import { sampleMission } from './data/sample.js?v=0922c014';
-import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=0922c014';
-import { fileToDataUrl } from './art.js?v=0922c014';
-import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=0922c014';
-import { FAQ, FAQ_TOPICS, FAQ_SOURCES, FAQ_LINKS, CONTENTS_1E } from './data/faq.js?v=0922c014';
-import { renderSheet, buildSheetPdf } from './sheet.js?v=0922c014';
-import { buildPdf, PAPERS, layoutFor } from './print.js?v=0922c014';
+import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, newMission, newBlock, newPart, normaliseMission, missionName, uid } from './data/schema.js?v=45322f44';
+import { ITEMS } from './data/items.js?v=45322f44';
+import { sampleMission } from './data/sample.js?v=45322f44';
+import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=45322f44';
+import { fileToDataUrl } from './art.js?v=45322f44';
+import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=45322f44';
+import { rollSpark } from './data/design.js?v=45322f44';
+import { FAQ, FAQ_TOPICS, FAQ_SOURCES, FAQ_LINKS, CONTENTS_1E } from './data/faq.js?v=45322f44';
+import { renderSheet, buildSheetPdf } from './sheet.js?v=45322f44';
+import { buildPdf, PAPERS, layoutFor } from './print.js?v=45322f44';
 
 const VERSION = '1.0.0';
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -42,7 +43,7 @@ const state = { missions: [], current: null, partIdx: 0, side: 'front', fit: [] 
 
 function route() {
   const [tab, id] = (location.hash.replace('#', '') || 'library').split('/');
-  const views = ['library', 'edit', 'print', 'sheet', 'faq', 'guide', 'about'];
+  const views = ['library', 'edit', 'print', 'sheet', 'design', 'faq', 'guide', 'about'];
   const view = views.includes(tab) ? tab : 'library';
   views.forEach(v => { $('#view-' + v).hidden = v !== view; });
   $$('.tabs a').forEach(a => a.classList.toggle('on', a.dataset.tab === view));
@@ -51,6 +52,7 @@ function route() {
   if (view === 'print') renderPrint();
   if (view === 'sheet') renderSheetView();
   if (view === 'faq') renderFaq(id);
+  if (view === 'design' && !state.spark) showSpark();
   if (!(view === 'faq' && id)) window.scrollTo(0, 0);
 }
 
@@ -156,6 +158,7 @@ async function openEditor(id) {
   renderArtForm();
   renderParts();
   $('#notesField').value = m.notes || '';
+  $('#notesPanel').open = !!m.notes;
   renderPreview();
   updateFit();
 }
@@ -508,6 +511,31 @@ function setupSheet() {
   });
 }
 
+// ---------- design ----------
+
+const SPARK_LABELS = { hook: 'Hook', goal: 'Goal', complication: 'Complication', twist: 'Twist', finale: 'Finale' };
+
+function showSpark() {
+  state.spark = rollSpark();
+  const dl = $('#sparkOut');
+  dl.innerHTML = '';
+  for (const [k, label] of Object.entries(SPARK_LABELS)) dl.append(el('dt', { text: label }), el('dd', { text: state.spark[k] }));
+}
+
+function setupDesign() {
+  $('#sparkRoll').addEventListener('click', showSpark);
+  $('#sparkUse').addEventListener('click', async () => {
+    const sp = state.spark || rollSpark();
+    const m = newMission();
+    m.title = 'Untitled mission';
+    m.notes = 'Spark\n' + Object.entries(SPARK_LABELS).map(([k, l]) => `${l}: ${sp[k]}`).join('\n');
+    await saveMission(m);
+    state.current = m; state.partIdx = 0;
+    location.hash = '#edit/' + m.id;
+    toast('New mission started. The spark is in the author notes.');
+  });
+}
+
 // ---------- faq ----------
 
 const faqState = { topic: 'all', query: '' };
@@ -633,6 +661,7 @@ async function start() {
   setupPrint();
   setupSheet();
   setupFaq();
+  setupDesign();
   renderIconTable();
   await ensureFonts();
   if (!getSetting('seeded', false)) {

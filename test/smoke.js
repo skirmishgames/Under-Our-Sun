@@ -105,6 +105,13 @@ const check = (ok, msg) => { console.log((ok ? 'PASS ' : 'FAIL ') + msg); if (!o
   const [sheet] = await Promise.all([page.waitForEvent('download'), page.click('#sheetPdf')]);
   check(fs.readFileSync(await sheet.path()).slice(0, 4).toString() === '%PDF' && sheet.suggestedFilename() === 'survivor-log-de.pdf', 'German survivor log PDF builds');
 
+  // design
+  await page.click('.tabs a[data-tab=design]');
+  await page.waitForSelector('#sparkOut dd');
+  await page.click('#sparkUse');
+  await page.waitForSelector('#editor:not([hidden])');
+  check((await page.inputValue('#notesField')).startsWith('Spark'), 'spark starts a mission with notes');
+
   // faq
   await page.click('.tabs a[data-tab=faq]');
   await page.fill('#faqSearch', 'karma');

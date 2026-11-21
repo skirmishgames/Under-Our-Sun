@@ -173,3 +173,9 @@ code { background: var(--surface-2); padding: 0.05rem 0.3rem; border-radius: 4px
 :root[data-theme="dark"] .src-house { color: #b79ad8; }
 mark { background: color-mix(in srgb, var(--warn) 35%, transparent); color: inherit; border-radius: 2px; }
 @media (max-width: 700px) { .faq-tools { position: static; } .qa { scroll-margin-top: 60px; } }
+
+/* design */
+.spark dl { display: grid; grid-template-columns: max-content 1fr; gap: 0.35rem 0.9rem; margin: 0.6rem 0; }
+.spark dt { font-weight: 700; color: var(--accent); }
+.spark dd { margin: 0; }
+@media (max-width: 560px) { .spark dl { grid-template-columns: 1fr; } .spark dd { margin-bottom: 0.4rem; } }

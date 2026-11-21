@@ -1,5 +1,5 @@
 // Sample mission shipped with the tool. Original text written for the tool.
-import { newBlock, newPart, SCHEMA_VERSION } from './schema.js?v=0922c014';
+import { newBlock, newPart, SCHEMA_VERSION } from './schema.js?v=45322f44';
 
 export function sampleMission() {
   const now = new Date().toISOString();
