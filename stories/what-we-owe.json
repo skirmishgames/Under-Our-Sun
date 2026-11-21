@@ -1,0 +1,246 @@
+{
+ "format": "uos-missions",
+ "version": 1,
+ "exported": "2026-11-21T03:05:04Z",
+ "missions": [
+  {
+   "schema": 1,
+   "id": "story-what-we-owe",
+   "title": "What We Owe",
+   "label": "Drama",
+   "number": "",
+   "author": "",
+   "community": false,
+   "difficulty": 2,
+   "mode": "both",
+   "players": "1-6",
+   "playtime": "90-150",
+   "summary": "A fever is spreading and there is only one crate of medicine in the wasteland. Two places need it. You can only save one.",
+   "notes": "Version 1.0. Base game components only: objective token, Scavenger and Rats enemy cards.\nDrama: the choice is mutually exclusive by rule, the crate cannot be split.",
+   "types": [
+    "fetch",
+    "timed"
+   ],
+   "art": {
+    "preset": "dunes",
+    "front": null,
+    "back": null,
+    "frontPos": {
+     "x": 50,
+     "y": 40,
+     "zoom": 1
+    },
+    "backPos": {
+     "x": 50,
+     "y": 50,
+     "zoom": 1
+    }
+   },
+   "parts": [
+    {
+     "id": "p-47386532",
+     "label": "",
+     "art": null,
+     "blocks": [
+      {
+       "id": "b-section-45830529",
+       "kind": "section",
+       "heading": "BRIEFING",
+       "text": "The fever came with the dust storm. Three children in the east quarter are burning up, and old Tomas has not opened his eyes since yesterday.\n*\"Without antibiotics they won't last the week,\"* the medic says quietly. *\"There's talk of a Prime Elite field hospital that went down to the east. If anything is left, it's there.\"*",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-section-79505965",
+       "kind": "section",
+       "heading": "SETUP",
+       "text": "Form 3 stacks of map tiles and shuffle each:\n- **Stack 1:** 3 random map tiles\n- **Stack 2:** 3 random map tiles + 1 target map tile\n- **Stack 3:** 3 random map tiles + 1 target map tile\nPlace stack 1 on top, then stack 2, then stack 3.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-goal-4244412",
+       "kind": "goal",
+       "heading": "",
+       "text": "Find medicine and bring it back before the **morning of day 5**.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-objectives-56027905",
+       "kind": "objectives",
+       "heading": "",
+       "text": "When the **first** target map tile is revealed, read **{mission} - Part 2**. When the **second** is revealed, read **{mission} - Part 3**. If all characters are dead, read **{mission} - Part 6: Failure**.",
+       "image": null,
+       "caption": ""
+      }
+     ]
+    },
+    {
+     "id": "p-80880990",
+     "label": "",
+     "art": null,
+     "blocks": [
+      {
+       "id": "b-section-75506753",
+       "kind": "section",
+       "heading": "THE CAMP",
+       "text": "Smoke on the horizon turns out to be cookfires. A nomad camp, a dozen tents in the lee of a dune. Their leader, Sela, offers you water before she asks your names.\nInside the largest tent, two of her children lie under wet cloths. The same fever.\n*\"If you find medicine,\"* she says, *\"remember who gave you water.\"*",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-section-38106492",
+       "kind": "section",
+       "heading": "SETUP",
+       "text": "This target map tile is **the camp**. It counts as a camp with a water source: place 2 {water} on it, refilled in each preparation phase. No night cards are drawn on it.\nEach character on the tile may refill all their water now.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-objectives-33631830",
+       "kind": "objectives",
+       "heading": "",
+       "text": "Keep searching. When the second target map tile is revealed, read **{mission} - Part 3**.",
+       "image": null,
+       "caption": ""
+      }
+     ]
+    },
+    {
+     "id": "p-10782120",
+     "label": "",
+     "art": null,
+     "blocks": [
+      {
+       "id": "b-section-84617169",
+       "kind": "section",
+       "heading": "THE WRECK",
+       "text": "The field hospital is a crumpled transport plane half buried in the sand, its red cross scoured to a ghost. Something has been nesting in the cargo bay, and it does not like visitors.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-section-26480621",
+       "kind": "section",
+       "heading": "SETUP",
+       "text": "Spawn **1 Scavenger** and **Rats** equal to the number of players minus 1 on this target map tile. Place 1 objective token (the crate) on it.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-objectives-46668733",
+       "kind": "objectives",
+       "heading": "",
+       "text": "Defeat every enemy on the tile. Picking up the crate costs 1 AP and it takes 1 item slot. When a character picks it up, read **{mission} - Part 4**.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-tip-78135824",
+       "kind": "tip",
+       "heading": "",
+       "text": "Count the days. New Haven and the camp may be far apart.",
+       "image": null,
+       "caption": ""
+      }
+     ]
+    },
+    {
+     "id": "p-92546647",
+     "label": "",
+     "art": null,
+     "blocks": [
+      {
+       "id": "b-section-48670936",
+       "kind": "section",
+       "heading": "ONE CRATE",
+       "text": "You pry the lid open. One case of antibiotics, sealed, and enough for a single course of treatment for a handful of patients.\nEnough for New Haven's children and Tomas. Or enough for Sela's children. Not both. You check the case twice, hoping you counted wrong.\nNobody says anything for a long time.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-section-95346519",
+       "kind": "section",
+       "heading": "MISSION RULES",
+       "text": "- **The crate cannot be split.** Whoever receives it first gets all of it.\n- When the character carrying the crate enters **New Haven**, read **{mission} - Part 5 A**. When they enter **the camp**, read **{mission} - Part 5 B**. The mission ends there.\n- The crate can be dropped, picked up and handed between characters as normal.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-objectives-71790560",
+       "kind": "objectives",
+       "heading": "",
+       "text": "Decide together where the crate goes, and deliver it before the **morning of day 5**. Otherwise read **{mission} - Part 6: Failure**.",
+       "image": null,
+       "caption": ""
+      }
+     ]
+    },
+    {
+     "id": "p-94294748",
+     "label": "5 A",
+     "art": null,
+     "blocks": [
+      {
+       "id": "b-success-11351963",
+       "kind": "success",
+       "heading": "",
+       "text": "The medic works through the night. By the third morning the children in the east quarter are sitting up and asking for food, and Tomas is complaining about the broth, which everyone agrees is a very good sign.\nTwo weeks later you ride east with spare water for Sela's people. The camp has moved on. Where the big tent stood there are two small cairns of stones, and a child's bracelet left on top of one.\nYou bring the bracelet home. Tomas keeps it by his radio.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-roguelike-20447422",
+       "kind": "roguelike",
+       "heading": "",
+       "text": "The group receives 1 additional {star} and 1 **Medkit** from the item deck.",
+       "image": null,
+       "caption": ""
+      }
+     ]
+    },
+    {
+     "id": "p-53885692",
+     "label": "5 B",
+     "art": null,
+     "blocks": [
+      {
+       "id": "b-success-70509457",
+       "kind": "success",
+       "heading": "",
+       "text": "Sela's children wake on the second day, weak and thirsty and alive. Sela does not thank you. She just holds your hands for a long moment, and that is worse, somehow.\nNew Haven's medic did what she could without medicine. Two of the children pulled through. Tomas did not.\nHe left you his crystal set, wrapped in a cloth, with a note in shaky letters: *Keep listening. Someone always needs help.*\nIn spring, the nomads come through New Haven with water to trade, and they never ask for anything in return.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-roguelike-85267202",
+       "kind": "roguelike",
+       "heading": "",
+       "text": "The group receives 1 additional {star} and 1 **Sun cape** from the gear deck. The nomads remember.",
+       "image": null,
+       "caption": ""
+      }
+     ]
+    },
+    {
+     "id": "p-29989382",
+     "label": "",
+     "art": null,
+     "blocks": [
+      {
+       "id": "b-failure-79434851",
+       "kind": "failure",
+       "heading": "",
+       "text": "The crate never reaches anyone. The fever burns itself out in its own time, in New Haven and in the camp alike, and takes what it takes.\nAfterwards, nobody talks about the field hospital, or the crate, or the days spent arguing in the sand while the sun went down.",
+       "image": null,
+       "caption": ""
+      }
+     ]
+    }
+   ],
+   "created": "2026-11-21T03:05:04Z",
+   "updated": "2026-11-21T03:05:04Z"
+  }
+ ]
+}

@@ -73,6 +73,24 @@ export const DISPATCHES = [
       'Story: were the leads clear enough to follow, and was the ending a surprise?'
     ],
     changes: [],
+    playtests: [] },
+  { id: 'story-what-we-owe', file: 'stories/what-we-owe.json', title: 'What We Owe', genre: 'Drama',
+    status: 'untested', version: '1.0', diff: 2, parts: 6, players: '1-6', time: '90-150', mode: 'both',
+    types: ['fetch', 'timed'], needs: 'Base game',
+    premise: 'A fever is spreading, and there is only one crate of medicine in the wasteland. Two places need it. You can only save one.',
+    testNotes: [
+      'The choice: how long did your group argue, and what decided it? Did anyone want to try for both?',
+      'Was the choice hard? If one option felt obviously right, tell us which and why.',
+      'Part 2, the camp: did meeting Sela and her children first make the camp feel like a real option?',
+      'Distance: how far apart were New Haven and the camp? Did the day 5 deadline ever rule one of them out?',
+      'Part 3, the wreck: 1 Scavenger plus Rats equal to players minus 1. Too easy or too hard?',
+      'The crate: is "it cannot be split" clear enough? Did anyone try to argue around it?',
+      'Endings: did the one you read land emotionally? Too heavy, or just right?',
+      'Semi-cooperative games: did the traitor try to carry the crate to the "wrong" place, or keep it from both? Did that make for a good game?',
+      'Rewards: is a Medkit for New Haven against a Sun cape for the camp a fair pair?',
+      'Pacing: how long did the game take, and did the search before the choice drag?'
+    ],
+    changes: [],
     playtests: [] }
 ];
 
