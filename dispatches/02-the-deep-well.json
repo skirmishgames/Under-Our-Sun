@@ -7,7 +7,7 @@
    "schema": 1,
    "id": "dispatch-02-the-deep-well",
    "title": "The Deep Well",
-   "label": "Dispatch",
+   "label": "Story",
    "number": "02",
    "author": "",
    "community": false,
@@ -16,7 +16,7 @@
    "players": "1-6",
    "playtime": "120-180",
    "summary": "Ida's map leads east to an old enclave where the water still runs. The Sons of Liberty know the way too.",
-   "notes": "Dispatch 02, version 1.1. 1.1: enemies can attack Ida, convoy arrives at 3 markers, last stand waves halved.\nSequel to Dispatch 01: Ghost Signal. Base game components only: objective tokens, allocation markers A-C, universal markers, SoL enemy cards.\nPlays on its own: use the setup for groups who did not play Dispatch 01.",
+   "notes": "Story 02, version 1.1. 1.1: enemies can attack Ida, convoy arrives at 3 markers, last stand waves halved.\nSequel to Story 01: Ghost Signal. Base game components only: objective tokens, allocation markers A-C, universal markers, SoL enemy cards.\nPlays on its own: use the setup for groups who did not play Story 01.",
    "types": [
     "timed",
     "rescue",
@@ -55,7 +55,7 @@
        "id": "b-section-87484626",
        "kind": "section",
        "heading": "SETUP",
-       "text": "Form 2 stacks of map tiles and shuffle each:\n- **Stack 1:** 6 random map tiles\n- **Stack 2:** 4 random map tiles + 1 target map tile\nPlace stack 1 on top of stack 2.\n- **Signal silenced in Dispatch 01, or not played:** start on day 1.\n- **Signal left running:** start on day 2 and place 2 universal markers next to this card.",
+       "text": "Form 2 stacks of map tiles and shuffle each:\n- **Stack 1:** 6 random map tiles\n- **Stack 2:** 4 random map tiles + 1 target map tile\nPlace stack 1 on top of stack 2.\n- **Signal silenced in Story 01, or not played:** start on day 1.\n- **Signal left running:** start on day 2 and place 2 universal markers next to this card.",
        "image": null,
        "caption": ""
       },

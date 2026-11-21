@@ -1,4 +1,4 @@
-// Stories: new missions written for the site, labelled "Dispatch" on the cards.
+// Stories: new missions written for the site, labelled "Story" on the cards.
 // status: 'untested' until a group has played it and sent feedback, then 'playtested'.
 // testNotes: what playtesters should watch for, part by part. Mission files live in /dispatches/.
 export const DISPATCHES = [
@@ -25,7 +25,7 @@ export const DISPATCHES = [
     types: ['timed', 'rescue', 'defend'], needs: 'Base game', sequelOf: 'dispatch-01-ghost-signal',
     premise: 'Ida\'s map leads east to an old enclave where the water still runs. The Sons of Liberty know the way too. Sequel to Ghost Signal, and playable on its own.',
     testNotes: [
-      'Part 1, start: which setup did you use (signal silenced, signal left running, or Dispatch 01 not played)?',
+      'Part 1, start: which setup did you use (signal silenced, signal left running, or Story 01 not played)?',
       'The convoy clock: it arrives at 3 markers. On which day did it arrive, and was that before or after you reached the enclave? Did the race feel real?',
       'Part 2, the outer ruins: does the +1 AP to enter a ruin tile slow you down too much?',
       'Part 3, the guards: 1 SoL Elite plus Drifters equal to the number of players. Too easy or too hard at your player count?',

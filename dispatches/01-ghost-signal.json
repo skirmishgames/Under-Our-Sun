@@ -7,7 +7,7 @@
    "schema": 1,
    "id": "dispatch-01-ghost-signal",
    "title": "Ghost Signal",
-   "label": "Dispatch",
+   "label": "Story",
    "number": "01",
    "author": "",
    "community": false,
@@ -16,7 +16,7 @@
    "players": "1-6",
    "playtime": "90-150",
    "summary": "Someone is broadcasting a promise of clean water. Find the voice before the desperate follow it.",
-   "notes": "Dispatch 01, version 1.1. Base game components only. 1.1: enemies can attack Ida.",
+   "notes": "Story 01, version 1.1. Base game components only. 1.1: enemies can attack Ida.",
    "types": [
     "rescue",
     "escort",
