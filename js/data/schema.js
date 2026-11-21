@@ -11,7 +11,8 @@ export const DIFFICULTY = [
 export const MODES = [
   { value: 'coop', label: 'Cooperative' },
   { value: 'semi', label: 'Semi-cooperative' },
-  { value: 'both', label: 'Cooperative or semi-cooperative' }
+  { value: 'both', label: 'Cooperative or semi-cooperative' },
+  { value: 'comp', label: 'Competitive' }
 ];
 
 // Block kinds a mission part can hold. "pill" kinds print a coloured label.
@@ -23,10 +24,12 @@ export const BLOCK_KINDS = {
   bonus:      { label: 'Bonus objective', pill: true, align: 'center', colour: '#7a5aa0', text: 'BONUS OBJECTIVE' },
   success:    { label: 'Success', pill: true, align: 'center', colour: '#4c8a3a', text: 'SUCCESS' },
   failure:    { label: 'Failure', pill: true, align: 'center', colour: '#b0352b', text: 'FAILURE' },
+  roguelike:  { label: 'Roguelike reward', pill: true, align: 'center', colour: '#6b5636', text: 'ROGUELIKE MODE' },
+  tip:        { label: 'Tip', pill: false, align: 'center' },
   image:      { label: 'Picture (map setup)', pill: false, align: 'center' }
 };
 
-export const HEADING_SUGGESTIONS = ['BRIEFING', 'INTRODUCTION', 'SETUP', 'SPECIAL RULES', 'DEBRIEFING'];
+export const HEADING_SUGGESTIONS = ['BRIEFING', 'INTRODUCTION', 'SETUP', 'SPECIAL RULES', 'MISSION RULES', 'SPECIAL ABILITY', 'DEBRIEFING'];
 
 export const ART_PRESETS = [
   { value: 'dunes', label: 'Dunes at dusk' },
@@ -60,6 +63,7 @@ export const ICON_TOKENS = {
   plastic:   { kind: 'cube', colour: '#e07ab0', label: 'Plastic' },
   injury:    { kind: 'injury', colour: '#c0392b', label: 'Injury' },
   infection: { kind: 'infection', colour: '#c0392b', label: 'Infection' },
+  star:      { kind: 'star', colour: '#6b5636', label: 'Point (roguelike star)' },
   hp:        { kind: 'tag', colour: '#b0352b', label: 'Health point', text: 'HP' },
   ap:        { kind: 'tag', colour: '#3d3d3d', label: 'Action point', text: 'AP' }
 };
@@ -93,6 +97,7 @@ export function newMission() {
     playtime: '90-120',
     summary: '',
     notes: '',
+    types: [],
     art: { preset: 'dunes', front: null, back: null, frontPos: { x: 50, y: 40, zoom: 1 }, backPos: { x: 50, y: 50, zoom: 1 } },
     parts: [
       newPart([
@@ -120,8 +125,10 @@ export function normaliseMission(m) {
   out.art.backPos = Object.assign({ x: 50, y: 50, zoom: 1 }, out.art.backPos || {});
   out.difficulty = [1, 2, 3].includes(+out.difficulty) ? +out.difficulty : 2;
   out.parts = Array.isArray(out.parts) && out.parts.length ? out.parts : base.parts;
+  out.types = Array.isArray(out.types) ? out.types : [];
   out.parts = out.parts.map(p => ({
     id: p.id || uid('p'),
+    label: p.label || '',
     art: p.art || null,
     blocks: (p.blocks || []).map(b => Object.assign(newBlock(), b, { kind: BLOCK_KINDS[b.kind] ? b.kind : 'story' }))
   }));
@@ -129,6 +136,25 @@ export function normaliseMission(m) {
 }
 
 // "Mission 14" style label used in headers and the {mission} token.
+// Part label shown in the header: a custom label such as "6 A", or the part number.
+export function partLabel(m, i) {
+  const p = m.parts[i];
+  return (p && String(p.label || '').trim()) || String(i + 1);
+}
+
+// Total parts: the highest leading number among part labels, so 6 A and 6 B count once.
+export function partTotal(m) {
+  let max = 0;
+  m.parts.forEach((p, i) => { const n = parseInt(partLabel(m, i), 10); if (n > max) max = n; });
+  return max || m.parts.length;
+}
+
+export const MISSION_TAGS = {
+  rescue: 'Rescue', hunt: 'Hunt', investigate: 'Investigation', fetch: 'Fetch and return', escort: 'Escort',
+  defend: 'Defence', infiltrate: 'Infiltration', survive: 'Survival', boss: 'Boss fight', timed: 'Race against time',
+  story: 'Story campaign', competitive: 'Competitive'
+};
+
 export function missionName(m) {
   return [m.label || 'Mission', m.number].filter(Boolean).join(' ').trim();
 }

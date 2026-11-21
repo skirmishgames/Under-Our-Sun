@@ -179,3 +179,23 @@ mark { background: color-mix(in srgb, var(--warn) 35%, transparent); color: inhe
 .spark dt { font-weight: 700; color: var(--accent); }
 .spark dd { margin: 0; }
 @media (max-width: 560px) { .spark dl { grid-template-columns: 1fr; } .spark dd { margin-bottom: 0.4rem; } }
+.roguelike .star { color: var(--accent); }
+.roguelike .cheat th { white-space: nowrap; width: 1%; }
+.part-label { width: 5.5rem !important; min-height: 34px; padding: 0.25rem 0.45rem !important; font-size: 0.9rem !important; }
+
+/* mission index */
+.mindex { max-width: 1100px; }
+.mgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 0.8rem; margin-top: 0.6rem; }
+.mcard { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 0.75rem 0.85rem; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 0.4rem; }
+.mcard header { display: flex; gap: 0.6rem; align-items: center; }
+.mcard h3 { margin: 0; font-size: 1.05rem; line-height: 1.2; }
+.mcard .num { font-size: 0.78rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.dhex { width: 34px; height: 30px; flex: none; display: grid; place-items: center; color: #fff; font-weight: 800; font-size: 0.9rem; clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%); }
+.mcard .meta { font-size: 0.82rem; color: var(--muted); }
+.mcard p { margin: 0; }
+.tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.tag { font-size: 0.72rem; font-weight: 700; padding: 0.12rem 0.5rem; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--line); }
+.tag.comp { background: color-mix(in srgb, #7a5aa0 16%, transparent); }
+.tag.box { background: transparent; }
+.mcard details summary { cursor: pointer; font-size: 0.85rem; font-weight: 600; color: var(--accent); }
+.mcard details ul { margin: 0.35rem 0 0; padding-left: 1.1rem; font-size: 0.88rem; }

@@ -7,7 +7,7 @@
   <meta name="description" content="Write and print fan-made missions for the Under Our Sun board game.">
   <meta name="theme-color" content="#b5583a">
   <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/styles.css?v=45322f44">
+  <link rel="stylesheet" href="css/styles.css?v=c509c391">
   <script>
     try { var t = localStorage.getItem('uos.theme'); if (t && JSON.parse(t) === 'dark') document.documentElement.dataset.theme = 'dark'; } catch (e) {}
   </script>
@@ -28,6 +28,7 @@
     <a href="#edit" data-tab="edit">Editor</a>
     <a href="#print" data-tab="print">Print</a>
     <a href="#sheet" data-tab="sheet">Survivor log</a>
+    <a href="#index" data-tab="index">Mission index</a>
     <a href="#design" data-tab="design">Design</a>
     <a href="#faq" data-tab="faq">FAQ</a>
     <a href="#guide" data-tab="guide">Guide</a>
@@ -137,12 +138,25 @@
         <button class="btn" id="sheetPng" type="button">Download PNG</button>
         <span id="sheetStatus" class="muted small" aria-live="polite"></span>
       </div>
+      <div class="panel prose roguelike" id="roguelikeRules"></div>
+    </section>
+
+    <!-- Mission index -->
+    <section id="view-index" class="view mindex" hidden>
+      <h1>Mission index</h1>
+      <p class="muted small">Every official mission in the base game and Content Pack 01, with what it is about and what kind of mission it is. Premises only cover the start of each mission. "How it is built" lists the mechanics each mission uses and contains spoilers.</p>
+      <div class="chips" id="indexFilters" role="toolbar" aria-label="Filter missions"></div>
+      <p id="indexCount" class="muted small" aria-live="polite"></p>
+      <div id="indexList" class="mgrid"></div>
+      <h2>Community missions</h2>
+      <p class="muted small">Missions written by players and shared in the community. They are not official. Missions 13 and 14 above started as community missions and are now printed in Content Pack 01.</p>
+      <div id="indexCommunity" class="mgrid"></div>
     </section>
 
     <!-- Design -->
     <section id="view-design" class="view prose design" hidden>
       <h1>Designing a mission</h1>
-      <p>A short guide to writing missions that play well, based on the official missions, the community mission template, missions written by other players and the designer's answers on BoardGameGeek. Read it once, then use the spark generator whenever you need an idea.</p>
+      <p>This guide comes from taking apart all 14 official missions (base game and Content Pack 01), the community mission template, fan missions and the designer's answers on BoardGameGeek. The numbers in brackets point to missions in the <a href="#index">Mission index</a> that use each idea.</p>
 
       <div class="panel spark">
         <div class="parts-head"><h2>Spark generator</h2>
@@ -152,97 +166,153 @@
         <p class="muted small">Roll until something makes you curious. "Start a mission from this" opens a new mission with the spark saved in its author notes.</p>
       </div>
 
+      <h2>What every official mission shares</h2>
+      <ul>
+        <li><strong>One to six parts.</strong> Competitive missions use one or two cards. Cooperative missions use two to six, most often four to six.</li>
+        <li><strong>Brief info on the back of part 1:</strong> a one-line hook, the playing time and the player count, with "(competitive)" where it applies.</li>
+        <li><strong>A briefing first.</strong> Usually the morning meeting in New Haven, with a veteran or scout speaking in quotes. Several part 1 cards hold only the briefing and send players straight to part 2, so setup stays hidden until it is needed (2, 4, 14).</li>
+        <li><strong>Every part ends with a trigger:</strong> "Once X happens, read <strong>Mission N - Part Y</strong>."</li>
+        <li><strong>Success and failure share the last card.</strong> Content Pack 01 adds a roguelike reward line to the success text.</li>
+      </ul>
+
       <h2>1. Start with one sentence</h2>
-      <p>Before touching setup or enemies, write the mission in one sentence: who needs what, and why today. "New Haven's wells are drying up and someone is stealing the water" gives you a goal, an enemy and a reason to hurry. If you cannot say it in one sentence, the mission is probably two missions.</p>
-      <p>Questions to ask yourself:</p>
+      <p>Write the mission in one sentence: who needs what, and why today. "New Haven's solar panels are wrecked and the fuel runs out in four days" (10) gives a goal, a place and a clock. If you cannot say it in one sentence, the mission is probably two missions.</p>
       <ul>
         <li>What does New Haven lose if the characters fail?</li>
         <li>Why can't they wait until tomorrow?</li>
-        <li>What will players remember about this mission a week later?</li>
-        <li>Is this a mission for 1 player, for 6, or for both?</li>
+        <li>What will players remember a week later?</li>
+        <li>Cooperative, competitive, or both?</li>
       </ul>
 
-      <h2>2. Pick a mission shape</h2>
-      <p>Most missions in the box and from the community fit one of these shapes. Mixing two works well. Using more than two usually gets muddy.</p>
+      <h2>2. Pick a mission type</h2>
+      <p>The official missions use a small set of types, and most mix two. The <a href="#index">Mission index</a> can filter by type.</p>
+      <table class="cheat">
+        <tr><th>Type</th><th>The group must</th><th>Missions</th></tr>
+        <tr><td>Rescue</td><td>find captives and free them</td><td>1</td></tr>
+        <tr><td>Hunt</td><td>track something that moves or hides</td><td>2, 6</td></tr>
+        <tr><td>Investigation</td><td>gather clues from people or places</td><td>8</td></tr>
+        <tr><td>Fetch and return</td><td>get something and bring it home</td><td>6, 10, 13</td></tr>
+        <tr><td>Escort</td><td>keep someone or something alive on a route</td><td>11</td></tr>
+        <tr><td>Defence</td><td>hold a place against waves</td><td>4</td></tr>
+        <tr><td>Infiltration</td><td>get in and out without a fight</td><td>7, 13</td></tr>
+        <tr><td>Survival</td><td>get home from far away with little</td><td>14</td></tr>
+        <tr><td>Boss fight</td><td>beat one strong enemy</td><td>2, 8</td></tr>
+        <tr><td>Race against time</td><td>finish before a day or phase</td><td>1, 3, 4, 6, 10</td></tr>
+        <tr><td>Story campaign</td><td>follow a longer plot with choices</td><td>7</td></tr>
+        <tr><td>Competitive</td><td>beat the other players</td><td>3, 5, 9, 12</td></tr>
+      </table>
+
+      <h2>3. Build the map</h2>
+      <p>The official missions build the map in five ways. The editor's "Insert pattern" menu has wording for each.</p>
       <ul>
-        <li><strong>Find it.</strong> A target map tile is hidden in the stack. Mission 1 hides two.</li>
-        <li><strong>Hunt.</strong> The target moves and the characters follow it. Mission 2 has the crawler flee one tile each phase and escape if it gets 3 tiles away.</li>
-        <li><strong>Infiltrate.</strong> A built camp layout that rewards stealth. Mission 13 lays out face-down SoL camp tiles around the target.</li>
-        <li><strong>Survive and return.</strong> Start far from home with little. Mission 14 starts at a helicopter crash with only what the wreck holds.</li>
-        <li><strong>Fetch, build or deliver.</strong> Collect resources or an object and bring it somewhere.</li>
-        <li><strong>Boss fight.</strong> One strong enemy with its own rules, like the community mission "Rebel".</li>
+        <li><strong>Hidden target in a stack</strong> (1, 2, 13, 14). Stack 1 is a few random tiles; stack 2 is random tiles shuffled with the target. Place stack 1 on top. With 5 tiles plus 5 and the target, the target turns up between the 6th and 11th tile explored. Mission 1 uses three stacks for two targets. Mission 14 hides New Haven itself in the stack, because the group starts far away.</li>
+        <li><strong>Fixed layout from a diagram</strong> (3, 4, 5, 9, 10, 12, and part 4 of 7). Name the tile numbers, remove them from the stack, and show the layout with a picture block. Most Content Pack 01 missions do this. It suits arenas, routes and short missions.</li>
+        <li><strong>Curated stacks</strong> (8). Put named tiles on top of the stack, or alternate two hand-picked stacks, to control what turns up without fixing the layout.</li>
+        <li><strong>Grow the map mid-mission</strong> (4, 7). A later part adds tiles, for example a line of face-down tiles from where something happened, or approach lanes for enemies.</li>
+        <li><strong>Leave it alone</strong> (6). Normal exploration, with the pressure coming from something else.</li>
       </ul>
+      <p>The box has 34 map tiles. New Haven is S01 and the target tiles carry an S number. Count every tile your setup names.</p>
 
-      <h2>3. Build the map stack</h2>
-      <p>The map tile stack is your pacing tool. Where you put the target tile decides how long the mission runs, and it is the most common setup on official cards:</p>
+      <h2>4. Use the decks</h2>
+      <p>Rebuilding a deck changes a mission's feel with almost no new rules.</p>
       <ul>
-        <li><strong>Stack 1:</strong> a few random tiles. Nothing important happens here, so players gather resources and find their feet.</li>
-        <li><strong>Stack 2:</strong> random tiles shuffled with the target tile. The target turns up somewhere inside this stack.</li>
-        <li>Place stack 1 on top of stack 2.</li>
+        <li><strong>Hide a card at a depth:</strong> stack the enemy deck so the wanted enemy appears no earlier than the fourth draw (6).</li>
+        <li><strong>A small custom deck:</strong> eight chosen enemy cards make a tightly themed mission (8).</li>
+        <li><strong>Remove enemy types</strong> that would break the story (7).</li>
+        <li><strong>A harsher night:</strong> build the night deck from enemy cards only (2).</li>
+        <li><strong>A target inside the event deck:</strong> the thing you hunt turns up as an event (8).</li>
+        <li><strong>Seed the loot deck</strong> with target cards for a treasure hunt (12).</li>
       </ul>
-      <p>With 5 tiles in stack 1 and 5 plus the target in stack 2, the target appears between the 6th and 11th tile explored. A bigger stack 1 makes a longer, safer start; a smaller stack 2 makes the target arrive more reliably. Use separate stacks in sequence for each target when you have more than one.</p>
-      <p>The box has 34 map tiles, and New Haven and the target tiles are among them. Count what your setup uses. Fixed layouts, like a camp built around the target, are great for a single dramatic part, but draw them as a picture block so players can copy them.</p>
 
-      <h2>4. Use time and survival as pressure</h2>
-      <p>Every day costs water and food, every night is dangerous, and the sun can turn on players without warning. Good missions lean on this instead of adding new rules.</p>
+      <h2>5. Add a clock</h2>
       <ul>
-        <li>The day tracker runs 5 days. Timed missions never go past day 5, so "by the end of day 3" is a strong, simple clock.</li>
-        <li>Night is where things go wrong. Decide whether your mission wants players to camp, or to push through the dark.</li>
-        <li>Water is the real currency. Taking away a refill, or putting the goal far from water sources, raises the stakes with no extra rules.</li>
-        <li>A pursuer that moves one tile closer each preparation phase is a clock players can see.</li>
+        <li><strong>Deadline:</strong> "be back before the morning of day 5" (10), "by tomorrow morning" (3, 4). Timed missions never go past day 5.</li>
+        <li><strong>Hold out:</strong> survive a number of day phases (4).</li>
+        <li><strong>Escalating penalty:</strong> infection from day 2, damage from day 5 (6). The clock gets louder instead of ending the game.</li>
+        <li><strong>A changed day:</strong> no nights and a frozen day tracker for a mission set inside New Haven (8).</li>
+        <li><strong>A pursuer or fleeing target</strong> that moves every phase is a clock players can see (2).</li>
       </ul>
 
-      <h2>5. Place enemies with care</h2>
-      <p>The game's enemies are SoL forces (drifters, soldiers, elites and the Prime Elite), crawlers that hunt at night from their tunnels, and mutated animals. Say exactly what to spawn and where, using the names on the enemy cards.</p>
+      <h2>6. Place enemies with care</h2>
       <ul>
-        <li>Enemies placed on target tiles do not move in the preparation phase. If you want a guard that wanders, say so.</li>
-        <li>Scale fights with player count. "Spawn enemies equal to the number of players" or "HP 10 plus 1 per character, maximum 16" keeps a solo game and a six-player game both tense.</li>
-        <li>Special decks change the feel cheaply. Mission 2 builds the night deck from enemy cards only.</li>
-        <li>If an enemy breaks a normal rule (does not move when shot, cannot be sneaked past), state the exception on the card. The rulebook wins over anything you leave unsaid.</li>
+        <li><strong>Guards on the target:</strong> revealing the target tile spawns named enemies there (1). Enemies on target tiles do not move in the preparation phase.</li>
+        <li><strong>Waves:</strong> spawn enemies equal to the number of players each phase and roll a d8 for the lane (4).</li>
+        <li><strong>Spawn rolls on movement:</strong> roll a die each time something enters a new tile. Use a harder die with more players (10, 11).</li>
+        <li><strong>Bosses:</strong> give HP as a base plus 1 per player (8). Guards can stay neutral until attacked (8).</li>
+        <li><strong>Exceptions:</strong> when an enemy breaks a normal rule, say so on the card (4). The rulebook wins over anything left unsaid.</li>
       </ul>
 
-      <h2>6. Write the parts</h2>
-      <p>Each part is one card. Players read part 1 at setup and each part tells them exactly when to read the next.</p>
+      <h2>7. Give players something to do besides fight</h2>
       <ul>
-        <li>End every part with a clear trigger: "Once you have revealed the target map tile, read <strong>Mission 14 - Part 3</strong>." Use the "Link to part" button so the number updates if you renumber.</li>
-        <li>Put setup for a part on that part's card, not on part 1. Players should not see what is coming.</li>
-        <li>Give failure a trigger too: all characters dead, the end of day 5, or a pursuer catching up.</li>
-        <li>The last part holds success and failure. Make both worth reading aloud.</li>
-        <li>Three to five parts is the usual length. If a part does not fit on one card, split it rather than shrinking the text further.</li>
+        <li><strong>Objective tokens</strong> carried in an item slot, which can be dropped and picked up (6, 10, 13).</li>
+        <li><strong>Required items</strong> that gate the next step: a light source (2), a rope (7), a tool (10).</li>
+        <li><strong>Mission-only crafting</strong> for weapons, repairs or a special tool (4, 10), or a mission item with a cost (8).</li>
+        <li><strong>Captives and interrogation:</strong> beat an enemy down to 1 or 2 HP instead of killing it (7, 8).</li>
+        <li><strong>Barricades</strong> tracked with HP cubes on tile borders, or a pile of resources to clear (4, 11).</li>
+        <li><strong>Allies and vehicles</strong> with their own HP and simple written behaviour (11).</li>
+        <li><strong>Skill tasks:</strong> spend AP and pass 2 of 3 checks (10).</li>
+        <li><strong>Two ways to win</strong> so groups can pick a plan (6, 10).</li>
       </ul>
 
-      <h2>7. Plan for the traitor</h2>
-      <p>Official missions recommend cooperative or semi-cooperative play on part 1. Semi-cooperative is recommended for 3 or more players. If you allow a traitor, look at what the three base game SoL cards ask for and make sure your mission gives them room:</p>
+      <h2>8. Scale with player count</h2>
+      <p>The official missions scale with simple formulas, not separate setups:</p>
       <ul>
-        <li>Stop the mission goal being reached: give the traitor something to sabotage, like an object to carry or a timer to run down.</li>
-        <li>Collect 4 food and escape off a map edge: missions with plenty of food and open edges help this one.</li>
-        <li>Kill a character and set fire to a survivor's camp: missions where players must camp make this possible.</li>
+        <li>enemies per wave equal to the number of players (4)</li>
+        <li>boss HP 5 plus 1 per player (8)</li>
+        <li>items needed: players plus 2 (6)</li>
+        <li>AP cost equal to the number of players (10)</li>
+        <li>an extra enemy, or a harder spawn die, at 4 or more players (8, 11)</li>
       </ul>
-      <p>If your mission falls apart with a traitor, mark it cooperative only. That is fine.</p>
 
-      <h2>8. Rewards and campaigns</h2>
-      <p>A mission can hand out items, resources or a free choice ("each player takes a knife or a loaded rifle"). For roguelike play, the official cards give the group extra star points or an item to keep, such as an A.E.D. Players can track these on the Survivor log.</p>
-
-      <h2>9. Use the world</h2>
-      <p>The setting gives you plenty to work with, so you do not have to invent everything:</p>
+      <h2>9. Branches and choices</h2>
       <ul>
-        <li>New Haven is one of the few free settlements, always short of water. The morning briefing is the classic opening.</li>
-        <li>Lawrence runs the trading post. Merchants like the Dealer roam the wastes and can be traded with, robbed or attacked.</li>
-        <li>The Sons of Liberty rule protection zones with brutal force under the mysterious Mr. Liberty, and they ban technology.</li>
-        <li>The Prime Elite were the private army of the rich enclaves. Their gear and vehicles still turn up.</li>
-        <li>Crawlers are mutated humans who live in tunnels and hunt at night. Mutated animals roam the open desert.</li>
-        <li>The ruins are everywhere: collapsed highways, rusted rail lines, gutted high-rises on the horizon, old enclaves of the AI Sapphire.</li>
+        <li><strong>Route choice:</strong> on foot or by vehicle (7).</li>
+        <li><strong>Method choice:</strong> brute force or craft the right tool (10).</li>
+        <li><strong>The ending depends on how you got there:</strong> part 6 A if no fight happened, 6 B if one did (7); different success text if the ally survives (11).</li>
+        <li><strong>Bonus objective</strong> with a reward (13).</li>
+      </ul>
+      <p>For branching parts, type a label such as "6 A" in the part's label box. The card shows PART 6 A/6 and the total counts 6 A and 6 B once.</p>
+
+      <h2>10. Competitive missions</h2>
+      <p>Four official missions pit players against each other: score the most loot (3), last one standing (5), hold the hills (9) and first to find the stash (12). They share a few habits: one or two cards, a fixed arena around New Haven, starting equipment set by the card instead of bought, and survival upkeep switched off when it would slow the fight (9). Set the game mode to Competitive and the brief info adds "(competitive)".</p>
+
+      <h2>11. Writing the cards</h2>
+      <ul>
+        <li>Write to the players as "you". Put quoted speech in italics.</li>
+        <li>Headings the official cards use: BRIEFING or INTRODUCTION, SETUP, SPECIAL RULES or MISSION RULES, SPECIAL ABILITY, MISSION GOAL, OBJECTIVES, SUCCESS, FAILURE. Story panels often get their own name, such as "A first lead" or "The journey back".</li>
+        <li>Bold what players act on: tile numbers, enemy names, item names, the part to read next.</li>
+        <li>A <strong>Tip</strong> block helps with tricky missions ("Try to sleep during the day").</li>
+        <li>Put each part's setup on that part's card, so players do not see what is coming.</li>
+        <li>Give failure a clear trigger too: all characters dead, a deadline passed, a barricade broken.</li>
       </ul>
 
-      <h2>10. Playtest checklist</h2>
+      <h2>12. Plan for the traitor</h2>
+      <p>Semi-cooperative play is recommended for 3 or more players. The three base game SoL cards ask the traitor to stop the mission goal, to collect 4 food and escape off a map edge, or to kill a character and burn a survivor's camp. Missions with something to carry, plenty of food or forced camping give the traitor room. Missions built around set encounters (4, 8, 11) work best fully cooperative.</p>
+
+      <h2>13. Roguelike rewards</h2>
+      <p>In roguelike mode each character earns 2 points for a completed mission. Content Pack 01 missions add a small group reward on top: 1 extra point plus one item, such as an A.E.D., a pistol, a rifle or a distillery (8, 10, 11, 13). Keep rewards that size, and use the Roguelike reward block. The Survivor log tracks points between missions.</p>
+
+      <h2>14. Use the world</h2>
+      <ul>
+        <li>New Haven is one of the few free settlements, always short of water. Its outposts are vulnerable (4).</li>
+        <li>Lawrence runs the trading post. Merchants roam the wastes and can be traded with, robbed or attacked.</li>
+        <li>The Sons of Liberty rule protection zones under the mysterious Mr. Liberty and ban technology. Their camps, trucks and meeting points make good targets (7, 13).</li>
+        <li>The Prime Elite were the private army of the rich enclaves. Their aircraft and gear still turn up (14), and one of them might even be an ally (11).</li>
+        <li>Crawlers live in tunnels and hunt at night (2). Mutated animals roam the open desert.</li>
+        <li>Solar storms wreck electrical gear (10). Water and medicine are always scarce (6).</li>
+        <li>The ruins: collapsed highways, rail lines, gas stations, gutted high-rises on the horizon.</li>
+      </ul>
+
+      <h2>15. Playtest checklist</h2>
       <ul>
         <li>Play it solo with two characters at least once before sharing it.</li>
-        <li>Count components: every token, standee and tile your setup needs must be in the box (or say which expansion it needs).</li>
+        <li>Count components: every token, standee, tile and card your setup names must be in the box, or say which expansion it needs.</li>
         <li>Use the game's terms: map tile, target map tile, spawn, initial combat round, preparation phase.</li>
-        <li>Check every part has a trigger to the next part, and that failure can happen.</li>
+        <li>Check every part has a trigger to the next, and that failure can happen.</li>
+        <li>Check the mission at 1 and at 6 players. If it breaks, add a player-count formula.</li>
         <li>Read the briefing aloud. If it takes more than a minute, trim it.</li>
         <li>Set the difficulty marks honestly: one ! for easy, two for challenging, three for hard.</li>
-        <li>Write down your playtest results in the author notes, then export the mission and share it.</li>
+        <li>Write your playtest results in the author notes, then export the mission and share it.</li>
       </ul>
     </section>
 
@@ -273,7 +343,14 @@
         <li><strong>Section with heading</strong>: a panel with a heading such as BRIEFING, SETUP or SPECIAL RULES.</li>
         <li><strong>Story text</strong>: narrative with no heading.</li>
         <li><strong>Mission goal, Objectives, Bonus objective, Success, Failure</strong>: centred text under a coloured label.</li>
+        <li><strong>Roguelike reward</strong>: the extra reward for roguelike mode, under its own label. Use <code>{star}</code> for points.</li>
+        <li><strong>Tip</strong>: a short hint, printed with "Tip:" in front.</li>
         <li><strong>Picture</strong>: a map setup diagram or similar, with an optional caption.</li>
+      </ul>
+      <h2>Patterns and branching parts</h2>
+      <ul>
+        <li>The <strong>Insert pattern</strong> menu in each block adds wording for setups the official missions use: tile stacks, deck changes, spawns, clocks, objective tokens and more. Replace the parts in [brackets].</li>
+        <li>For a branching mission, type a label such as <strong>6 A</strong> in a part's label box. The card shows PART 6 A/6, and parts that share a number count once.</li>
       </ul>
       <h2>Text formatting</h2>
       <table class="cheat">
@@ -315,7 +392,7 @@
 
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 
-  <script src="vendor/jspdf.umd.min.js?v=45322f44" defer></script>
-  <script type="module" src="js/app.js?v=45322f44"></script>
+  <script src="vendor/jspdf.umd.min.js?v=c509c391" defer></script>
+  <script type="module" src="js/app.js?v=c509c391"></script>
 </body>
 </html>

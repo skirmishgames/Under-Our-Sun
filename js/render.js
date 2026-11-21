@@ -1,7 +1,7 @@
 // Canvas card renderer. All positions are in millimetres.
 // Front: 70 x 120 mm portrait. Back: 120 x 70 mm landscape.
-import { DIFFICULTY, MODES, BLOCK_KINDS, ICON_TOKENS, missionName } from './data/schema.js?v=45322f44';
-import { drawPreset, loadImage, drawCover } from './art.js?v=45322f44';
+import { DIFFICULTY, MODES, BLOCK_KINDS, ICON_TOKENS, missionName, partLabel, partTotal } from './data/schema.js?v=c509c391';
+import { drawPreset, loadImage, drawCover } from './art.js?v=c509c391';
 
 export const CARD_W = 70;
 export const CARD_H = 120;
@@ -204,6 +204,11 @@ export function drawIcon(ctx, name, x, y, s) {
     ctx.beginPath();
     ctx.moveTo(x + p, y + p * 1.6); ctx.lineTo(x + p * 2, y + p * 0.6); ctx.lineTo(x + s - p * 0.6, y + p * 0.6); ctx.lineTo(x + s - p * 1.6, y + p * 1.6); ctx.closePath();
     ctx.fill(); ctx.stroke();
+  } else if (def.kind === 'star') {
+    ctx.beginPath(); ctx.arc(cx, cy, s * 0.47, 0, Math.PI * 2); ctx.fillStyle = '#fff'; ctx.fill(); ctx.stroke();
+    ctx.fillStyle = def.colour; ctx.beginPath();
+    for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + i * Math.PI / 5, r = i % 2 ? s * 0.15 : s * 0.34; ctx.lineTo(cx + Math.cos(a) * r, cy + Math.sin(a) * r); }
+    ctx.closePath(); ctx.fill();
   } else if (def.kind === 'tag') {
     roundRect(ctx, x, y + s * 0.12, s * 1.0, s * 0.76, s * 0.18); ctx.fill();
     ctx.fillStyle = '#fff'; ctx.font = `700 ${s * 0.5}px ${HEAD_FONT}`; ctx.textAlign = 'center';
@@ -299,7 +304,7 @@ function drawHeaderBar(ctx, mission, partIdx, total, x, y, w, s) {
   ctx.textAlign = 'right';
   ctx.font = `600 ${2.7 * s}px ${HEAD_FONT}`;
   ctx.fillStyle = 'rgba(242,228,200,0.85)';
-  ctx.fillText(`PART ${partIdx + 1}/${total}`, (x + w - 1.6) * s, (y + h / 2 + 0.95) * s);
+  ctx.fillText(`PART ${partLabel(mission, partIdx).toUpperCase()}/${total}`, (x + w - 1.6) * s, (y + h / 2 + 0.95) * s);
   ctx.restore();
   return y + h;
 }
@@ -381,7 +386,8 @@ async function measureBlocks(ctx, mission, blocks, innerW, s, sizePt) {
       m.h = PAD * 2 + m.ih + (m.cap ? m.cap.h / s + 0.8 : 0);
     } else {
       m.head = def.pill ? null : (b.kind === 'section' && b.heading ? layout(ctx, parseMarkup(String(b.heading).toUpperCase(), mission), textW, size * 1.08, { weight: 700 }) : null);
-      m.body = String(b.text || '').trim() ? layout(ctx, parseMarkup(b.text, mission), textW, size) : null;
+      const bodyText = b.kind === 'tip' ? String(b.text || '').split('\n').map(l => l.trim() ? '**Tip:** ' + l : l).join('\n') : b.text;
+      m.body = String(b.text || '').trim() ? layout(ctx, parseMarkup(bodyText, mission), textW, size * (b.kind === 'tip' ? 0.95 : 1)) : null;
       const pillH = def.pill ? 3.6 : 0;
       m.pillH = pillH;
       m.h = (def.pill ? pillH * 0.5 + 0.7 : 0) + PAD * 2 + (m.head ? m.head.h / s + 0.3 : 0) + (m.body ? m.body.h / s : 0);
@@ -400,7 +406,7 @@ function drawBlock(ctx, m, x, y, w, s) {
   // panel
   if (!(def.pill && !m.body)) {
     roundRect(ctx, x * s, panelY * s, w * s, panelH * s, 0.9 * s);
-    ctx.fillStyle = 'rgba(244,236,222,0.9)';
+    ctx.fillStyle = b.kind === 'tip' ? 'rgba(226,214,194,0.92)' : 'rgba(244,236,222,0.9)';
     ctx.fill();
     ctx.strokeStyle = 'rgba(60,40,28,0.35)'; ctx.lineWidth = 0.18 * s; ctx.stroke();
   }
@@ -462,7 +468,7 @@ export async function renderFront(mission, partIdx, opts = {}) {
   ctx.fillStyle = g; ctx.fillRect(0, 45 * s, W * s, (H - 45) * s);
   frame(ctx, W, H, s);
 
-  const headBottom = drawHeaderBar(ctx, mission, partIdx, mission.parts.length, 4, 4, W - 8, s);
+  const headBottom = drawHeaderBar(ctx, mission, partIdx, partTotal(mission), 4, 4, W - 8, s);
   const titleBottom = drawTitle(ctx, mission, W / 2, headBottom + 1.4, W - 8, s);
 
   // content, anchored to the bottom
@@ -514,7 +520,7 @@ export async function renderBack(mission, partIdx, opts = {}) {
   ctx.fillStyle = g; ctx.fillRect(0, 0, W * s, 26 * s);
   frame(ctx, W, H, s);
   const barW = 74;
-  const hb = drawHeaderBar(ctx, mission, partIdx, mission.parts.length, (W - barW) / 2, 4, barW, s);
+  const hb = drawHeaderBar(ctx, mission, partIdx, partTotal(mission), (W - barW) / 2, 4, barW, s);
   drawTitle(ctx, mission, W / 2, hb + 1.3, 84, s, 5.4);
 
   if (partIdx === 0) {
@@ -524,8 +530,8 @@ export async function renderBack(mission, partIdx, opts = {}) {
     const lines = [];
     if (mission.summary) lines.push(mission.summary);
     if (mission.playtime) lines.push(`Playing time approx. ${mission.playtime} minutes`);
-    if (mission.players) lines.push(`Recommended for ${mission.players} players`);
-    lines.push(modeLabel);
+    if (mission.players) lines.push(`Recommended for ${mission.players} players${mission.mode === 'comp' ? ' (competitive)' : ''}`);
+    if (mission.mode !== 'comp') lines.push(modeLabel);
     const lay = layout(ctx, parseMarkup(lines.join('\n'), mission), (pw - PAD * 2) * s, size);
     const pillH = 3.6;
     const ph = lay.h / s + PAD * 2 + 0.7;

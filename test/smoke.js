@@ -105,6 +105,13 @@ const check = (ok, msg) => { console.log((ok ? 'PASS ' : 'FAIL ') + msg); if (!o
   const [sheet] = await Promise.all([page.waitForEvent('download'), page.click('#sheetPdf')]);
   check(fs.readFileSync(await sheet.path()).slice(0, 4).toString() === '%PDF' && sheet.suggestedFilename() === 'survivor-log-de.pdf', 'German survivor log PDF builds');
 
+  // mission index
+  await page.click('.tabs a[data-tab=index]');
+  await page.waitForSelector('#indexList .mcard');
+  check((await page.locator('#indexList .mcard').count()) === 14, 'mission index lists 14 missions');
+  await page.click('#indexFilters .chip >> text=Competitive');
+  check((await page.locator('#indexList .mcard').count()) === 4, 'competitive filter shows 4');
+
   // design
   await page.click('.tabs a[data-tab=design]');
   await page.waitForSelector('#sparkOut dd');

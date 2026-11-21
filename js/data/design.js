@@ -27,7 +27,9 @@ export const SPARKS = {
     'Build or repair: gather resources and spend them at a location.',
     'Escort: protect someone or something across the map.',
     'Boss fight: face one strong enemy with special rules.',
-    'Hold out: defend a tile until a day or phase on the tracker.'
+    'Hold out: defend a tile until a day or phase on the tracker.',
+    'Investigate: question people or search places for clues before the real target shows itself.',
+    'Capture: bring someone back alive, not dead.'
   ],
   complication: [
     'The mission starts in the afternoon, so night comes fast.',
@@ -41,7 +43,13 @@ export const SPARKS = {
     'A merchant appears only once, and only if someone finds him.',
     'Night cards are drawn on every tile, camp or not.',
     'The SoL know you are coming: their camp tiles start with enemies already placed.',
-    'Only one character can carry the objective token, and it fills an item slot.'
+    'Only one character can carry the objective token, and it fills an item slot.',
+    'The night deck is built from enemy cards only.',
+    'The wanted enemy is hidden deep in the enemy deck.',
+    'A barricade blocks the route and has to be cleared resource by resource.',
+    'Nights are skipped and the day tracker is frozen: the clock is the number of actions.',
+    'A vehicle or ally with its own HP has to survive the trip.',
+    'Killing the wrong people ends the mission.'
   ],
   twist: [
     'The target is not what the briefing said.',

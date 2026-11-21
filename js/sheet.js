@@ -1,9 +1,9 @@
 // Survivor log: a roguelike save card for tracking one character between missions.
 // Card is 135 x 100 mm, four to a landscape Letter or A4 page.
-import { ensureFonts, roundRect, hexagon } from './render.js?v=45322f44';
-import { drawPreset } from './art.js?v=45322f44';
-import { ICON_TOKENS } from './data/schema.js?v=45322f44';
-import { PAPERS } from './print.js?v=45322f44';
+import { ensureFonts, roundRect, hexagon } from './render.js?v=c509c391';
+import { drawPreset } from './art.js?v=c509c391';
+import { ICON_TOKENS } from './data/schema.js?v=c509c391';
+import { PAPERS } from './print.js?v=c509c391';
 
 export const SHEET_W = 135;
 export const SHEET_H = 100;
@@ -15,15 +15,15 @@ export const SHEET_TEXT = {
   en: {
     title: 'SURVIVOR LOG', subtitle: 'Under Our Sun · roguelike mode',
     character: 'CHARACTER', player: 'PLAYER', hp: 'HP', water: 'WATER', points: 'POINTS',
-    conditions: 'CONDITIONS', dice: 'DICE UPGRADES', diceHint: 'skill, then mark the colour',
+    conditions: 'CONDITIONS', dice: 'DICE UPGRADES', diceHint: 'attribute or item, then mark the die',
     item: 'ITEM', gear: 'GEAR', items: 'ITEMS / RESOURCES',
     missions: 'MISSIONS PLAYED', notes: 'NOTES', footer: 'Fan-made sheet for Under Our Sun'
   },
   de: {
     title: 'ÜBERLEBENDEN-LOGBUCH', subtitle: 'Under Our Sun · Roguelike-Modus',
     character: 'CHARAKTER', player: 'SPIELER', hp: 'HP', water: 'WASSER', points: 'PUNKTE',
-    conditions: 'ZUSTÄNDE', dice: 'WÜRFEL-UPGRADES', diceHint: 'Fertigkeit, dann Farbe ankreuzen',
-    item: 'GEGENSTAND', gear: 'AUSRÜSTUNG', items: 'GEGENSTÄNDE / RESSOURCEN',
+    conditions: 'ZUSTÄNDE', dice: 'WÜRFEL-UPGRADES', diceHint: 'Attribut oder Item, dann Würfel ankreuzen',
+    item: 'ITEM', gear: 'GEAR', items: 'ITEMS / RESSOURCEN',
     missions: 'GESPIELTE MISSIONEN', notes: 'NOTIZEN', footer: 'Fan-made Bogen für Under Our Sun'
   }
 };
@@ -118,12 +118,12 @@ export async function renderSheet(opts = {}) {
   label(T.dice, bx + 0.3, 19.2, 22);
   ctx.font = `italic 400 ${m(2)}px ${FONT}`; ctx.fillStyle = INK; ctx.textAlign = 'right';
   ctx.fillText(T.diceHint, m(bx + bw), m(19.2)); ctx.textAlign = 'left';
-  const dice = ['green', 'yellow', 'blue', 'red'];
+  const dice = ['blue', 'yellow', 'green']; // upgrades are blue (1 point) or yellow (4 points); green for campaign rewards
   for (let r = 0; r < 6; r++) {
     const y = 20.4 + r * 8.1;
-    box(bx, y, 24, 7);
+    box(bx, y, 28, 7);
     dice.forEach((d, k) => {
-      const cx = bx + 27.6 + k * 4.75, cy = y + 3.5;
+      const cx = bx + 31.4 + k * 4.75, cy = y + 3.5;
       hexagon(ctx, m(cx), m(cy), m(2.15));
       ctx.fillStyle = '#ffffff'; ctx.fill();
       ctx.lineWidth = m(0.55); ctx.strokeStyle = ICON_TOKENS[d].colour; ctx.stroke();
@@ -195,3 +195,35 @@ export async function buildSheetPdf(opts) {
   }
   return doc;
 }
+
+// Roguelike rules summary, reworded from the official V1.0 printout.
+export const ROGUELIKE_TEXT = {
+  en: {
+    title: 'Roguelike mode in short',
+    intro: 'Characters carry their gear and their wounds from one mission to the next and earn points to spend between missions. Recommended for fully cooperative play.',
+    rules: [
+      'Keep every item you finished the mission with. HP, conditions and water stay as they are: nothing heals or refills between missions.',
+      'Each character who completes a mission earns 2 points. Some missions give the group extra rewards.',
+      'Spend points only between missions, in step 5 of setup. Group points can be added to your own. Unspent points carry over.',
+      'A die upgrade is permanent until the character dies or the item breaks. Each attribute, item or gear holds one upgrade at a time, and you can swap it later.',
+      'A character who dies loses all points and upgrades. Eliminated or new players join the next mission with a fresh character.'
+    ],
+    costsTitle: 'Spending points',
+    costs: [['1', 'Heal 4 HP'], ['1', 'Heal 1 infection'], ['1', 'Refill 3 water'], ['1', 'Trade with the trading post, worth 3 water'], ['stars on card', 'Buy starting equipment'], ['1', '+1 blue die on one attribute, item or gear'], ['4', '+1 yellow die on one attribute, item or gear']],
+    source: 'Summary of the official roguelike rules V1.0. The full printout and save sheet are on the'
+  },
+  de: {
+    title: 'Roguelike-Modus kurz erklärt',
+    intro: 'Charaktere nehmen Ausrüstung und Verletzungen von Mission zu Mission mit und sammeln Punkte, die sie zwischen den Missionen einsetzen. Empfohlen für vollkooperatives Spiel.',
+    rules: [
+      'Alle Gegenstände, mit denen eine Mission beendet wird, bleiben erhalten. HP, Zustände und Wasser bleiben ebenfalls: zwischen den Missionen wird nichts geheilt oder aufgefüllt.',
+      'Jeder Charakter, der eine Mission erfolgreich abschließt, erhält 2 Punkte. Manche Missionen geben der Gruppe zusätzliche Belohnungen.',
+      'Punkte werden nur zwischen den Missionen eingesetzt, in Schritt 5 des Setups. Gruppenpunkte können mit eigenen kombiniert werden. Übrige Punkte bleiben erhalten.',
+      'Eine Würfelverbesserung bleibt, bis der Charakter stirbt oder das Item kaputtgeht. Jedes Attribut, Item oder Gear hat höchstens eine Verbesserung, die später getauscht werden kann.',
+      'Stirbt ein Charakter, verliert er alle Punkte und Verbesserungen. Ausgeschiedene oder neue Spieler steigen zur nächsten Mission mit einem neuen Charakter ein.'
+    ],
+    costsTitle: 'Punkte einsetzen',
+    costs: [['1', '4 HP heilen'], ['1', '1 Infektion heilen'], ['1', '3 Wasser auffüllen'], ['1', 'Mit dem Handelsposten handeln, entspricht 3 Wasser'], ['Sterne der Karte', 'Startausrüstung kaufen'], ['1', '+1 blauer Würfel auf ein Attribut, Item oder Gear'], ['4', '+1 gelber Würfel auf ein Attribut, Item oder Gear']],
+    source: 'Zusammenfassung der offiziellen Roguelike-Regeln V1.0. Die vollständige Regelkarte und den Speicherbogen gibt es auf der'
+  }
+};

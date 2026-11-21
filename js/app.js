@@ -1,14 +1,16 @@
 // App shell: views, editor, library and print.
-import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, newMission, newBlock, newPart, normaliseMission, missionName, uid } from './data/schema.js?v=45322f44';
-import { ITEMS } from './data/items.js?v=45322f44';
-import { sampleMission } from './data/sample.js?v=45322f44';
-import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=45322f44';
-import { fileToDataUrl } from './art.js?v=45322f44';
-import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=45322f44';
-import { rollSpark } from './data/design.js?v=45322f44';
-import { FAQ, FAQ_TOPICS, FAQ_SOURCES, FAQ_LINKS, CONTENTS_1E } from './data/faq.js?v=45322f44';
-import { renderSheet, buildSheetPdf } from './sheet.js?v=45322f44';
-import { buildPdf, PAPERS, layoutFor } from './print.js?v=45322f44';
+import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, MISSION_TAGS, newMission, newBlock, newPart, normaliseMission, missionName, partLabel, partTotal, uid } from './data/schema.js?v=c509c391';
+import { PATTERNS } from './data/patterns.js?v=c509c391';
+import { ITEMS } from './data/items.js?v=c509c391';
+import { sampleMission } from './data/sample.js?v=c509c391';
+import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=c509c391';
+import { fileToDataUrl } from './art.js?v=c509c391';
+import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=c509c391';
+import { OFFICIAL_MISSIONS, COMMUNITY_MISSIONS, MISSION_TYPES } from './data/missions-index.js?v=c509c391';
+import { rollSpark } from './data/design.js?v=c509c391';
+import { FAQ, FAQ_TOPICS, FAQ_SOURCES, FAQ_LINKS, CONTENTS_1E } from './data/faq.js?v=c509c391';
+import { renderSheet, buildSheetPdf, ROGUELIKE_TEXT } from './sheet.js?v=c509c391';
+import { buildPdf, PAPERS, layoutFor } from './print.js?v=c509c391';
 
 const VERSION = '1.0.0';
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -43,7 +45,7 @@ const state = { missions: [], current: null, partIdx: 0, side: 'front', fit: [] 
 
 function route() {
   const [tab, id] = (location.hash.replace('#', '') || 'library').split('/');
-  const views = ['library', 'edit', 'print', 'sheet', 'design', 'faq', 'guide', 'about'];
+  const views = ['library', 'edit', 'print', 'sheet', 'index', 'design', 'faq', 'guide', 'about'];
   const view = views.includes(tab) ? tab : 'library';
   views.forEach(v => { $('#view-' + v).hidden = v !== view; });
   $$('.tabs a').forEach(a => a.classList.toggle('on', a.dataset.tab === view));
@@ -52,6 +54,7 @@ function route() {
   if (view === 'print') renderPrint();
   if (view === 'sheet') renderSheetView();
   if (view === 'faq') renderFaq(id);
+  if (view === 'index') renderIndex();
   if (view === 'design' && !state.spark) showSpark();
   if (!(view === 'faq' && id)) window.scrollTo(0, 0);
 }
@@ -78,7 +81,7 @@ async function renderLibrary() {
       cv,
       el('div', { class: 'tile-body' },
         el('h3', { text: m.title || 'Untitled mission' }),
-        el('div', { class: 'muted small', text: [missionName(m), `${m.parts.length} parts`, diff && diff.label, m.author && `by ${m.author}`].filter(Boolean).join(' · ') })
+        el('div', { class: 'muted small', text: [missionName(m), `${m.parts.length} parts`, ...(m.types || []).map(t => MISSION_TAGS[t]).filter(Boolean), diff && diff.label, m.author && `by ${m.author}`].filter(Boolean).join(' · ') })
       ),
       el('div', { class: 'tile-actions' },
         el('a', { class: 'btn mini primary', href: '#edit/' + m.id }, 'Edit'),
@@ -194,7 +197,10 @@ function renderDetails() {
     field('Game mode', mode),
     el('div', { class: 'field wide' }, el('span', { class: 'muted small', text: 'Difficulty' }), el('div', {}, diff)),
     field('Summary (printed as brief info on the back of part 1)', bindText(el('textarea', { rows: 2, placeholder: 'One or two sentences that tell players what the mission is about.' }), m, 'summary'), 'wide'),
-    el('label', { class: 'check wide' }, community, 'Show "Community mission" under the title')
+    el('label', { class: 'check wide' }, community, 'Show "Community mission" under the title'),
+    el('div', { class: 'field wide' }, el('span', { class: 'muted small', text: 'Mission type (for your library and sharing, not printed)' }),
+      el('div', { class: 'chips' }, Object.entries(MISSION_TAGS).map(([k, label]) => el('button', { type: 'button', class: 'chip' + (m.types.includes(k) ? ' on' : ''), 'aria-pressed': String(m.types.includes(k)),
+        onclick: e => { const on = !m.types.includes(k); m.types = on ? [...m.types, k] : m.types.filter(t => t !== k); e.currentTarget.classList.toggle('on', on); e.currentTarget.setAttribute('aria-pressed', String(on)); scheduleSave(); } }, label))))
   );
 }
 
@@ -271,7 +277,9 @@ function renderParts() {
   m.parts.forEach((part, i) => {
     const move = (d) => { const j = i + d; if (j < 0 || j >= m.parts.length) return; [m.parts[i], m.parts[j]] = [m.parts[j], m.parts[i]]; state.partIdx = j; changed({ structure: true }); };
     const head = el('div', { class: 'part-head' },
-      el('h3', { onclick: () => selectPart(i) }, `Part ${i + 1} of ${m.parts.length}`),
+      el('h3', { onclick: () => selectPart(i) }, `Part ${partLabel(m, i)} of ${partTotal(m)}`),
+      el('input', { type: 'text', class: 'part-label', value: part.label || '', placeholder: 'Label', title: 'Optional label for branching parts, for example 6 A', 'aria-label': 'Part label',
+        oninput: e => { part.label = e.target.value; scheduleSave(); schedulePreview(); renderPreviewSelect(); const h = e.target.parentNode.querySelector('h3'); if (h) h.textContent = `Part ${partLabel(m, i)} of ${partTotal(m)}`; } }),
       el('span', { class: 'fit-slot' }, fitBadge(i)),
       el('button', { class: 'btn mini', type: 'button', title: 'Move up', 'aria-label': 'Move part up', disabled: i === 0, onclick: () => move(-1) }, '↑'),
       el('button', { class: 'btn mini', type: 'button', title: 'Move down', 'aria-label': 'Move part down', disabled: i === m.parts.length - 1, onclick: () => move(1) }, '↓'),
@@ -330,7 +338,9 @@ function blockEditor(part, b, k, partIdx) {
     objectives: 'Do X, then read **{mission} - Part 2**.',
     bonus: 'An optional extra task and its reward.',
     success: 'Debriefing when the mission succeeds.',
-    failure: 'Debriefing when the mission fails.'
+    failure: 'Debriefing when the mission fails.',
+    roguelike: 'The group receives 1 additional {star} and the **A.E.D.** item.',
+    tip: 'Try to sleep during the day.'
   }[b.kind];
   const ta = bindText(el('textarea', { rows: 4, placeholder }), b, 'text');
   const iconSel = el('select', { class: 'mini', 'aria-label': 'Insert icon', onchange: e => { if (e.target.value) insertAtCursor(ta, `{${e.target.value}}`); e.target.value = ''; } },
@@ -343,7 +353,8 @@ function blockEditor(part, b, k, partIdx) {
   wrap.append(ta, el('div', { class: 'block-tools' },
     el('button', { class: 'btn mini', type: 'button', title: 'Bold the selected text', onclick: () => { const s = ta.selectionStart, e = ta.selectionEnd; const sel = ta.value.slice(s, e) || 'bold'; ta.setSelectionRange(s, e); insertAtCursor(ta, `**${sel}**`); } }, 'Bold'),
     el('button', { class: 'btn mini', type: 'button', onclick: () => insertAtCursor(ta, `Read **{mission} - Part ${nextPart}**.`) }, `Link to part ${nextPart}`),
-    iconSel, itemSel));
+    iconSel, itemSel, el('select', { class: 'mini', 'aria-label': 'Insert a pattern from the official missions', onchange: e => { const pt = PATTERNS[+e.target.value]; if (pt) insertAtCursor(ta, (ta.value && !ta.value.endsWith('\n') ? '\n' : '') + pt.text); e.target.value = ''; } },
+      el('option', { value: '' }, 'Insert pattern'), PATTERNS.map((pt, k) => el('option', { value: k }, pt.label)))));
   return wrap;
 }
 
@@ -351,7 +362,7 @@ function renderPreviewSelect() {
   const m = state.current;
   const sel = $('#previewPart');
   sel.innerHTML = '';
-  m.parts.forEach((p, i) => sel.append(el('option', { value: i, selected: i === state.partIdx }, `Part ${i + 1}`)));
+  m.parts.forEach((p, i) => sel.append(el('option', { value: i, selected: i === state.partIdx }, `Part ${partLabel(m, i)}`)));
 }
 
 let previewSeq = 0;
@@ -488,7 +499,19 @@ function renderSheetView() {
   drawSheetPreview();
 }
 
+function renderRoguelike(lang) {
+  const T = ROGUELIKE_TEXT[lang] || ROGUELIKE_TEXT.en;
+  const box = $('#roguelikeRules');
+  box.innerHTML = '';
+  const star = el('span', { class: 'star', 'aria-hidden': 'true', text: '★' });
+  box.append(el('h2', { text: T.title }), el('p', { text: T.intro }), el('ul', {}, T.rules.map(r => el('li', { text: r }))),
+    el('h3', { text: T.costsTitle }),
+    el('table', { class: 'cheat' }, T.costs.map(([c, what]) => el('tr', {}, el('th', {}, c, ' ', star.cloneNode(true)), el('td', { text: what })))),
+    el('p', { class: 'muted small' }, T.source + ' ', el('a', { href: 'https://tabletopper.games/downloads/', target: '_blank', rel: 'noopener', text: 'tabletopper games downloads page' }), '.'));
+}
+
 async function drawSheetPreview() {
+  renderRoguelike(sheetOpts().lang);
   const c = await renderSheet(Object.assign(sheetOpts(), { scale: 8, rounded: true }));
   const cv = $('#sheetCanvas');
   cv.width = c.width; cv.height = c.height;
@@ -509,6 +532,54 @@ function setupSheet() {
     const a = el('a', { href: c.toDataURL('image/png'), download: `survivor-log-${o.lang}.png` });
     document.body.append(a); a.click(); a.remove();
   });
+}
+
+// ---------- mission index ----------
+
+const indexState = { filter: 'all' };
+
+function diffBadge(d) {
+  const def = DIFFICULTY.find(x => x.value === d) || DIFFICULTY[1];
+  const b = el('span', { class: 'dhex', title: def.label, text: def.marks });
+  b.style.background = def.colour;
+  return b;
+}
+
+function renderIndex() {
+  const filters = $('#indexFilters');
+  filters.innerHTML = '';
+  const opts = [['all', 'All'], ['coop', 'Cooperative'], ['comp', 'Competitive'], ['d1', 'Easy'], ['d2', 'Challenging'], ['d3', 'Hard'],
+    ...Object.entries(MISSION_TYPES).filter(([k]) => k !== 'competitive' && OFFICIAL_MISSIONS.some(m => m.types.includes(k)))];
+  const match = (m, f) => f === 'all' || (f === 'coop' && m.mode !== 'comp') || (f === 'comp' && m.mode === 'comp') || (f[0] === 'd' && /^d\d$/.test(f) && m.diff === +f[1]) || m.types.includes(f);
+  for (const [k, label] of opts) {
+    filters.append(el('button', { type: 'button', class: 'chip' + (indexState.filter === k ? ' on' : ''), 'aria-pressed': String(indexState.filter === k),
+      onclick: () => { indexState.filter = k; renderIndex(); } }, label, el('span', { class: 'n', text: String(OFFICIAL_MISSIONS.filter(m => match(m, k)).length) })));
+  }
+  const list = $('#indexList');
+  list.innerHTML = '';
+  const shown = OFFICIAL_MISSIONS.filter(m => match(m, indexState.filter));
+  $('#indexCount').textContent = indexState.filter === 'all' ? '' : `${shown.length} of ${OFFICIAL_MISSIONS.length} missions`;
+  for (const m of shown) {
+    const meta = [`${m.parts} part${m.parts === 1 ? '' : 's'}`, `${m.players} players`, m.time && `${m.time} min`, m.box === 'cp01' ? 'Content Pack 01' : 'Base game'].filter(Boolean).join(' · ');
+    list.append(el('article', { class: 'mcard', id: 'mission-' + m.n },
+      el('header', {}, diffBadge(m.diff), el('div', {}, el('div', { class: 'num', text: `Mission ${m.n}` }), el('h3', { text: m.title }))),
+      el('div', { class: 'meta', text: meta + (m.author ? ` · by ${m.author}` : '') }),
+      el('div', { class: 'tags' }, m.mode === 'comp' ? el('span', { class: 'tag comp', text: 'Competitive' }) : el('span', { class: 'tag', text: 'Cooperative' }),
+        m.types.filter(t => t !== 'competitive').map(t => el('span', { class: 'tag', text: MISSION_TYPES[t] })),
+        m.community ? el('span', { class: 'tag box', text: 'Community mission' }) : null),
+      el('p', { text: m.premise }),
+      el('details', {}, el('summary', { text: 'How it is built (spoilers)' }), el('ul', {}, m.design.map(d => el('li', { text: d }))))));
+  }
+  const com = $('#indexCommunity');
+  com.innerHTML = '';
+  for (const m of COMMUNITY_MISSIONS) {
+    const meta = [m.diff && `Difficulty: ${m.diff}`, m.players && `${m.players} players`, m.time && `${m.time} min`].filter(Boolean).join(' · ');
+    com.append(el('article', { class: 'mcard' },
+      el('header', {}, el('div', {}, el('div', { class: 'num', text: m.author ? `by ${m.author}` : 'Community' }), el('h3', { text: m.title }))),
+      meta ? el('div', { class: 'meta', text: meta }) : null,
+      el('div', { class: 'tags' }, m.types.map(t => el('span', { class: 'tag', text: MISSION_TYPES[t] }))),
+      el('p', { text: m.premise })));
+  }
 }
 
 // ---------- design ----------
