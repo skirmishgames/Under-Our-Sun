@@ -7,7 +7,7 @@
   <meta name="description" content="Write and print fan-made missions for the Under Our Sun board game.">
   <meta name="theme-color" content="#b5583a">
   <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/styles.css?v=c509c391">
+  <link rel="stylesheet" href="css/styles.css?v=cfccbd9d">
   <script>
     try { var t = localStorage.getItem('uos.theme'); if (t && JSON.parse(t) === 'dark') document.documentElement.dataset.theme = 'dark'; } catch (e) {}
   </script>
@@ -24,14 +24,16 @@
   </header>
 
   <nav class="tabs" aria-label="Sections">
+    <a href="#design" data-tab="design">Design</a>
+    <a href="#guide" data-tab="guide">Guide</a>
     <a href="#library" data-tab="library">Missions</a>
     <a href="#edit" data-tab="edit">Editor</a>
     <a href="#print" data-tab="print">Print</a>
-    <a href="#sheet" data-tab="sheet">Survivor log</a>
+    <span class="tab-sep" aria-hidden="true"></span>
     <a href="#index" data-tab="index">Mission index</a>
-    <a href="#design" data-tab="design">Design</a>
+    <a href="#sheet" data-tab="sheet">Survivor log</a>
     <a href="#faq" data-tab="faq">FAQ</a>
-    <a href="#guide" data-tab="guide">Guide</a>
+    <span class="tab-sep" aria-hidden="true"></span>
     <a href="#about" data-tab="about">About</a>
   </nav>
 
@@ -314,6 +316,7 @@
         <li>Set the difficulty marks honestly: one ! for easy, two for challenging, three for hard.</li>
         <li>Write your playtest results in the author notes, then export the mission and share it.</li>
       </ul>
+      <p class="next-step">Next: <a href="#guide">how the editor works</a>, or <a href="#library">start writing</a>.</p>
     </section>
 
     <!-- FAQ -->
@@ -370,6 +373,7 @@
       <p>Text sits at the bottom of the card and the art shows above it. When a part gets long, the font shrinks a little to fit. If it still does not fit, the editor marks the part in red. Split it into another part or trim it.</p>
       <h2>Sharing missions</h2>
       <p>Export a mission from the editor to get a <code>.json</code> file with its text and pictures. Anyone can import that file on the Missions page. Use "Back up all" now and then, because clearing browser data deletes saved missions.</p>
+      <p class="next-step">Next: <a href="#library">open your missions</a> and start one, or roll an idea on the <a href="#design">Design</a> page.</p>
     </section>
 
     <!-- About -->
@@ -392,7 +396,7 @@
 
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 
-  <script src="vendor/jspdf.umd.min.js?v=c509c391" defer></script>
-  <script type="module" src="js/app.js?v=c509c391"></script>
+  <script src="vendor/jspdf.umd.min.js?v=cfccbd9d" defer></script>
+  <script type="module" src="js/app.js?v=cfccbd9d"></script>
 </body>
 </html>

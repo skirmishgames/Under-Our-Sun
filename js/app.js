@@ -1,16 +1,16 @@
 // App shell: views, editor, library and print.
-import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, MISSION_TAGS, newMission, newBlock, newPart, normaliseMission, missionName, partLabel, partTotal, uid } from './data/schema.js?v=c509c391';
-import { PATTERNS } from './data/patterns.js?v=c509c391';
-import { ITEMS } from './data/items.js?v=c509c391';
-import { sampleMission } from './data/sample.js?v=c509c391';
-import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=c509c391';
-import { fileToDataUrl } from './art.js?v=c509c391';
-import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=c509c391';
-import { OFFICIAL_MISSIONS, COMMUNITY_MISSIONS, MISSION_TYPES } from './data/missions-index.js?v=c509c391';
-import { rollSpark } from './data/design.js?v=c509c391';
-import { FAQ, FAQ_TOPICS, FAQ_SOURCES, FAQ_LINKS, CONTENTS_1E } from './data/faq.js?v=c509c391';
-import { renderSheet, buildSheetPdf, ROGUELIKE_TEXT } from './sheet.js?v=c509c391';
-import { buildPdf, PAPERS, layoutFor } from './print.js?v=c509c391';
+import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, MISSION_TAGS, newMission, newBlock, newPart, normaliseMission, missionName, partLabel, partTotal, uid } from './data/schema.js?v=cfccbd9d';
+import { PATTERNS } from './data/patterns.js?v=cfccbd9d';
+import { ITEMS } from './data/items.js?v=cfccbd9d';
+import { sampleMission } from './data/sample.js?v=cfccbd9d';
+import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=cfccbd9d';
+import { fileToDataUrl } from './art.js?v=cfccbd9d';
+import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=cfccbd9d';
+import { OFFICIAL_MISSIONS, COMMUNITY_MISSIONS, MISSION_TYPES } from './data/missions-index.js?v=cfccbd9d';
+import { rollSpark } from './data/design.js?v=cfccbd9d';
+import { FAQ, FAQ_TOPICS, FAQ_SOURCES, FAQ_LINKS, CONTENTS_1E } from './data/faq.js?v=cfccbd9d';
+import { renderSheet, buildSheetPdf, ROGUELIKE_TEXT } from './sheet.js?v=cfccbd9d';
+import { buildPdf, PAPERS, layoutFor } from './print.js?v=cfccbd9d';
 
 const VERSION = '1.0.0';
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -44,6 +44,9 @@ const state = { missions: [], current: null, partIdx: 0, side: 'front', fit: [] 
 // ---------- routing ----------
 
 function route() {
+  // First visit opens on Design; later visits open on the mission library.
+  const first = !getSetting('visited', false);
+  if (!location.hash) { setSetting('visited', true); history.replaceState(null, '', first ? '#design' : '#library'); }
   const [tab, id] = (location.hash.replace('#', '') || 'library').split('/');
   const views = ['library', 'edit', 'print', 'sheet', 'index', 'design', 'faq', 'guide', 'about'];
   const view = views.includes(tab) ? tab : 'library';

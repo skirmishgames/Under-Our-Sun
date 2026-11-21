@@ -35,6 +35,9 @@ const check = (ok, msg) => { console.log((ok ? 'PASS ' : 'FAIL ') + msg); if (!o
   page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
 
   await page.goto(url);
+  await page.waitForTimeout(800);
+  check(page.url().endsWith('#design'), 'first visit opens on Design');
+  await page.goto(url + '#library');
   await page.waitForSelector('.tile');
   check((await page.locator('.tile').count()) >= 1, 'library shows the sample mission');
 

@@ -15,8 +15,6 @@ Items to verify with the community or the designers.
 | Survivor log fields | Character Upgrade Tracking (roguelike save sheet) | Same fields as the official sheet: character, player, HP, water, star points, 2 conditions, 6 dice upgrades with colour, item, gear, 3 items or resources. Added a missions played strip and a notes line. Colour is ticked on four die hexagons instead of written. |
 | German labels | Roguelike rules V1.0 (DE) | The German rules use Item and Gear, so the German survivor log now says ITEM, GEAR and ITEMS / RESSOURCEN. Gespielte Missionen and Notizen are still my wording. |
 | Survivor log size | Survivor log | 135 x 100 mm, chosen so four fit on Letter and A4 landscape. Tarot size was too small for handwriting. |
-| Mission 11 scans | Mission card scans | Parts 2 and 4 of Complicated Logistics are missing (parts 5 and 6 were scanned twice). The index entry is built from parts 1, 3, 5 and 6. |
-| Mission 14 brief info | Mission card scans | The back of part 1 was not scanned, so playing time is blank in the index. |
 | Mission 14 author | Mission 14 card | Printed as "Wifried Trüper", probably Wilfried. The index uses the printed spelling. |
 | Mission 9 hills | Mission 9 card | The three hill tiles are not named on the card. The ring markers sit on S02, S03 and S04. |
 | Merchant cards | Merchant scans | Out of scope for now. The scans were reviewed for layout only. |

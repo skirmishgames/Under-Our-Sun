@@ -61,7 +61,7 @@ export const OFFICIAL_MISSIONS = [
   { n: 11, title: 'Complicated Logistics', diff: 3, parts: 6, players: '1-6', time: '70-140', mode: 'coop', box: 'cp01',
     types: ['escort'],
     premise: 'Escort a military truck with vital cargo back to New Haven, with an unlikely ally along for the ride.',
-    design: ['Escorted vehicle with its own HP, armour and movement each phase', 'Allied NPC with written behaviour rules', 'Spawn die on vehicle movement gets harder with more players', 'Ambush at a chokepoint with a barricade to clear', 'Success text changes if the NPC survives', 'Roguelike reward: point and an item'] },
+    design: ['Route of face-down tiles from a start tile: named target tiles shuffled with random ones, laid out as shown', 'Target tiles act as mountains that cost 5 AP to enter, so the route funnels into a ravine', 'Extra water bottles at setup, more with more players', 'Removes chosen cards from the event and night decks', 'Escorted vehicle (an objective token) with its own HP, armour and movement each phase', 'Mission goal sets both endings: vehicle at 0 HP fails, reaching New Haven succeeds', 'Allied NPC with written behaviour rules', 'Spawn die on vehicle movement gets harder with more players', 'An objective that sends players to a named story section further down the same card', 'Ambush at a chokepoint with a barricade to clear', 'Success text changes if the NPC survives', 'Roguelike reward: point and an item'] },
   { n: 12, title: 'Hidden Stash', diff: 1, parts: 2, players: '2-6', time: '30-90', mode: 'comp', box: 'cp01',
     types: ['competitive', 'fetch'],
     premise: 'A race for buried supply crates. The first to bring the right one to Lawrence wins.',
@@ -70,7 +70,7 @@ export const OFFICIAL_MISSIONS = [
     types: ['infiltrate', 'fetch'],
     premise: 'Rumours of an artifact that leads to lost water reserves. The SoL are looking for it too.',
     design: ['Two-stack setup with one target tile', 'Built camp layout from face-down tiles around the objective, with alternative layouts', 'Bonus objective with a reward', 'Stealth bonus that switches off after the objective is taken', 'Escape back to New Haven carrying the objective', 'Roguelike reward: point and an item'] },
-  { n: 14, title: 'Gray Hawk Down', diff: 3, parts: 3, players: '1-6', time: '', mode: 'coop', box: 'cp01', author: 'Wifried Trüper', community: true,
+  { n: 14, title: 'Gray Hawk Down', diff: 3, parts: 3, players: '1-6', time: '60-110', mode: 'coop', box: 'cp01', author: 'Wifried Trüper', community: true,
     types: ['survive'],
     premise: 'A reconnaissance flight goes wrong. Wake up in the wreck and find your way home.',
     design: ['Starts away from New Haven, with New Haven inside the tile stack', 'Day tracker set at setup', 'Fixed starting gear found at the crash site', 'Initial combat round on the first turn', 'Part 1 and 2 are story only, setup comes on part 3'] }
