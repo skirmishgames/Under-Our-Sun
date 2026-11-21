@@ -133,7 +133,7 @@ const check = (ok, msg) => { console.log((ok ? 'PASS ' : 'FAIL ') + msg); if (!o
   check((await page.locator('#dispatchList .dcard').count()) === 1, 'stories genre filter');
   await page.locator('#dispatchFilters select').nth(1).selectOption('');
   await page.locator('#dispatchFilters select').nth(3).selectOption('semi');
-  check((await page.locator('#dispatchList .dcard').count()) === 2, 'stories semi-cooperative filter');
+  check((await page.locator('#dispatchList .dcard').count()) === 3, 'stories semi-cooperative filter');
   await page.locator('#dispatchFilters select').nth(3).selectOption('');
   const [dpdf] = await Promise.all([page.waitForEvent('download', { timeout: 60000 }), page.click('#dispatchList .dcard >> text=Print cards')]);
   check(fs.readFileSync(await dpdf.path()).slice(0, 4).toString() === '%PDF', 'dispatch prints to PDF');
