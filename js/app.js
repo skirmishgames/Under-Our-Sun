@@ -1,17 +1,17 @@
 // App shell: views, editor, library and print.
-import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, MISSION_TAGS, newMission, newBlock, newPart, normaliseMission, missionName, headerLabel, partLabel, partTotal, uid } from './data/schema.js?v=1131d9f1';
-import { PATTERNS } from './data/patterns.js?v=1131d9f1';
-import { ITEMS } from './data/items.js?v=1131d9f1';
-import { sampleMission } from './data/sample.js?v=1131d9f1';
-import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=1131d9f1';
-import { fileToDataUrl } from './art.js?v=1131d9f1';
-import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=1131d9f1';
-import { DISPATCHES, DISPATCH_STATUS } from './data/dispatches.js?v=1131d9f1';
-import { OFFICIAL_MISSIONS, COMMUNITY_MISSIONS, MISSION_TYPES } from './data/missions-index.js?v=1131d9f1';
-import { rollSpark } from './data/design.js?v=1131d9f1';
-import { FAQ, FAQ_TOPICS, FAQ_SOURCES, FAQ_LINKS, CONTENTS_1E } from './data/faq.js?v=1131d9f1';
-import { renderSheet, buildSheetPdf, ROGUELIKE_TEXT } from './sheet.js?v=1131d9f1';
-import { buildPdf, PAPERS, layoutFor } from './print.js?v=1131d9f1';
+import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, MISSION_TAGS, newMission, newBlock, newPart, normaliseMission, missionName, headerLabel, partLabel, partTotal, uid } from './data/schema.js?v=f8c9b218';
+import { PATTERNS } from './data/patterns.js?v=f8c9b218';
+import { ITEMS } from './data/items.js?v=f8c9b218';
+import { sampleMission } from './data/sample.js?v=f8c9b218';
+import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=f8c9b218';
+import { fileToDataUrl } from './art.js?v=f8c9b218';
+import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=f8c9b218';
+import { DISPATCHES, DISPATCH_STATUS } from './data/dispatches.js?v=f8c9b218';
+import { OFFICIAL_MISSIONS, COMMUNITY_MISSIONS, MISSION_TYPES } from './data/missions-index.js?v=f8c9b218';
+import { rollSpark } from './data/design.js?v=f8c9b218';
+import { FAQ, FAQ_TOPICS, FAQ_SOURCES, FAQ_LINKS, CONTENTS_1E } from './data/faq.js?v=f8c9b218';
+import { renderSheet, buildSheetPdf, ROGUELIKE_TEXT } from './sheet.js?v=f8c9b218';
+import { buildPdf, PAPERS, layoutFor } from './print.js?v=f8c9b218';
 
 const VERSION = '1.0.0';
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -94,6 +94,7 @@ async function renderLibrary() {
       ),
       el('div', { class: 'tile-actions' },
         el('a', { class: 'btn mini primary', href: '#edit/' + m.id }, 'Edit'),
+        el('button', { class: 'btn mini', type: 'button', onclick: () => openViewer(m, { all: true }) }, 'View'),
         el('button', { class: 'btn mini', type: 'button', onclick: () => { setSetting('printSel', [m.id]); location.hash = '#print'; } }, 'Print'),
         el('button', { class: 'btn mini', type: 'button', onclick: () => duplicate(m) }, 'Duplicate'),
         el('button', { class: 'btn mini', type: 'button', onclick: () => downloadJson(exportPayload([m]), slug(m.title) + '.json') }, 'Export'),
@@ -627,6 +628,78 @@ function renderIndex() {
   }
 }
 
+// ---------- card viewer ----------
+
+const viewer = { mission: null, idx: 0, side: 'front', all: false, seq: 0 };
+
+function openViewer(mission, opts = {}) {
+  Object.assign(viewer, { mission, idx: 0, side: opts.side || 'front', all: !!opts.all });
+  $('#viewerTitle').textContent = mission.title;
+  $('#viewer').hidden = false;
+  document.body.style.overflow = 'hidden';
+  drawViewer();
+  $('#viewerNext').focus();
+}
+
+function closeViewer() {
+  $('#viewer').hidden = true;
+  document.body.style.overflow = '';
+}
+
+async function drawViewer() {
+  const m = viewer.mission;
+  if (!m) return;
+  const seq = ++viewer.seq;
+  const n = m.parts.length;
+  const stage = $('#viewerStage');
+  const dpr = Math.min(2, window.devicePixelRatio || 1);
+  const wMM = viewer.side === 'front' ? 70 : 120, hMM = viewer.side === 'front' ? 120 : 70;
+  const scale = Math.max(4, Math.min(16, Math.min(stage.clientWidth / wMM, stage.clientHeight / hMM) * dpr));
+  const tmp = document.createElement('canvas');
+  const o = { scale, rounded: true, canvas: tmp };
+  if (viewer.side === 'front') await renderFront(m, viewer.idx, o); else await renderBack(m, viewer.idx, o);
+  if (seq !== viewer.seq) return;
+  const cv = $('#viewerCanvas');
+  cv.width = tmp.width; cv.height = tmp.height;
+  cv.getContext('2d').drawImage(tmp, 0, 0);
+  cv.setAttribute('aria-label', `${m.title}, part ${partLabel(m, viewer.idx)} ${viewer.side}`);
+  $('#viewerPos').textContent = `Part ${partLabel(m, viewer.idx)} of ${partTotal(m)}`;
+  $('#viewerPrev').disabled = viewer.idx === 0;
+  const gated = !viewer.all && n > 1;
+  $('#viewerNext').hidden = gated;
+  $('#viewerReveal').hidden = !gated;
+  $('#viewerNext').disabled = viewer.idx >= n - 1;
+  $$('#viewer [data-vside]').forEach(b => b.classList.toggle('on', b.dataset.vside === viewer.side));
+}
+
+function stepViewer(d) {
+  const n = viewer.mission ? viewer.mission.parts.length : 0;
+  const j = viewer.idx + d;
+  if (j < 0 || j >= n || (!viewer.all && j > 0)) return;
+  viewer.idx = j;
+  drawViewer();
+}
+
+function setupViewer() {
+  $('#viewerClose').addEventListener('click', closeViewer);
+  $('#viewerPrev').addEventListener('click', () => stepViewer(-1));
+  $('#viewerNext').addEventListener('click', () => stepViewer(1));
+  $('#viewerReveal').addEventListener('click', () => { viewer.all = true; viewer.idx = Math.min(1, viewer.mission.parts.length - 1); drawViewer(); $('#viewerNext').focus(); });
+  $$('#viewer [data-vside]').forEach(b => b.addEventListener('click', () => { viewer.side = b.dataset.vside; drawViewer(); }));
+  $('#viewer').addEventListener('click', e => { if (e.target.id === 'viewer' || e.target.id === 'viewerStage') closeViewer(); });
+  document.addEventListener('keydown', e => {
+    if ($('#viewer').hidden) return;
+    if (e.key === 'Escape') closeViewer();
+    else if (e.key === 'ArrowRight') stepViewer(1);
+    else if (e.key === 'ArrowLeft') stepViewer(-1);
+    else if (e.key === 'f' || e.key === 'b') { viewer.side = e.key === 'f' ? 'front' : 'back'; drawViewer(); }
+  });
+  let tx = null;
+  $('#viewerStage').addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+  $('#viewerStage').addEventListener('touchend', e => { if (tx === null) return; const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 50) stepViewer(dx < 0 ? 1 : -1); tx = null; });
+  window.addEventListener('resize', () => { if (!$('#viewer').hidden) drawViewer(); });
+}
+
 // ---------- dispatches ----------
 
 const dispatchState = { status: '', genre: '', diff: '', type: '' };
@@ -678,12 +751,9 @@ function renderDispatches(openId) {
     const st = DISPATCH_STATUS[d.status];
     const front = el('canvas', { class: 'front', width: 7, height: 12, 'aria-label': 'Part 1 front' });
     const back = el('canvas', { class: 'back', width: 12, height: 7, 'aria-label': 'Part 1 back' });
-    const allCards = el('div', { class: 'all-cards' });
-    const spoil = el('details', { ontoggle: async e => {
-      if (!e.target.open || allCards.childElementCount) return;
-      const m = await loadDispatch(d);
-      for (let i = 0; i < m.parts.length; i++) { const c = el('canvas', {}); allCards.append(c); renderFront(m, i, { scale: 4, rounded: true, canvas: c }); }
-    } }, el('summary', { text: 'Read every card (spoilers)' }), allCards);
+    const view = async side => { try { openViewer(await loadDispatch(d), { side }); } catch (err) { toast(err.message); } };
+    front.addEventListener('click', () => view('front'));
+    back.addEventListener('click', () => view('back'));
     const meta = [`${d.parts} parts`, `${d.players} players`, `${d.time} min`, d.needs, `version ${d.version}`].join(' · ');
     const card = el('article', { class: 'mcard dcard', id: 'dispatch-' + d.id },
       el('header', {}, diffBadge(d.diff), el('div', {},
@@ -697,7 +767,8 @@ function renderDispatches(openId) {
         el('ol', {}, d.testNotes.map(t => el('li', { text: t })))) : null,
       d.changes && d.changes.length ? el('p', { class: 'muted small', text: 'Changes: ' + d.changes.join(' ') }) : null,
       el('div', { class: 'tile-actions', style: 'padding:0' },
-        el('button', { class: 'btn mini primary', type: 'button', onclick: async e => {
+        el('button', { class: 'btn mini primary', type: 'button', onclick: () => view('front') }, 'View cards'),
+        el('button', { class: 'btn mini', type: 'button', onclick: async e => {
           const btn = e.currentTarget; btn.disabled = true;
           try {
             if (!window.jspdf) throw new Error('The PDF library has not loaded yet.');
@@ -714,8 +785,7 @@ function renderDispatches(openId) {
         } }, 'Add to My missions'),
         el('a', { class: 'btn mini', href: `mailto:games@staroversky.com?subject=${encodeURIComponent(`Playtest: ${d.title} v${d.version}`)}&body=${encodeURIComponent(['Players:', 'Characters:', 'Game mode (co-op or semi-co-op):', 'Playing time:', 'Result (won or lost, and on which part):', '', ...(d.testNotes || []).map((t, k) => `${k + 1}. ${t}\nAnswer:\n`), 'Anything else:'].join('\n'))}` }, 'Send feedback'),
         el('a', { class: 'btn mini', href: '#stories/' + d.id, title: 'Link to this story' }, 'Link')),
-      d.playtests.length ? el('p', { class: 'muted small', text: `Playtested ${d.playtests.length} time${d.playtests.length === 1 ? '' : 's'}.` }) : null,
-      spoil);
+      d.playtests.length ? el('p', { class: 'muted small', text: `Playtested ${d.playtests.length} time${d.playtests.length === 1 ? '' : 's'}.` }) : null);
     list.append(card);
     loadDispatch(d).then(m => { renderFront(m, 0, { scale: 4, rounded: true, canvas: front }); renderBack(m, 0, { scale: 4, rounded: true, canvas: back }); }).catch(err => toast(err.message));
   }
@@ -872,6 +942,7 @@ async function start() {
   setupPrint();
   setupSheet();
   setupFaq();
+  setupViewer();
   setupDesign();
   renderIconTable();
   await ensureFonts();

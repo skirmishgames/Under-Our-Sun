@@ -135,6 +135,17 @@ const check = (ok, msg) => { console.log((ok ? 'PASS ' : 'FAIL ') + msg); if (!o
   await page.locator('#dispatchFilters select').nth(3).selectOption('semi');
   check((await page.locator('#dispatchList .dcard').count()) === 3, 'stories semi-cooperative filter');
   await page.locator('#dispatchFilters select').nth(3).selectOption('');
+  await page.click('#dispatchList .dcard >> nth=0 >> text=View cards');
+  await page.waitForSelector('#viewer:not([hidden])');
+  await page.waitForTimeout(500);
+  check(await page.isHidden('#viewerNext') && await page.isVisible('#viewerReveal'), 'viewer hides later parts behind the spoiler switch');
+  await page.click('#viewerReveal');
+  await page.waitForTimeout(400);
+  check((await page.textContent('#viewerPos')).startsWith('Part 2'), 'viewer steps to part 2 after reveal');
+  const vw = await page.$eval('#viewerCanvas', c => c.width);
+  check(vw >= 400, `viewer renders large (${vw}px wide)`);
+  await page.keyboard.press('Escape');
+  check(await page.isHidden('#viewer'), 'Escape closes the viewer');
   const [dpdf] = await Promise.all([page.waitForEvent('download', { timeout: 60000 }), page.click('#dispatchList .dcard >> text=Print cards')]);
   check(fs.readFileSync(await dpdf.path()).slice(0, 4).toString() === '%PDF', 'dispatch prints to PDF');
 
