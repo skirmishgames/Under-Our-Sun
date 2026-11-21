@@ -136,10 +136,23 @@ export function normaliseMission(m) {
 }
 
 // "Mission 14" style label used in headers and the {mission} token.
-// Part label shown in the header: a custom label such as "6 A", or the part number.
+// Part label shown in the header: a custom label such as "6 A", or the next number.
+// Unlabelled parts continue from the previous part's number, so after 5 A and 5 B comes 6.
 export function partLabel(m, i) {
-  const p = m.parts[i];
-  return (p && String(p.label || '').trim()) || String(i + 1);
+  let n = 0;
+  for (let k = 0; k <= i; k++) {
+    const p = m.parts[k];
+    const own = p && String(p.label || '').trim();
+    if (own) {
+      const lead = parseInt(own, 10);
+      if (k === i) return own;
+      if (!isNaN(lead)) n = lead;
+    } else {
+      n += 1;
+      if (k === i) return String(n);
+    }
+  }
+  return String(i + 1);
 }
 
 // Total parts: the highest leading number among part labels, so 6 A and 6 B count once.

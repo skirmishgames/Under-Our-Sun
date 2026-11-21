@@ -1,0 +1,287 @@
+{
+ "format": "uos-missions",
+ "version": 1,
+ "exported": "2026-11-21T02:10:54Z",
+ "missions": [
+  {
+   "schema": 1,
+   "id": "dispatch-02-the-deep-well",
+   "title": "The Deep Well",
+   "label": "Dispatch",
+   "number": "02",
+   "author": "",
+   "community": false,
+   "difficulty": 3,
+   "mode": "coop",
+   "players": "1-6",
+   "playtime": "120-180",
+   "summary": "Ida's map leads east to an old enclave where the water still runs. The Sons of Liberty know the way too.",
+   "notes": "Dispatch 02, sequel to Dispatch 01: Ghost Signal. Base game components only: objective tokens, allocation markers A-C, universal markers, SoL enemy cards.\nPlays on its own: use the setup for groups who did not play Dispatch 01.",
+   "types": [
+    "timed",
+    "rescue",
+    "defend"
+   ],
+   "art": {
+    "preset": "storm",
+    "front": null,
+    "back": null,
+    "frontPos": {
+     "x": 50,
+     "y": 40,
+     "zoom": 1
+    },
+    "backPos": {
+     "x": 50,
+     "y": 50,
+     "zoom": 1
+    }
+   },
+   "parts": [
+    {
+     "id": "p-79928385",
+     "label": "",
+     "art": null,
+     "blocks": [
+      {
+       "id": "b-section-13988664",
+       "kind": "section",
+       "heading": "BRIEFING",
+       "text": "Ida's map is drawn on the back of a ration crate: a dry riverbed, a broken highway and a ring of buildings marked with one word. *Water.*\n*\"It's an old enclave pump hall,\"* she says. *\"The Sons will be on the road by now. Whoever gets there first decides who drinks.\"*\nShe is coming with you, whether the council likes it or not.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-section-64376101",
+       "kind": "section",
+       "heading": "SETUP",
+       "text": "Form 2 stacks of map tiles and shuffle each:\n- **Stack 1:** 6 random map tiles\n- **Stack 2:** 4 random map tiles + 1 target map tile\nPlace stack 1 on top of stack 2.\n- **Signal silenced in Dispatch 01, or not played:** start on day 1.\n- **Signal left running:** start on day 2 and place 1 universal marker next to this card.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-section-56032490",
+       "kind": "section",
+       "heading": "SPECIAL RULES",
+       "text": "**Ida** has 4 HP and moves with one character, who pays +1 AP for each map tile. Once per day, that character may spend 2 AP to look at the top 2 map tiles and put them back in any order. If Ida's HP drops to 0, she dies and her map is lost.\n**The convoy:** in each preparation phase, place 1 universal marker next to this card.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-objectives-3683563",
+       "kind": "objectives",
+       "heading": "",
+       "text": "Once the target map tile is revealed, read **{mission} - Part 2**. If all characters are dead, read **{mission} - Part 6: Failure**.",
+       "image": null,
+       "caption": ""
+      }
+     ]
+    },
+    {
+     "id": "p-45220420",
+     "label": "",
+     "art": null,
+     "blocks": [
+      {
+       "id": "b-section-60385269",
+       "kind": "section",
+       "heading": "THE ENCLAVE",
+       "text": "A ring of collapsed walls rises out of the sand, and in the middle stands a pump hall with its roof torn open. Somewhere under the floor, machinery is running.\nFresh tyre tracks cross the sand. You are not the first.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-section-19736671",
+       "kind": "section",
+       "heading": "SETUP",
+       "text": "Place 3 random map tiles face down touching the target map tile and each other: the outer ruins. Put allocation markers **A**, **B** and **C** on them, one each. Entering a ruin tile costs 1 extra AP.\nPlace 1 objective token (the pump) on the target map tile.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-section-12921773",
+       "kind": "section",
+       "heading": "SPECIAL RULES",
+       "text": "**The convoy arrives** when 4 universal markers are next to part 1: spawn **1 SoL Elite** and **2 SoL Soldiers** on ruin tile A. Then keep adding markers; every 2 more markers, spawn **1 SoL Soldier** on tile A.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-objectives-84693973",
+       "kind": "objectives",
+       "heading": "",
+       "text": "As soon as a character enters the target map tile, read **{mission} - Part 3**.",
+       "image": null,
+       "caption": ""
+      }
+     ]
+    },
+    {
+     "id": "p-97926021",
+     "label": "",
+     "art": null,
+     "blocks": [
+      {
+       "id": "b-section-39200575",
+       "kind": "section",
+       "heading": "VOICES BELOW",
+       "text": "Steps lead down into the dark, and the sound of the pump grows louder. So do the voices.\nChained along the pipes are people with cracked lips and hollow eyes, working the hand pumps in shifts. Ida stops on the stairs. She knows these faces. They are the families who followed her voice east.\n*\"They didn't take them for ransom,\"* she whispers. *\"They took them to work.\"*",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-section-66276869",
+       "kind": "section",
+       "heading": "SETUP",
+       "text": "Spawn **1 SoL Elite** and **SoL Drifters** equal to the number of players on the target map tile. Characters who sneaked onto the tile stay hidden.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-objectives-44957300",
+       "kind": "objectives",
+       "heading": "",
+       "text": "Defeat every enemy on the target map tile, then read **{mission} - Part 4**.",
+       "image": null,
+       "caption": ""
+      }
+     ]
+    },
+    {
+     "id": "p-3806787",
+     "label": "",
+     "art": null,
+     "blocks": [
+      {
+       "id": "b-section-9024822",
+       "kind": "section",
+       "heading": "THE CHOICE",
+       "text": "The chains come off. The workers can barely stand, and there is no way to carry both them and the well's secrets home before the Sons strike back.\n*\"If we leave, the Sons keep the water,\"* Ida says. *\"If we stay, they wait in the dark while we fight.\"*\nEveryone looks at you.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-section-8159948",
+       "kind": "section",
+       "heading": "SETUP",
+       "text": "Place 1 objective token (the workers) on the target map tile. If the convoy has not arrived yet, it arrives now.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-objectives-7693488",
+       "kind": "objectives",
+       "heading": "",
+       "text": "Decide together before the next preparation phase.\n- **Lead the workers home:** read **{mission} - Part 5 A**.\n- **Hold the well:** read **{mission} - Part 5 B**.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-tip-64720738",
+       "kind": "tip",
+       "heading": "",
+       "text": "Count your water and your AP before you choose.",
+       "image": null,
+       "caption": ""
+      }
+     ]
+    },
+    {
+     "id": "p-46916244",
+     "label": "5 A",
+     "art": null,
+     "blocks": [
+      {
+       "id": "b-section-88201370",
+       "kind": "section",
+       "heading": "EXODUS",
+       "text": "You lead a long, slow line of survivors back toward the broken highway. Behind you, engines start.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-section-67071595",
+       "kind": "section",
+       "heading": "MISSION RULES",
+       "text": "- **The workers** have 6 HP and move with one character, who pays +1 AP for each map tile. Enemies on their tile attack the workers before anyone else.\n- In each preparation phase, spawn **1 SoL Soldier** on the target map tile. SoL enemies move 1 map tile toward the workers instead of rolling for movement.\n- Ida's map no longer works: you know the way home.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-goal-30478271",
+       "kind": "goal",
+       "heading": "",
+       "text": "Bring the workers to New Haven before the **morning of day 5**: read **{mission} - Part 6: Success A**. If the workers' HP drops to 0 or day 5 begins, read **{mission} - Part 6: Failure**.",
+       "image": null,
+       "caption": ""
+      }
+     ]
+    },
+    {
+     "id": "p-7448815",
+     "label": "5 B",
+     "art": null,
+     "blocks": [
+      {
+       "id": "b-section-11731669",
+       "kind": "section",
+       "heading": "THE LAST STAND",
+       "text": "You drag rubble across the stairs and send the workers deep into the pump hall. The well is yours, for as long as you can keep it.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-section-36173991",
+       "kind": "section",
+       "heading": "MISSION RULES",
+       "text": "- The target map tile is a camp. No night cards are drawn there.\n- At the start of each day phase, spawn enemies equal to the number of players. For each enemy roll a d8: **1-3** tile A, **4-6** tile B, **7-8** tile C.\n- Enemies move 1 map tile toward the target map tile at the start of each day phase. If an enemy is on the target map tile at the end of a day phase, a worker is lost: place 1 universal marker on the workers token.\n- **Shore up:** 1 AP and 1 {wood} or 1 {metal} removes 1 marker from the workers token.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-goal-99104406",
+       "kind": "goal",
+       "heading": "",
+       "text": "Hold the target map tile for **4 day phases**, then read **{mission} - Part 6: Success B**. If the workers token holds 3 markers, read **{mission} - Part 6: Failure**.",
+       "image": null,
+       "caption": ""
+      }
+     ]
+    },
+    {
+     "id": "p-68147758",
+     "label": "",
+     "art": null,
+     "blocks": [
+      {
+       "id": "b-success-87129541",
+       "kind": "success",
+       "heading": "",
+       "text": "**A: Exodus.** The gates of New Haven open for a column of ghosts. Tonight there are more mouths than water, but every one of them is alive. Ida stands at the gate long after the last worker is through, looking east.\n**B: The well.** The convoy pulls back at dawn, leaving smoke and empty shell casings. New Haven has a second home now, deep underground, and a well the Sons will never stop wanting back.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-roguelike-68012532",
+       "kind": "roguelike",
+       "heading": "",
+       "text": "The group receives 1 additional {star}. **A:** each character heals 4 HP. **B:** the group takes 1 **Water bottle** per character from the item deck.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-failure-8845853",
+       "kind": "failure",
+       "heading": "",
+       "text": "The pump falls silent. Somewhere in the dark, the Sons of Liberty are counting their new workers, and Ida's map ends up in the fire.",
+       "image": null,
+       "caption": ""
+      }
+     ]
+    }
+   ],
+   "created": "2026-11-21T02:10:54Z",
+   "updated": "2026-11-21T02:10:54Z"
+  }
+ ]
+}
