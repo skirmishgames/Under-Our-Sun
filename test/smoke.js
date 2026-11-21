@@ -112,8 +112,10 @@ const check = (ok, msg) => { console.log((ok ? 'PASS ' : 'FAIL ') + msg); if (!o
   await page.click('.tabs a[data-tab=index]');
   await page.waitForSelector('#indexList .mcard');
   check((await page.locator('#indexList .mcard').count()) === 14, 'mission index lists 14 missions');
-  await page.click('#indexFilters .chip >> text=Competitive');
+  await page.locator('#indexFilters select').nth(2).selectOption('comp');
   check((await page.locator('#indexList .mcard').count()) === 4, 'competitive filter shows 4');
+  await page.locator('#indexFilters select').nth(0).selectOption('1');
+  check((await page.locator('#indexList .mcard').count()) === 3, 'easy and competitive shows 3');
 
   // design
   await page.click('.tabs a[data-tab=design]');

@@ -1,16 +1,16 @@
 // App shell: views, editor, library and print.
-import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, MISSION_TAGS, newMission, newBlock, newPart, normaliseMission, missionName, partLabel, partTotal, uid } from './data/schema.js?v=b57b33be';
-import { PATTERNS } from './data/patterns.js?v=b57b33be';
-import { ITEMS } from './data/items.js?v=b57b33be';
-import { sampleMission } from './data/sample.js?v=b57b33be';
-import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=b57b33be';
-import { fileToDataUrl } from './art.js?v=b57b33be';
-import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=b57b33be';
-import { OFFICIAL_MISSIONS, COMMUNITY_MISSIONS, MISSION_TYPES } from './data/missions-index.js?v=b57b33be';
-import { rollSpark } from './data/design.js?v=b57b33be';
-import { FAQ, FAQ_TOPICS, FAQ_SOURCES, FAQ_LINKS, CONTENTS_1E } from './data/faq.js?v=b57b33be';
-import { renderSheet, buildSheetPdf, ROGUELIKE_TEXT } from './sheet.js?v=b57b33be';
-import { buildPdf, PAPERS, layoutFor } from './print.js?v=b57b33be';
+import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, MISSION_TAGS, newMission, newBlock, newPart, normaliseMission, missionName, partLabel, partTotal, uid } from './data/schema.js?v=5158092e';
+import { PATTERNS } from './data/patterns.js?v=5158092e';
+import { ITEMS } from './data/items.js?v=5158092e';
+import { sampleMission } from './data/sample.js?v=5158092e';
+import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=5158092e';
+import { fileToDataUrl } from './art.js?v=5158092e';
+import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=5158092e';
+import { OFFICIAL_MISSIONS, COMMUNITY_MISSIONS, MISSION_TYPES } from './data/missions-index.js?v=5158092e';
+import { rollSpark } from './data/design.js?v=5158092e';
+import { FAQ, FAQ_TOPICS, FAQ_SOURCES, FAQ_LINKS, CONTENTS_1E } from './data/faq.js?v=5158092e';
+import { renderSheet, buildSheetPdf, ROGUELIKE_TEXT } from './sheet.js?v=5158092e';
+import { buildPdf, PAPERS, layoutFor } from './print.js?v=5158092e';
 
 const VERSION = '1.0.0';
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -542,7 +542,24 @@ function setupSheet() {
 
 // ---------- mission index ----------
 
-const indexState = { filter: 'all' };
+const indexState = { diff: '', dur: '', type: '' };
+
+const DURATIONS = [
+  { value: 'short', label: 'Short (up to 90 min)', test: max => max <= 90 },
+  { value: 'medium', label: 'Medium (up to 2.5 hours)', test: max => max > 90 && max <= 150 },
+  { value: 'long', label: 'Long (over 2.5 hours)', test: max => max > 150 }
+];
+
+function maxTime(m) { const n = String(m.time || '').split('-').map(Number).filter(Boolean); return n.length ? Math.max(...n) : 0; }
+
+function indexMatch(m, st) {
+  if (st.diff && m.diff !== +st.diff) return false;
+  if (st.dur) { const d = DURATIONS.find(x => x.value === st.dur); if (!d || !d.test(maxTime(m))) return false; }
+  if (st.type === 'coop' && m.mode === 'comp') return false;
+  if (st.type === 'comp' && m.mode !== 'comp') return false;
+  if (st.type && st.type !== 'coop' && st.type !== 'comp' && !m.types.includes(st.type)) return false;
+  return true;
+}
 
 function diffBadge(d) {
   const def = DIFFICULTY.find(x => x.value === d) || DIFFICULTY[1];
@@ -552,19 +569,27 @@ function diffBadge(d) {
 }
 
 function renderIndex() {
-  const filters = $('#indexFilters');
-  filters.innerHTML = '';
-  const opts = [['all', 'All'], ['coop', 'Cooperative'], ['comp', 'Competitive'], ['d1', 'Easy'], ['d2', 'Challenging'], ['d3', 'Hard'],
-    ...Object.entries(MISSION_TYPES).filter(([k]) => k !== 'competitive' && OFFICIAL_MISSIONS.some(m => m.types.includes(k)))];
-  const match = (m, f) => f === 'all' || (f === 'coop' && m.mode !== 'comp') || (f === 'comp' && m.mode === 'comp') || (f[0] === 'd' && /^d\d$/.test(f) && m.diff === +f[1]) || m.types.includes(f);
-  for (const [k, label] of opts) {
-    filters.append(el('button', { type: 'button', class: 'chip' + (indexState.filter === k ? ' on' : ''), 'aria-pressed': String(indexState.filter === k),
-      onclick: () => { indexState.filter = k; renderIndex(); } }, label, el('span', { class: 'n', text: String(OFFICIAL_MISSIONS.filter(m => match(m, k)).length) })));
-  }
+  const box = $('#indexFilters');
+  box.innerHTML = '';
+  // count for an option, given the other active filters
+  const count = (key, value) => OFFICIAL_MISSIONS.filter(m => indexMatch(m, Object.assign({}, indexState, { [key]: value }))).length;
+  const opt = (key, value, label) => el('option', { value, selected: indexState[key] === value }, `${label} (${count(key, value)})`);
+  const select = (key, label, children) => el('label', { class: 'field' }, el('span', { text: label }),
+    el('select', { onchange: e => { indexState[key] = e.target.value; renderIndex(); } }, children));
+  const types = Object.entries(MISSION_TYPES).filter(([k]) => k !== 'competitive' && OFFICIAL_MISSIONS.some(m => m.types.includes(k)));
+  box.append(
+    select('diff', 'Difficulty', [opt('diff', '', 'Any'), ...DIFFICULTY.map(d => opt('diff', String(d.value), `${d.marks} ${d.label}`))]),
+    select('dur', 'Playing time', [opt('dur', '', 'Any'), ...DURATIONS.map(d => opt('dur', d.value, d.label))]),
+    select('type', 'Type', [opt('type', '', 'Any'),
+      el('optgroup', { label: 'Play mode' }, opt('type', 'coop', 'Cooperative'), opt('type', 'comp', 'Competitive')),
+      el('optgroup', { label: 'Mission type' }, types.map(([k, l]) => opt('type', k, l)))]));
+  const active = indexState.diff || indexState.dur || indexState.type;
+  if (active) box.append(el('button', { class: 'btn mini', type: 'button', onclick: () => { indexState.diff = indexState.dur = indexState.type = ''; renderIndex(); } }, 'Clear filters'));
   const list = $('#indexList');
   list.innerHTML = '';
-  const shown = OFFICIAL_MISSIONS.filter(m => match(m, indexState.filter));
-  $('#indexCount').textContent = indexState.filter === 'all' ? '' : `${shown.length} of ${OFFICIAL_MISSIONS.length} missions`;
+  const shown = OFFICIAL_MISSIONS.filter(m => indexMatch(m, indexState));
+  $('#indexCount').textContent = active ? `${shown.length} of ${OFFICIAL_MISSIONS.length} missions` : `${OFFICIAL_MISSIONS.length} missions`;
+  if (!shown.length) list.append(el('p', { class: 'empty', text: 'No mission matches these filters.' }));
   for (const m of shown) {
     const meta = [`${m.parts} part${m.parts === 1 ? '' : 's'}`, `${m.players} players`, m.time && `${m.time} min`, m.box === 'cp01' ? 'Content Pack 01' : 'Base game'].filter(Boolean).join(' · ');
     list.append(el('article', { class: 'mcard', id: 'mission-' + m.n },
