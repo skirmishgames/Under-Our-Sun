@@ -1,12 +1,13 @@
 // App shell: views, editor, library and print.
-import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, newMission, newBlock, newPart, normaliseMission, missionName, uid } from './data/schema.js?v=d362ef6d';
-import { ITEMS } from './data/items.js?v=d362ef6d';
-import { sampleMission } from './data/sample.js?v=d362ef6d';
-import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=d362ef6d';
-import { fileToDataUrl } from './art.js?v=d362ef6d';
-import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=d362ef6d';
-import { renderSheet, buildSheetPdf } from './sheet.js?v=d362ef6d';
-import { buildPdf, PAPERS, layoutFor } from './print.js?v=d362ef6d';
+import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, newMission, newBlock, newPart, normaliseMission, missionName, uid } from './data/schema.js?v=0922c014';
+import { ITEMS } from './data/items.js?v=0922c014';
+import { sampleMission } from './data/sample.js?v=0922c014';
+import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=0922c014';
+import { fileToDataUrl } from './art.js?v=0922c014';
+import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=0922c014';
+import { FAQ, FAQ_TOPICS, FAQ_SOURCES, FAQ_LINKS, CONTENTS_1E } from './data/faq.js?v=0922c014';
+import { renderSheet, buildSheetPdf } from './sheet.js?v=0922c014';
+import { buildPdf, PAPERS, layoutFor } from './print.js?v=0922c014';
 
 const VERSION = '1.0.0';
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -41,7 +42,7 @@ const state = { missions: [], current: null, partIdx: 0, side: 'front', fit: [] 
 
 function route() {
   const [tab, id] = (location.hash.replace('#', '') || 'library').split('/');
-  const views = ['library', 'edit', 'print', 'sheet', 'guide', 'about'];
+  const views = ['library', 'edit', 'print', 'sheet', 'faq', 'guide', 'about'];
   const view = views.includes(tab) ? tab : 'library';
   views.forEach(v => { $('#view-' + v).hidden = v !== view; });
   $$('.tabs a').forEach(a => a.classList.toggle('on', a.dataset.tab === view));
@@ -49,7 +50,8 @@ function route() {
   if (view === 'edit') openEditor(id);
   if (view === 'print') renderPrint();
   if (view === 'sheet') renderSheetView();
-  window.scrollTo(0, 0);
+  if (view === 'faq') renderFaq(id);
+  if (!(view === 'faq' && id)) window.scrollTo(0, 0);
 }
 
 // ---------- library ----------
@@ -506,6 +508,85 @@ function setupSheet() {
   });
 }
 
+// ---------- faq ----------
+
+const faqState = { topic: 'all', query: '' };
+
+function esc(t) { return String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
+
+function faqHtml(text, query) {
+  const inline = t => {
+    let h = esc(t)
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\{link:(\w+)\|([^}]+)\}/g, (m, k, label) => `<a href="${FAQ_LINKS[k] || '#'}" target="_blank" rel="noopener">${label}</a>`);
+    if (query) {
+      const re = new RegExp('(' + query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')(?![^<]*>)', 'gi');
+      h = h.replace(re, '<mark>$1</mark>');
+    }
+    return h;
+  };
+  const out = [];
+  let list = null;
+  for (const line of String(text).split('\n')) {
+    if (/^- /.test(line)) { if (!list) { list = []; } list.push('<li>' + inline(line.slice(2)) + '</li>'); continue; }
+    if (list) { out.push('<ul>' + list.join('') + '</ul>'); list = null; }
+    if (line.trim()) out.push('<p>' + inline(line) + '</p>');
+  }
+  if (list) out.push('<ul>' + list.join('') + '</ul>');
+  return out.join('');
+}
+
+function faqMatches(e, q) {
+  if (!q) return true;
+  return (e.q + ' ' + e.a).toLowerCase().includes(q.toLowerCase());
+}
+
+function renderFaq(openId) {
+  $('#faqWikiLink').href = FAQ_LINKS.wiki;
+  if (openId) { faqState.query = ''; faqState.topic = 'all'; $('#faqSearch').value = ''; }
+  const q = faqState.query.trim();
+  const visible = FAQ.filter(e => (faqState.topic === 'all' || e.topic === faqState.topic) && faqMatches(e, q));
+  // topic chips with counts for the current search
+  const chips = $('#faqTopics');
+  chips.innerHTML = '';
+  const count = t => FAQ.filter(e => (t === 'all' || e.topic === t) && faqMatches(e, q)).length;
+  [{ id: 'all', label: 'All' }, ...FAQ_TOPICS].forEach(t => {
+    const n = count(t.id);
+    if (t.id !== 'all' && !n) return;
+    chips.append(el('button', { type: 'button', class: 'chip' + (faqState.topic === t.id ? ' on' : ''), 'aria-pressed': String(faqState.topic === t.id),
+      onclick: () => { faqState.topic = t.id; renderFaq(); } }, t.label, el('span', { class: 'n', text: String(n) })));
+  });
+  $('#faqCount').textContent = q ? `${visible.length} answer${visible.length === 1 ? '' : 's'} for "${q}"` : '';
+  const list = $('#faqList');
+  list.innerHTML = '';
+  if (!visible.length) { list.append(el('p', { class: 'empty', text: 'Nothing found. Try another word, or check the rulebook.' })); }
+  for (const t of FAQ_TOPICS) {
+    const items = visible.filter(e => e.topic === t.id);
+    if (!items.length) continue;
+    const sec = el('section', { class: 'faq-topic' }, el('h2', { text: t.label }));
+    for (const e of items) {
+      const src = FAQ_SOURCES[e.src];
+      const d = el('details', { class: 'qa', id: 'faq-' + e.id, open: !!q || openId === e.id },
+        el('summary', {}, el('span', { class: 'q', text: e.q }), el('span', { class: 'src src-' + e.src, title: src.title, text: src.label })));
+      const body = el('div', { class: 'body' });
+      body.innerHTML = faqHtml(e.a, q);
+      body.append(el('p', { class: 'muted small' }, el('a', { href: '#faq/' + e.id, text: 'Link to this answer' })));
+      d.append(body);
+      sec.append(d);
+    }
+    list.append(sec);
+  }
+  if (openId) { const target = document.getElementById('faq-' + openId); if (target) target.scrollIntoView({ block: 'start' }); }
+}
+
+function setupFaq() {
+  const s = $('#faqSearch');
+  let t = null;
+  s.addEventListener('input', () => { clearTimeout(t); t = setTimeout(() => { faqState.query = s.value; renderFaq(); }, 120); });
+  const table = $('#faqContents');
+  CONTENTS_1E.forEach(([k, v]) => table.append(el('tr', {}, el('th', { text: k }), el('td', { text: v }))));
+}
+
 // ---------- guide ----------
 
 function renderIconTable() {
@@ -551,6 +632,7 @@ async function start() {
   setupEditorChrome();
   setupPrint();
   setupSheet();
+  setupFaq();
   renderIconTable();
   await ensureFonts();
   if (!getSetting('seeded', false)) {

@@ -105,6 +105,16 @@ const check = (ok, msg) => { console.log((ok ? 'PASS ' : 'FAIL ') + msg); if (!o
   const [sheet] = await Promise.all([page.waitForEvent('download'), page.click('#sheetPdf')]);
   check(fs.readFileSync(await sheet.path()).slice(0, 4).toString() === '%PDF' && sheet.suggestedFilename() === 'survivor-log-de.pdf', 'German survivor log PDF builds');
 
+  // faq
+  await page.click('.tabs a[data-tab=faq]');
+  await page.fill('#faqSearch', 'karma');
+  await page.waitForTimeout(400);
+  const hits = await page.locator('#faqList details.qa').count();
+  check(hits >= 2 && hits < 20, `FAQ search filters (${hits} hits for karma)`);
+  await page.goto(url + '#faq/hero-item');
+  await page.waitForTimeout(600);
+  check(await page.evaluate(() => document.getElementById('faq-hero-item')?.open === true), 'FAQ deep link opens the answer');
+
   // mobile
   await page.setViewportSize({ width: 390, height: 844 });
   await page.click('.tabs a[data-tab=edit]');

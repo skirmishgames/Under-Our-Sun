@@ -7,7 +7,7 @@
   <meta name="description" content="Write and print fan-made missions for the Under Our Sun board game.">
   <meta name="theme-color" content="#b5583a">
   <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/styles.css?v=d362ef6d">
+  <link rel="stylesheet" href="css/styles.css?v=0922c014">
   <script>
     try { var t = localStorage.getItem('uos.theme'); if (t && JSON.parse(t) === 'dark') document.documentElement.dataset.theme = 'dark'; } catch (e) {}
   </script>
@@ -28,6 +28,7 @@
     <a href="#edit" data-tab="edit">Editor</a>
     <a href="#print" data-tab="print">Print</a>
     <a href="#sheet" data-tab="sheet">Survivor log</a>
+    <a href="#faq" data-tab="faq">FAQ</a>
     <a href="#guide" data-tab="guide">Guide</a>
     <a href="#about" data-tab="about">About</a>
   </nav>
@@ -137,6 +138,22 @@
       </div>
     </section>
 
+    <!-- FAQ -->
+    <section id="view-faq" class="view faq" hidden>
+      <h1>Rules FAQ</h1>
+      <p class="muted small">Questions and answers from the <a id="faqWikiLink" target="_blank" rel="noopener">BoardGameGeek wiki</a> and answers from designer Maximilian Lichtner on the BGG forums, reworded and sorted by topic. The rulebook is the final word. Answers from the first edition FAQ still apply to V2.0 unless an errata entry says otherwise.</p>
+      <div class="faq-tools">
+        <input type="search" id="faqSearch" placeholder="Search, for example stealth, merchant, karma" aria-label="Search the FAQ">
+        <div class="chips" id="faqTopics" role="toolbar" aria-label="Topics"></div>
+      </div>
+      <p id="faqCount" class="muted small" aria-live="polite"></p>
+      <div id="faqList"></div>
+      <details class="panel">
+        <summary>What is in the box (first edition)</summary>
+        <table class="cheat" id="faqContents"></table>
+      </details>
+    </section>
+
     <!-- Guide -->
     <section id="view-guide" class="view prose" hidden>
       <h1>Guide</h1>
@@ -190,7 +207,7 @@
 
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 
-  <script src="vendor/jspdf.umd.min.js?v=d362ef6d" defer></script>
-  <script type="module" src="js/app.js?v=d362ef6d"></script>
+  <script src="vendor/jspdf.umd.min.js?v=0922c014" defer></script>
+  <script type="module" src="js/app.js?v=0922c014"></script>
 </body>
 </html>

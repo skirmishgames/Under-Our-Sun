@@ -4,7 +4,7 @@ Items to verify with the community or the designers.
 
 | Item | Source | What to verify |
 |---|---|---|
-| Card size | Mission card scans, 300 dpi | Measured about 70 x 120 mm (fronts 69.8 to 70.3 mm wide, backs 120.1 to 121.3 mm long). Tool prints 70 x 120 mm. Confirm against a physical card with a ruler. |
+| Card size | Mission card scans, BGG wiki component list | Confirmed: mission cards are tarot size, 70 x 120 mm. Bleed is still unknown. |
 | Back orientation | Mission card scans | Fronts read portrait, backs read landscape. Which way the back art turns relative to the front is not clear from the scans. The print page has a setting for both. Check against a real card. |
 | Difficulty marks | Rulebook V2.0 p. 3 | Easy (!), challenging (!!), hard (!!!). Badge colours in the tool are its own: green, orange, red. |
 | Brief info | Mission card scans (Missions 1 and 13) | Only the back of part 1 shows brief info: summary, playing time, player count. Tool adds the game mode line. Confirm that is wanted. |
