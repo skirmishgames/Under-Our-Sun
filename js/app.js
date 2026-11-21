@@ -1,17 +1,17 @@
 // App shell: views, editor, library and print.
-import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, MISSION_TAGS, newMission, newBlock, newPart, normaliseMission, missionName, partLabel, partTotal, uid } from './data/schema.js?v=33dccb04';
-import { PATTERNS } from './data/patterns.js?v=33dccb04';
-import { ITEMS } from './data/items.js?v=33dccb04';
-import { sampleMission } from './data/sample.js?v=33dccb04';
-import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=33dccb04';
-import { fileToDataUrl } from './art.js?v=33dccb04';
-import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=33dccb04';
-import { DISPATCHES, DISPATCH_STATUS } from './data/dispatches.js?v=33dccb04';
-import { OFFICIAL_MISSIONS, COMMUNITY_MISSIONS, MISSION_TYPES } from './data/missions-index.js?v=33dccb04';
-import { rollSpark } from './data/design.js?v=33dccb04';
-import { FAQ, FAQ_TOPICS, FAQ_SOURCES, FAQ_LINKS, CONTENTS_1E } from './data/faq.js?v=33dccb04';
-import { renderSheet, buildSheetPdf, ROGUELIKE_TEXT } from './sheet.js?v=33dccb04';
-import { buildPdf, PAPERS, layoutFor } from './print.js?v=33dccb04';
+import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, MISSION_TAGS, newMission, newBlock, newPart, normaliseMission, missionName, partLabel, partTotal, uid } from './data/schema.js?v=d4b9a02a';
+import { PATTERNS } from './data/patterns.js?v=d4b9a02a';
+import { ITEMS } from './data/items.js?v=d4b9a02a';
+import { sampleMission } from './data/sample.js?v=d4b9a02a';
+import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=d4b9a02a';
+import { fileToDataUrl } from './art.js?v=d4b9a02a';
+import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=d4b9a02a';
+import { DISPATCHES, DISPATCH_STATUS } from './data/dispatches.js?v=d4b9a02a';
+import { OFFICIAL_MISSIONS, COMMUNITY_MISSIONS, MISSION_TYPES } from './data/missions-index.js?v=d4b9a02a';
+import { rollSpark } from './data/design.js?v=d4b9a02a';
+import { FAQ, FAQ_TOPICS, FAQ_SOURCES, FAQ_LINKS, CONTENTS_1E } from './data/faq.js?v=d4b9a02a';
+import { renderSheet, buildSheetPdf, ROGUELIKE_TEXT } from './sheet.js?v=d4b9a02a';
+import { buildPdf, PAPERS, layoutFor } from './print.js?v=d4b9a02a';
 
 const VERSION = '1.0.0';
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -668,7 +668,7 @@ function renderDispatches(openId) {
         el('div', { class: 'num', text: `Story ${d.number} · ${(DIFFICULTY.find(x => x.value === d.diff) || {}).label || ''}` }), el('h3', { text: d.title }))),
       el('div', {}, el('span', { class: 'status status-' + d.status, title: st.note, text: st.label })),
       el('div', { class: 'meta', text: meta }),
-      el('div', { class: 'tags' }, el('span', { class: 'tag', text: (MODES.find(x => x.value === d.mode) || MODES[0]).label }), d.types.map(t => el('span', { class: 'tag', text: MISSION_TYPES[t] }))),
+      el('div', { class: 'tags' }, d.genre ? el('span', { class: 'tag comp', text: d.genre }) : null, el('span', { class: 'tag', text: (MODES.find(x => x.value === d.mode) || MODES[0]).label }), d.types.map(t => el('span', { class: 'tag', text: MISSION_TYPES[t] }))),
       el('p', { text: d.premise }),
       el('div', { class: 'thumbs' }, front, back),
       d.status === 'untested' ? el('details', { class: 'focus' }, el('summary', {}, el('strong', { text: `What to test (${d.testNotes.length})` })),

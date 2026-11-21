@@ -1,7 +1,7 @@
 // Canvas card renderer. All positions are in millimetres.
 // Front: 70 x 120 mm portrait. Back: 120 x 70 mm landscape.
-import { DIFFICULTY, MODES, BLOCK_KINDS, ICON_TOKENS, missionName, partLabel, partTotal } from './data/schema.js?v=33dccb04';
-import { drawPreset, loadImage, drawCover } from './art.js?v=33dccb04';
+import { DIFFICULTY, MODES, BLOCK_KINDS, ICON_TOKENS, missionName, partLabel, partTotal } from './data/schema.js?v=d4b9a02a';
+import { drawPreset, loadImage, drawCover } from './art.js?v=d4b9a02a';
 
 export const CARD_W = 70;
 export const CARD_H = 120;
@@ -31,7 +31,8 @@ export function ensureFonts() {
 
 // Expand {mission} and split each line into styled runs and icons.
 export function parseMarkup(text, mission) {
-  const src = String(text || '').replace(/\{mission\}/gi, missionName(mission)).replace(/\r/g, '');
+  const src = String(text || '').replace(/\{mission\}/gi, missionName(mission)).replace(/\r/g, '')
+    .replace(/\bPart (\d+) ([A-Z])\b/g, 'Part $1\u00a0$2'); // keep "Part 5 A" on one line
   return src.split('\n').map(raw => {
     const bullet = /^\s*[-•*]\s+/.test(raw);
     const line = bullet ? raw.replace(/^\s*[-•*]\s+/, '') : raw;
@@ -73,10 +74,10 @@ function layout(ctx, lines, width, size, opts = {}) {
     const tokens = [];
     for (const run of line.runs) {
       if (run.type === 'icon') { tokens.push({ type: 'icon', name: run.name, w: size * 1.05 }); continue; }
-      const parts = run.str.split(/(\s+)/).filter(s => s !== '');
+      const parts = run.str.split(/([ \t]+)/).filter(s => s !== '');
       for (const p of parts) {
         ctx.font = fontFor(run, size, opts.weight);
-        tokens.push({ type: 'text', str: p, bold: run.bold, italic: run.italic, space: /^\s+$/.test(p), w: ctx.measureText(p).width });
+        tokens.push({ type: 'text', str: p, bold: run.bold, italic: run.italic, space: /^[ \t]+$/.test(p), w: ctx.measureText(p).width });
       }
     }
     let cur = [], curW = 0, first = true;
@@ -106,7 +107,8 @@ function drawRows(ctx, lay, x, y, width, align, colour, opts = {}) {
     if (row.gap) { cy += row.h; continue; }
     const base = cy + size * 0.88;
     let cx = x + row.indent;
-    if (align === 'center') cx = x + (width - row.w) / 2;
+    // Bulleted lines stay left-aligned even in centred panels, so lists read cleanly.
+    if (align === 'center' && !row.indent) cx = x + (width - row.w) / 2;
     if (row.bullet) {
       ctx.fillStyle = colour;
       ctx.beginPath();

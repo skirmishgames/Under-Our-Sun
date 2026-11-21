@@ -37,6 +37,24 @@ export const DISPATCHES = [
       'Ida: did she survive, and did her map ability matter?'
     ],
     changes: ['1.1: enemies on Ida\'s tile can attack her; the convoy arrives at 3 markers instead of 4 (2 markers at the start if the signal was left running) so the race matters; last stand waves halved to fit the enemy standees in the box.'],
+    playtests: [] },
+  { id: 'story-03-the-informant', file: 'dispatches/03-the-informant.json', number: '03', title: 'The Informant',
+    status: 'untested', version: '1.0', diff: 2, parts: 6, players: '1-6', time: '120-180', mode: 'both', genre: 'Thriller',
+    types: ['investigate', 'hunt', 'timed'], needs: 'Base game',
+    premise: 'Someone in New Haven is selling patrol routes to the Sons of Liberty. A scout has run with a satchel of maps. Bring her back before more people die.',
+    testNotes: [
+      'Part 1, leads: did all three leads land on reachable tiles? How many did you find, and was 2 AP plus a Dexterity check a fair price?',
+      'The reveal: when did your group suspect the truth? After a lead, at part 3, or not until the end? A thriller works best when someone guesses just before it is confirmed.',
+      'Part 1 deadline: did you find Ren before day 4? How much time was left?',
+      'Part 3, the ambush: 1 SoL Elite plus Soldiers equal to the number of players. Did Ren (3 HP) survive it?',
+      'Part 4, the walk home: did the pursuing Soldiers catch up? Did "no night cards on Ren\'s tile" make travelling at night too safe?',
+      'Branch: which part 5 did you reach, and why (clues, Ren dead, or night fell)? Did it feel earned?',
+      'Part 5 A, the chase: can the veteran be caught within 3 day phases, or does he escape too easily?',
+      'Part 5 B, the open gate: one night phase to clear New Haven. Possible at your player count?',
+      'Semi-cooperative games: did the ending line about the traitor land? Did the traitor\'s goals fit this mission?',
+      'Story: were the leads clear enough to follow, and was the ending a surprise?'
+    ],
+    changes: [],
     playtests: [] }
 ];
 
