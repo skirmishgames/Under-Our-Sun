@@ -209,5 +209,5 @@ mark { background: color-mix(in srgb, var(--warn) 35%, transparent); color: inhe
 .dkey { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1rem; color: var(--muted); }
 .dkey > span { display: inline-flex; align-items: center; gap: 0.35rem; }
 .dhex.sm { width: 26px; height: 22px; font-size: 0.72rem; }
-.index-filters { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) auto; gap: 0.6rem; align-items: end; margin: 0.6rem 0; }
+.index-filters { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)) auto; gap: 0.6rem; align-items: end; margin: 0.6rem 0; }
 @media (max-width: 700px) { .index-filters { grid-template-columns: 1fr 1fr; } }

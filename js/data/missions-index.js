@@ -62,16 +62,16 @@ export const OFFICIAL_MISSIONS = [
     premise: 'A reconnaissance flight over the wasteland goes badly wrong.' }
 ];
 
-// Fan-made missions shared in the community (not official).
+// Fan-made missions shared in the community (not official). diff 0 = not stated as a single level.
 export const COMMUNITY_MISSIONS = [
-  { title: 'Rebel', author: '', diff: 'medium to hard', players: '2-6', time: '120-150', types: ['boss', 'investigate'],
+  { title: 'Rebel', author: '', diffText: 'medium to hard', diff: 0, mode: 'coop', players: '2-6', time: '120-150', types: ['boss', 'investigate'],
     premise: 'Something is attacking everyone in the wasteland without allegiance. Find it and stop it in a boss battle.' },
-  { title: 'The Abduction', author: '', diff: 'hard', players: '2-4', time: '120-180', types: ['survive'],
+  { title: 'The Abduction', author: '', diffText: 'hard', diff: 3, mode: 'coop', players: '2-4', time: '120-180', types: ['survive'],
     premise: 'Captured by SoL raiders on patrol, the characters wake in a cage far from home with no gear.' },
-  { title: 'Mission 565', author: 'chari n', diff: 'hard', players: '', time: '', types: ['investigate', 'boss'],
+  { title: 'Mission 565', author: 'chari n', diffText: 'hard', diff: 3, mode: 'coop', players: '', time: '', types: ['investigate', 'boss'],
     premise: 'Contact with the eastern outposts is lost after an earthquake. Five short parts lead to something escaped from an old zoo.' },
-  { title: 'Too much of a good thing?', author: 'stephen lamb', diff: 'at least medium', players: '', time: 'about 45', types: ['fetch', 'escort'],
+  { title: 'Too much of a good thing?', author: 'stephen lamb', diffText: 'at least medium', diff: 0, mode: 'coop', players: '', time: '45', types: ['fetch', 'escort'],
     premise: 'New Haven is overcrowded. Find a new community, earn its trust, build a road and escort the first caravan.' },
-  { title: 'Macadam Warriors', author: 'Dhan Torkin', diff: 'campaign', players: '2 characters', time: '', types: ['story'],
+  { title: 'Macadam Warriors', author: 'Dhan Torkin', diffText: 'campaign', diff: 0, mode: 'coop', players: '2 characters', time: '', types: ['story'],
     premise: 'A cooperative campaign of seven missions and side quests, with vehicles, a travelling merchant and new cards.' }
 ];
