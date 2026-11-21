@@ -1,17 +1,17 @@
 // App shell: views, editor, library and print.
-import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, MISSION_TAGS, newMission, newBlock, newPart, normaliseMission, missionName, headerLabel, partLabel, partTotal, uid } from './data/schema.js?v=4b1eb4f2';
-import { PATTERNS } from './data/patterns.js?v=4b1eb4f2';
-import { ITEMS } from './data/items.js?v=4b1eb4f2';
-import { sampleMission } from './data/sample.js?v=4b1eb4f2';
-import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=4b1eb4f2';
-import { fileToDataUrl } from './art.js?v=4b1eb4f2';
-import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=4b1eb4f2';
-import { DISPATCHES, DISPATCH_STATUS } from './data/dispatches.js?v=4b1eb4f2';
-import { OFFICIAL_MISSIONS, COMMUNITY_MISSIONS, MISSION_TYPES } from './data/missions-index.js?v=4b1eb4f2';
-import { rollSpark } from './data/design.js?v=4b1eb4f2';
-import { FAQ, FAQ_TOPICS, FAQ_SOURCES, FAQ_LINKS, CONTENTS_1E } from './data/faq.js?v=4b1eb4f2';
-import { renderSheet, buildSheetPdf, ROGUELIKE_TEXT } from './sheet.js?v=4b1eb4f2';
-import { buildPdf, PAPERS, layoutFor } from './print.js?v=4b1eb4f2';
+import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, MISSION_TAGS, newMission, newBlock, newPart, normaliseMission, missionName, headerLabel, partLabel, partTotal, uid } from './data/schema.js?v=4b0b260b';
+import { PATTERNS } from './data/patterns.js?v=4b0b260b';
+import { ITEMS } from './data/items.js?v=4b0b260b';
+import { sampleMission } from './data/sample.js?v=4b0b260b';
+import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=4b0b260b';
+import { fileToDataUrl } from './art.js?v=4b0b260b';
+import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=4b0b260b';
+import { DISPATCHES, DISPATCH_STATUS } from './data/dispatches.js?v=4b0b260b';
+import { OFFICIAL_MISSIONS, COMMUNITY_MISSIONS, MISSION_TYPES } from './data/missions-index.js?v=4b0b260b';
+import { rollSpark } from './data/design.js?v=4b0b260b';
+import { FAQ, FAQ_TOPICS, FAQ_SOURCES, FAQ_LINKS, CONTENTS_1E } from './data/faq.js?v=4b0b260b';
+import { renderSheet, buildSheetPdf, ROGUELIKE_TEXT } from './sheet.js?v=4b0b260b';
+import { buildPdf, PAPERS, layoutFor } from './print.js?v=4b0b260b';
 
 const VERSION = '1.0.0';
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -629,7 +629,7 @@ function renderIndex() {
 
 // ---------- dispatches ----------
 
-const dispatchState = { status: '' };
+const dispatchState = { status: '', genre: '', diff: '', type: '' };
 const dispatchCache = new Map();
 
 async function loadDispatch(d) {
@@ -640,18 +640,40 @@ async function loadDispatch(d) {
   return dispatchCache.get(d.id);
 }
 
+function dispatchMatch(d, st) {
+  if (st.status && d.status !== st.status) return false;
+  if (st.genre && d.genre !== st.genre) return false;
+  if (st.diff && d.diff !== +st.diff) return false;
+  if (st.type === 'coop' && d.mode === 'comp') return false;
+  if (st.type === 'semi' && !['semi', 'both'].includes(d.mode)) return false;
+  if (st.type === 'comp' && d.mode !== 'comp') return false;
+  if (st.type && !['coop', 'semi', 'comp'].includes(st.type) && !d.types.includes(st.type)) return false;
+  return true;
+}
+
 function renderDispatches(openId) {
   const box = $('#dispatchFilters');
   box.innerHTML = '';
-  const count = st => DISPATCHES.filter(d => !st || d.status === st).length;
-  box.append(el('label', { class: 'field' }, el('span', { text: 'Status' }),
-    el('select', { onchange: e => { dispatchState.status = e.target.value; renderDispatches(); } },
-      el('option', { value: '', selected: !dispatchState.status }, `All (${count('')})`),
-      Object.entries(DISPATCH_STATUS).map(([k, v]) => el('option', { value: k, selected: dispatchState.status === k }, `${v.label} (${count(k)})`)))));
+  const count = (key, value) => DISPATCHES.filter(d => dispatchMatch(d, Object.assign({}, dispatchState, { [key]: value }))).length;
+  const opt = (key, value, label) => el('option', { value, selected: dispatchState[key] === value }, `${label} (${count(key, value)})`);
+  const select = (key, label, children) => el('label', { class: 'field' }, el('span', { text: label }),
+    el('select', { onchange: e => { dispatchState[key] = e.target.value; renderDispatches(); } }, children));
+  const genres = [...new Set(DISPATCHES.map(d => d.genre).filter(Boolean))].sort();
+  const types = Object.entries(MISSION_TYPES).filter(([k]) => DISPATCHES.some(d => d.types.includes(k)));
+  const modes = [['coop', 'Cooperative'], ['semi', 'Semi-cooperative'], ['comp', 'Competitive']].filter(([k]) => count('type', k) || dispatchState.type === k);
+  box.append(
+    select('status', 'Status', [opt('status', '', 'Any'), ...Object.entries(DISPATCH_STATUS).map(([k, v]) => opt('status', k, v.label))]),
+    select('genre', 'Genre', [opt('genre', '', 'Any'), ...genres.map(g => opt('genre', g, g))]),
+    select('diff', 'Difficulty', [opt('diff', '', 'Any'), ...DIFFICULTY.map(x => opt('diff', String(x.value), `${x.marks} ${x.label}`))]),
+    select('type', 'Type', [opt('type', '', 'Any'),
+      el('optgroup', { label: 'Play mode' }, modes.map(([k, l]) => opt('type', k, l))),
+      el('optgroup', { label: 'Mission type' }, types.map(([k, l]) => opt('type', k, l)))]));
+  const active = dispatchState.status || dispatchState.genre || dispatchState.diff || dispatchState.type;
+  if (active) box.append(el('button', { class: 'btn mini', type: 'button', onclick: () => { dispatchState.status = dispatchState.genre = dispatchState.diff = dispatchState.type = ''; renderDispatches(); } }, 'Clear filters'));
   const list = $('#dispatchList');
   list.innerHTML = '';
-  const shown = DISPATCHES.filter(d => !dispatchState.status || d.status === dispatchState.status);
-  if (!shown.length) list.append(el('p', { class: 'empty', text: 'No stories with this status yet.' }));
+  const shown = DISPATCHES.filter(d => dispatchMatch(d, dispatchState));
+  if (!shown.length) list.append(el('p', { class: 'empty', text: 'No story matches these filters.' }));
   for (const d of shown) {
     const st = DISPATCH_STATUS[d.status];
     const front = el('canvas', { class: 'front', width: 7, height: 12, 'aria-label': 'Part 1 front' });
@@ -668,7 +690,7 @@ function renderDispatches(openId) {
         el('div', { class: 'num', text: `${d.genre} · ${(DIFFICULTY.find(x => x.value === d.diff) || {}).label || ''}` }), el('h3', { text: d.title }))),
       el('div', {}, el('span', { class: 'status status-' + d.status, title: st.note, text: st.label })),
       el('div', { class: 'meta', text: meta }),
-      el('div', { class: 'tags' }, el('span', { class: 'tag', text: (MODES.find(x => x.value === d.mode) || MODES[0]).label }), d.types.map(t => el('span', { class: 'tag', text: MISSION_TYPES[t] }))),
+      el('div', { class: 'tags' }, d.genre ? el('span', { class: 'tag comp', text: d.genre }) : null, el('span', { class: 'tag', text: (MODES.find(x => x.value === d.mode) || MODES[0]).label }), d.types.map(t => el('span', { class: 'tag', text: MISSION_TYPES[t] }))),
       el('p', { text: d.premise }),
       el('div', { class: 'thumbs' }, front, back),
       d.status === 'untested' ? el('details', { class: 'focus' }, el('summary', {}, el('strong', { text: `What to test (${d.testNotes.length})` })),

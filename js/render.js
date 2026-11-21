@@ -1,7 +1,7 @@
 // Canvas card renderer. All positions are in millimetres.
 // Front: 70 x 120 mm portrait. Back: 120 x 70 mm landscape.
-import { DIFFICULTY, MODES, BLOCK_KINDS, ICON_TOKENS, missionName, headerLabel, partLabel, partTotal } from './data/schema.js?v=4b1eb4f2';
-import { drawPreset, loadImage, drawCover } from './art.js?v=4b1eb4f2';
+import { DIFFICULTY, MODES, BLOCK_KINDS, ICON_TOKENS, missionName, headerLabel, partLabel, partTotal } from './data/schema.js?v=4b0b260b';
+import { drawPreset, loadImage, drawCover } from './art.js?v=4b0b260b';
 
 export const CARD_W = 70;
 export const CARD_H = 120;

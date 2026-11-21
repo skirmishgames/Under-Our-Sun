@@ -213,7 +213,7 @@ mark { background: color-mix(in srgb, var(--warn) 35%, transparent); color: inhe
 @media (max-width: 700px) { .index-filters { grid-template-columns: 1fr 1fr; } }
 
 /* dispatches */
-.dispatch-filters { grid-template-columns: minmax(0, 260px) auto; }
+.dispatch-filters { grid-template-columns: repeat(4, minmax(0, 1fr)) auto; }
 .status { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.03em; padding: 0.15rem 0.55rem; border-radius: 999px; }
 .status-untested { background: color-mix(in srgb, var(--warn) 22%, transparent); color: var(--warn); }
 .status-playtested { background: color-mix(in srgb, var(--ok) 20%, transparent); color: var(--ok); }
