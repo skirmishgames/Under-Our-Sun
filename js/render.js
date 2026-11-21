@@ -1,7 +1,7 @@
 // Canvas card renderer. All positions are in millimetres.
 // Front: 70 x 120 mm portrait. Back: 120 x 70 mm landscape.
-import { DIFFICULTY, MODES, BLOCK_KINDS, ICON_TOKENS, missionName, partLabel, partTotal } from './data/schema.js?v=b839a605';
-import { drawPreset, loadImage, drawCover } from './art.js?v=b839a605';
+import { DIFFICULTY, MODES, BLOCK_KINDS, ICON_TOKENS, missionName, headerLabel, partLabel, partTotal } from './data/schema.js?v=4b1eb4f2';
+import { drawPreset, loadImage, drawCover } from './art.js?v=4b1eb4f2';
 
 export const CARD_W = 70;
 export const CARD_H = 120;
@@ -295,7 +295,7 @@ function drawHeaderBar(ctx, mission, partIdx, total, x, y, w, s) {
   ctx.font = `700 ${(d.marks.length === 3 ? 3.6 : 4.2) * s}px ${HEAD_FONT}`;
   ctx.fillText(d.marks, (x + 4.6) * s, (y + h / 2 + 1.5) * s);
   // name
-  const name = missionName(mission).toUpperCase();
+  const name = headerLabel(mission).toUpperCase();
   ctx.fillStyle = SAND;
   const nameMax = w - 24;
   const size = fitText(ctx, name, px => `600 ${px}px ${HEAD_FONT}`, nameMax * s, 3.9 * s, 2.4 * s);

@@ -7,8 +7,8 @@
    "schema": 1,
    "id": "story-the-stray",
    "title": "The Stray",
-   "label": "Story",
-   "number": "01",
+   "label": "Mystery",
+   "number": "",
    "author": "",
    "community": false,
    "difficulty": 1,
@@ -16,7 +16,7 @@
    "players": "1-6",
    "playtime": "45-90",
    "summary": "Something is raiding New Haven's food stores at night. Track it to its den and deal with it. A gentle first mission.",
-   "notes": "Story 01, version 1.0. Base game components only: objective token, a Desert Dog enemy card.\nIntroductory mission: teaches campfires, night cards and sneaking, with little combat.",
+   "notes": "Version 1.0. Base game components only: objective token, a Desert Dog enemy card.\nIntroductory mission: teaches campfires, night cards and sneaking, with little combat.",
    "types": [
     "hunt"
    ],

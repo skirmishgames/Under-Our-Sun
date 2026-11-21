@@ -1,17 +1,17 @@
 // App shell: views, editor, library and print.
-import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, MISSION_TAGS, newMission, newBlock, newPart, normaliseMission, missionName, partLabel, partTotal, uid } from './data/schema.js?v=b839a605';
-import { PATTERNS } from './data/patterns.js?v=b839a605';
-import { ITEMS } from './data/items.js?v=b839a605';
-import { sampleMission } from './data/sample.js?v=b839a605';
-import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=b839a605';
-import { fileToDataUrl } from './art.js?v=b839a605';
-import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=b839a605';
-import { DISPATCHES, DISPATCH_STATUS } from './data/dispatches.js?v=b839a605';
-import { OFFICIAL_MISSIONS, COMMUNITY_MISSIONS, MISSION_TYPES } from './data/missions-index.js?v=b839a605';
-import { rollSpark } from './data/design.js?v=b839a605';
-import { FAQ, FAQ_TOPICS, FAQ_SOURCES, FAQ_LINKS, CONTENTS_1E } from './data/faq.js?v=b839a605';
-import { renderSheet, buildSheetPdf, ROGUELIKE_TEXT } from './sheet.js?v=b839a605';
-import { buildPdf, PAPERS, layoutFor } from './print.js?v=b839a605';
+import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, MISSION_TAGS, newMission, newBlock, newPart, normaliseMission, missionName, headerLabel, partLabel, partTotal, uid } from './data/schema.js?v=4b1eb4f2';
+import { PATTERNS } from './data/patterns.js?v=4b1eb4f2';
+import { ITEMS } from './data/items.js?v=4b1eb4f2';
+import { sampleMission } from './data/sample.js?v=4b1eb4f2';
+import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=4b1eb4f2';
+import { fileToDataUrl } from './art.js?v=4b1eb4f2';
+import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=4b1eb4f2';
+import { DISPATCHES, DISPATCH_STATUS } from './data/dispatches.js?v=4b1eb4f2';
+import { OFFICIAL_MISSIONS, COMMUNITY_MISSIONS, MISSION_TYPES } from './data/missions-index.js?v=4b1eb4f2';
+import { rollSpark } from './data/design.js?v=4b1eb4f2';
+import { FAQ, FAQ_TOPICS, FAQ_SOURCES, FAQ_LINKS, CONTENTS_1E } from './data/faq.js?v=4b1eb4f2';
+import { renderSheet, buildSheetPdf, ROGUELIKE_TEXT } from './sheet.js?v=4b1eb4f2';
+import { buildPdf, PAPERS, layoutFor } from './print.js?v=4b1eb4f2';
 
 const VERSION = '1.0.0';
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -90,7 +90,7 @@ async function renderLibrary() {
       cv,
       el('div', { class: 'tile-body' },
         el('h3', { text: m.title || 'Untitled mission' }),
-        el('div', { class: 'muted small', text: [missionName(m), `${m.parts.length} parts`, ...(m.types || []).map(t => MISSION_TAGS[t]).filter(Boolean), diff && diff.label, m.author && `by ${m.author}`].filter(Boolean).join(' · ') })
+        el('div', { class: 'muted small', text: [headerLabel(m), `${m.parts.length} parts`, ...(m.types || []).map(t => MISSION_TAGS[t]).filter(Boolean), diff && diff.label, m.author && `by ${m.author}`].filter(Boolean).join(' · ') })
       ),
       el('div', { class: 'tile-actions' },
         el('a', { class: 'btn mini primary', href: '#edit/' + m.id }, 'Edit'),
@@ -199,8 +199,8 @@ function renderDetails() {
   const community = el('input', { type: 'checkbox', checked: !!m.community, onchange: e => { m.community = e.target.checked; changed(); } });
   f.append(
     field('Mission name', bindText(el('input', { type: 'text', placeholder: 'Search and rescue' }), m, 'title'), 'wide'),
-    field('Label', bindText(el('input', { type: 'text', placeholder: 'Mission' }), m, 'label')),
-    field('Number', bindText(el('input', { type: 'text', placeholder: '15, CM-3 or blank' }), m, 'number')),
+    field('Label (Mission, or a genre such as Thriller)', bindText(el('input', { type: 'text', placeholder: 'Mission' }), m, 'label')),
+    field('Number (blank: part links use the mission name)', bindText(el('input', { type: 'text', placeholder: '15, CM-3 or blank' }), m, 'number')),
     field('Author', bindText(el('input', { type: 'text', placeholder: 'Your name or handle' }), m, 'author')),
     field('Players', bindText(el('input', { type: 'text', placeholder: '1-6' }), m, 'players')),
     field('Playing time (minutes)', bindText(el('input', { type: 'text', placeholder: '90-180' }), m, 'playtime')),
@@ -454,7 +454,7 @@ function renderPrint() {
     for (const m of missions) {
       list.append(el('label', { class: 'check' },
         el('input', { type: 'checkbox', value: m.id, checked: sel.has(m.id), onchange: () => setSetting('printSel', $$('#printList input:checked').map(i => i.value)) }),
-        `${m.title} `, el('span', { class: 'muted small', text: `${missionName(m)}, ${m.parts.length} cards` })));
+        `${m.title} `, el('span', { class: 'muted small', text: `${headerLabel(m)}, ${m.parts.length} cards` })));
     }
   });
 }
@@ -665,10 +665,10 @@ function renderDispatches(openId) {
     const meta = [`${d.parts} parts`, `${d.players} players`, `${d.time} min`, d.needs, `version ${d.version}`].join(' · ');
     const card = el('article', { class: 'mcard dcard', id: 'dispatch-' + d.id },
       el('header', {}, diffBadge(d.diff), el('div', {},
-        el('div', { class: 'num', text: `Story ${d.number} · ${(DIFFICULTY.find(x => x.value === d.diff) || {}).label || ''}` }), el('h3', { text: d.title }))),
+        el('div', { class: 'num', text: `${d.genre} · ${(DIFFICULTY.find(x => x.value === d.diff) || {}).label || ''}` }), el('h3', { text: d.title }))),
       el('div', {}, el('span', { class: 'status status-' + d.status, title: st.note, text: st.label })),
       el('div', { class: 'meta', text: meta }),
-      el('div', { class: 'tags' }, d.genre ? el('span', { class: 'tag comp', text: d.genre }) : null, el('span', { class: 'tag', text: (MODES.find(x => x.value === d.mode) || MODES[0]).label }), d.types.map(t => el('span', { class: 'tag', text: MISSION_TYPES[t] }))),
+      el('div', { class: 'tags' }, el('span', { class: 'tag', text: (MODES.find(x => x.value === d.mode) || MODES[0]).label }), d.types.map(t => el('span', { class: 'tag', text: MISSION_TYPES[t] }))),
       el('p', { text: d.premise }),
       el('div', { class: 'thumbs' }, front, back),
       d.status === 'untested' ? el('details', { class: 'focus' }, el('summary', {}, el('strong', { text: `What to test (${d.testNotes.length})` })),
@@ -682,7 +682,7 @@ function renderDispatches(openId) {
             const m = await loadDispatch(d);
             const opts = getSetting('printOpts', { paper: 'letter', perPage: 6, backs: true, clockwise: true, marks: true });
             const doc = await buildPdf(m.parts.map((p, i) => ({ mission: m, part: i })), opts);
-            doc.save(`story-${d.number}-${slug(d.title)}-cards.pdf`);
+            doc.save(`${slug(d.title)}-cards.pdf`);
           } catch (err) { toast(err.message, 5000); } finally { btn.disabled = false; }
         } }, 'Print cards'),
         el('button', { class: 'btn mini', type: 'button', onclick: async () => {
@@ -690,7 +690,7 @@ function renderDispatches(openId) {
           const got = await importJson(JSON.stringify(exportPayload([m])));
           toast(`"${got[0].title}" added to My missions.`);
         } }, 'Add to My missions'),
-        el('a', { class: 'btn mini', href: `mailto:games@staroversky.com?subject=${encodeURIComponent(`Playtest: Story ${d.number} ${d.title} v${d.version}`)}&body=${encodeURIComponent(['Players:', 'Characters:', 'Game mode (co-op or semi-co-op):', 'Playing time:', 'Result (won or lost, and on which part):', '', ...(d.testNotes || []).map((t, k) => `${k + 1}. ${t}\nAnswer:\n`), 'Anything else:'].join('\n'))}` }, 'Send feedback'),
+        el('a', { class: 'btn mini', href: `mailto:games@staroversky.com?subject=${encodeURIComponent(`Playtest: ${d.title} v${d.version}`)}&body=${encodeURIComponent(['Players:', 'Characters:', 'Game mode (co-op or semi-co-op):', 'Playing time:', 'Result (won or lost, and on which part):', '', ...(d.testNotes || []).map((t, k) => `${k + 1}. ${t}\nAnswer:\n`), 'Anything else:'].join('\n'))}` }, 'Send feedback'),
         el('a', { class: 'btn mini', href: '#stories/' + d.id, title: 'Link to this story' }, 'Link')),
       d.playtests.length ? el('p', { class: 'muted small', text: `Playtested ${d.playtests.length} time${d.playtests.length === 1 ? '' : 's'}.` }) : null,
       spoil);

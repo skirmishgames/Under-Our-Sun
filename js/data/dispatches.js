@@ -1,9 +1,9 @@
-// Stories: new missions written for the site, labelled "Story" on the cards.
+// Stories: new missions written for the site. Cards show the genre in the header, with no number.
 // status: 'untested' until a group has played it and sent feedback, then 'playtested'.
-// testNotes: what playtesters should watch for, part by part. Mission files live in /stories/. Ids and file names carry no number, so renumbering never breaks links.
+// testNotes: what playtesters should watch for, part by part. Mission files live in /stories/. Listed in suggested play order.
 export const DISPATCHES = [
-  { id: 'story-the-stray', file: 'stories/the-stray.json', number: '01', title: 'The Stray',
-    status: 'untested', version: '1.0', diff: 1, parts: 4, players: '1-6', time: '45-90', mode: 'coop', genre: 'Introductory',
+  { id: 'story-the-stray', file: 'stories/the-stray.json', title: 'The Stray',
+    status: 'untested', version: '1.0', diff: 1, parts: 4, players: '1-6', time: '45-90', mode: 'coop', genre: 'Mystery',
     types: ['hunt'], needs: 'Base game',
     premise: 'Something is raiding New Haven\'s food stores at night. Track it to its den. A gentle first mission for new players, with little combat.',
     testNotes: [
@@ -20,7 +20,7 @@ export const DISPATCHES = [
     ],
     changes: [],
     playtests: [] },
-  { id: 'story-ghost-signal', file: 'stories/ghost-signal.json', number: '02', title: 'Ghost Signal',
+  { id: 'story-ghost-signal', file: 'stories/ghost-signal.json', title: 'Ghost Signal', genre: 'Rescue',
     status: 'untested', version: '1.1', diff: 2, parts: 5, players: '1-6', time: '90-150', mode: 'both',
     types: ['rescue', 'escort', 'timed'], needs: 'Base game',
     premise: 'A forbidden radio picks up a woman\'s voice promising clean water to anyone who comes east. Three families are already packing.',
@@ -38,12 +38,12 @@ export const DISPATCHES = [
     ],
     changes: ['1.1: enemies on Ida\'s tile can attack her like a character (the rule was missing).'],
     playtests: [] },
-  { id: 'story-the-deep-well', file: 'stories/the-deep-well.json', number: '03', title: 'The Deep Well',
+  { id: 'story-the-deep-well', file: 'stories/the-deep-well.json', title: 'The Deep Well', genre: 'Race',
     status: 'untested', version: '1.1', diff: 3, parts: 6, players: '1-6', time: '120-180', mode: 'coop',
     types: ['timed', 'rescue', 'defend'], needs: 'Base game', sequelOf: 'story-ghost-signal',
-    premise: 'Ida\'s map leads east to an old enclave where the water still runs. The Sons of Liberty know the way too. Sequel to Story 02: Ghost Signal, and playable on its own.',
+    premise: 'Ida\'s map leads east to an old enclave where the water still runs. The Sons of Liberty know the way too. Sequel to Ghost Signal, and playable on its own.',
     testNotes: [
-      'Part 1, start: which setup did you use (signal silenced, signal left running, or Story 02 not played)?',
+      'Part 1, start: which setup did you use (signal silenced, signal left running, or Ghost Signal not played)?',
       'The convoy clock: it arrives at 3 markers. On which day did it arrive, and was that before or after you reached the enclave? Did the race feel real?',
       'Part 2, the outer ruins: does the +1 AP to enter a ruin tile slow you down too much?',
       'Part 3, the guards: 1 SoL Elite plus Drifters equal to the number of players. Too easy or too hard at your player count?',
@@ -56,7 +56,7 @@ export const DISPATCHES = [
     ],
     changes: ['1.1: enemies on Ida\'s tile can attack her; the convoy arrives at 3 markers instead of 4 (2 markers at the start if the signal was left running) so the race matters; last stand waves halved to fit the enemy standees in the box.'],
     playtests: [] },
-  { id: 'story-the-informant', file: 'stories/the-informant.json', number: '04', title: 'The Informant',
+  { id: 'story-the-informant', file: 'stories/the-informant.json', title: 'The Informant',
     status: 'untested', version: '1.0', diff: 2, parts: 6, players: '1-6', time: '120-180', mode: 'both', genre: 'Thriller',
     types: ['investigate', 'hunt', 'timed'], needs: 'Base game',
     premise: 'Someone in New Haven is selling patrol routes to the Sons of Liberty. A scout has run with a satchel of maps. Bring her back before more people die.',

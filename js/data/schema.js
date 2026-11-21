@@ -168,6 +168,14 @@ export const MISSION_TAGS = {
   story: 'Story campaign', competitive: 'Competitive'
 };
 
-export function missionName(m) {
+// Header label on the card: "Mission 14", or a genre such as "Thriller" when there is no number.
+export function headerLabel(m) {
   return [m.label || 'Mission', m.number].filter(Boolean).join(' ').trim();
+}
+
+// Name used by the {mission} token in part links: "Mission 14" when numbered,
+// otherwise the mission's title, so links read "Read The Informant - Part 3".
+export function missionName(m) {
+  if (String(m.number || '').trim()) return headerLabel(m);
+  return String(m.title || '').trim() || headerLabel(m);
 }
