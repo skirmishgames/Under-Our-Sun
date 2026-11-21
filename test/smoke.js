@@ -132,9 +132,16 @@ const check = (ok, msg) => { console.log((ok ? 'PASS ' : 'FAIL ') + msg); if (!o
   await page.waitForTimeout(600);
   check(await page.evaluate(() => document.getElementById('faq-hero-item')?.open === true), 'FAQ deep link opens the answer');
 
+  // help panel and old guide links
+  await page.goto(url + '#guide');
+  await page.waitForTimeout(900);
+  check(await page.evaluate(() => document.getElementById('helpPanel').open === true), 'old Guide link opens the editor Help panel');
+  check((await page.locator('.tabs a').count()) === 7, 'menu has 7 tabs');
+
   // mobile
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.click('.tabs a[data-tab=edit]');
+  await page.click('.tabs a[data-tab=library]');
+  await page.click('.tile .btn.primary >> nth=0');
   await page.waitForSelector('#previewOpen');
   await page.click('#previewOpen');
   check(await page.isVisible('#previewCanvas'), 'mobile preview opens');

@@ -1,16 +1,16 @@
 // App shell: views, editor, library and print.
-import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, MISSION_TAGS, newMission, newBlock, newPart, normaliseMission, missionName, partLabel, partTotal, uid } from './data/schema.js?v=cfccbd9d';
-import { PATTERNS } from './data/patterns.js?v=cfccbd9d';
-import { ITEMS } from './data/items.js?v=cfccbd9d';
-import { sampleMission } from './data/sample.js?v=cfccbd9d';
-import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=cfccbd9d';
-import { fileToDataUrl } from './art.js?v=cfccbd9d';
-import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=cfccbd9d';
-import { OFFICIAL_MISSIONS, COMMUNITY_MISSIONS, MISSION_TYPES } from './data/missions-index.js?v=cfccbd9d';
-import { rollSpark } from './data/design.js?v=cfccbd9d';
-import { FAQ, FAQ_TOPICS, FAQ_SOURCES, FAQ_LINKS, CONTENTS_1E } from './data/faq.js?v=cfccbd9d';
-import { renderSheet, buildSheetPdf, ROGUELIKE_TEXT } from './sheet.js?v=cfccbd9d';
-import { buildPdf, PAPERS, layoutFor } from './print.js?v=cfccbd9d';
+import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, MISSION_TAGS, newMission, newBlock, newPart, normaliseMission, missionName, partLabel, partTotal, uid } from './data/schema.js?v=165ac91a';
+import { PATTERNS } from './data/patterns.js?v=165ac91a';
+import { ITEMS } from './data/items.js?v=165ac91a';
+import { sampleMission } from './data/sample.js?v=165ac91a';
+import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=165ac91a';
+import { fileToDataUrl } from './art.js?v=165ac91a';
+import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=165ac91a';
+import { OFFICIAL_MISSIONS, COMMUNITY_MISSIONS, MISSION_TYPES } from './data/missions-index.js?v=165ac91a';
+import { rollSpark } from './data/design.js?v=165ac91a';
+import { FAQ, FAQ_TOPICS, FAQ_SOURCES, FAQ_LINKS, CONTENTS_1E } from './data/faq.js?v=165ac91a';
+import { renderSheet, buildSheetPdf, ROGUELIKE_TEXT } from './sheet.js?v=165ac91a';
+import { buildPdf, PAPERS, layoutFor } from './print.js?v=165ac91a';
 
 const VERSION = '1.0.0';
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -48,10 +48,12 @@ function route() {
   const first = !getSetting('visited', false);
   if (!location.hash) { setSetting('visited', true); history.replaceState(null, '', first ? '#design' : '#library'); }
   const [tab, id] = (location.hash.replace('#', '') || 'library').split('/');
-  const views = ['library', 'edit', 'print', 'sheet', 'index', 'design', 'faq', 'guide', 'about'];
+  // Old links to the Guide open the editor's Help panel.
+  if (tab === 'guide') { history.replaceState(null, '', '#edit'); setTimeout(() => { const h = $('#helpPanel'); if (h) { h.open = true; h.scrollIntoView(); } }, 300); return route(); }
+  const views = ['library', 'edit', 'print', 'sheet', 'index', 'design', 'faq', 'about'];
   const view = views.includes(tab) ? tab : 'library';
   views.forEach(v => { $('#view-' + v).hidden = v !== view; });
-  $$('.tabs a').forEach(a => a.classList.toggle('on', a.dataset.tab === view));
+  $$('.tabs a').forEach(a => a.classList.toggle('on', a.dataset.tab === (view === 'edit' ? 'library' : view)));
   if (view === 'library') renderLibrary();
   if (view === 'edit') openEditor(id);
   if (view === 'print') renderPrint();
@@ -88,6 +90,7 @@ async function renderLibrary() {
       ),
       el('div', { class: 'tile-actions' },
         el('a', { class: 'btn mini primary', href: '#edit/' + m.id }, 'Edit'),
+        el('button', { class: 'btn mini', type: 'button', onclick: () => { setSetting('printSel', [m.id]); location.hash = '#print'; } }, 'Print'),
         el('button', { class: 'btn mini', type: 'button', onclick: () => duplicate(m) }, 'Duplicate'),
         el('button', { class: 'btn mini', type: 'button', onclick: () => downloadJson(exportPayload([m]), slug(m.title) + '.json') }, 'Export'),
         el('button', { class: 'btn mini danger', type: 'button', onclick: () => remove(m) }, 'Delete')
@@ -155,7 +158,7 @@ async function openEditor(id) {
   const m = state.current;
   $('#editorEmpty').hidden = !!m;
   $('#editor').hidden = !m;
-  if (!m) return;
+  if (!m) { location.hash = '#library'; return; }
   setSetting('lastMission', m.id);
   if (location.hash !== '#edit/' + m.id) history.replaceState(null, '', '#edit/' + m.id);
   $('#editorTitle').textContent = m.title || 'Mission';
