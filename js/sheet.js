@@ -1,9 +1,9 @@
 // Survivor log: a roguelike save card for tracking one character between missions.
 // Card is 135 x 100 mm, four to a landscape Letter or A4 page.
-import { ensureFonts, roundRect, hexagon } from './render.js?v=d4b9a02a';
-import { drawPreset } from './art.js?v=d4b9a02a';
-import { ICON_TOKENS } from './data/schema.js?v=d4b9a02a';
-import { PAPERS } from './print.js?v=d4b9a02a';
+import { ensureFonts, roundRect, hexagon } from './render.js?v=b839a605';
+import { drawPreset } from './art.js?v=b839a605';
+import { ICON_TOKENS } from './data/schema.js?v=b839a605';
+import { PAPERS } from './print.js?v=b839a605';
 
 export const SHEET_W = 135;
 export const SHEET_H = 100;

@@ -1,8 +1,26 @@
 // Stories: new missions written for the site, labelled "Story" on the cards.
 // status: 'untested' until a group has played it and sent feedback, then 'playtested'.
-// testNotes: what playtesters should watch for, part by part. Mission files live in /dispatches/.
+// testNotes: what playtesters should watch for, part by part. Mission files live in /stories/. Ids and file names carry no number, so renumbering never breaks links.
 export const DISPATCHES = [
-  { id: 'dispatch-01-ghost-signal', file: 'dispatches/01-ghost-signal.json', number: '01', title: 'Ghost Signal',
+  { id: 'story-the-stray', file: 'stories/the-stray.json', number: '01', title: 'The Stray',
+    status: 'untested', version: '1.0', diff: 1, parts: 4, players: '1-6', time: '45-90', mode: 'coop', genre: 'Introductory',
+    types: ['hunt'], needs: 'Base game',
+    premise: 'Something is raiding New Haven\'s food stores at night. Track it to its den. A gentle first mission for new players, with little combat.',
+    testNotes: [
+      'New players: was this a good first game? Which rules did you have to look up?',
+      'Part 1, the trail: with 3 + 3 tiles plus the target, on which day and phase did you find the den? Too quick or too slow?',
+      'Tips: did the campfire and sneaking tips help, or did you already know them?',
+      'Part 2, the lure: did your group work out to leave food at night without a fire, or did you attack? Was the hint ("hungry, not angry") too obvious or too vague?',
+      'Night: did night cards make the wait at the den feel tense but fair?',
+      'Part 3, the fight (if you attacked): is a Desert Dog with +2 HP right for an easy mission?',
+      'Part 3, the dogs: is 1 food per night for carrying them home a fair cost? Did anyone take damage?',
+      'Deadline: was the morning of day 3 too tight?',
+      'Ending: which ending did you get, and did it land? Did anyone feel bad about the choice?',
+      'Roguelike: is ignoring one ANIMAL night card per mission a fair reward, or too strong?'
+    ],
+    changes: [],
+    playtests: [] },
+  { id: 'story-ghost-signal', file: 'stories/ghost-signal.json', number: '02', title: 'Ghost Signal',
     status: 'untested', version: '1.1', diff: 2, parts: 5, players: '1-6', time: '90-150', mode: 'both',
     types: ['rescue', 'escort', 'timed'], needs: 'Base game',
     premise: 'A forbidden radio picks up a woman\'s voice promising clean water to anyone who comes east. Three families are already packing.',
@@ -20,12 +38,12 @@ export const DISPATCHES = [
     ],
     changes: ['1.1: enemies on Ida\'s tile can attack her like a character (the rule was missing).'],
     playtests: [] },
-  { id: 'dispatch-02-the-deep-well', file: 'dispatches/02-the-deep-well.json', number: '02', title: 'The Deep Well',
+  { id: 'story-the-deep-well', file: 'stories/the-deep-well.json', number: '03', title: 'The Deep Well',
     status: 'untested', version: '1.1', diff: 3, parts: 6, players: '1-6', time: '120-180', mode: 'coop',
-    types: ['timed', 'rescue', 'defend'], needs: 'Base game', sequelOf: 'dispatch-01-ghost-signal',
-    premise: 'Ida\'s map leads east to an old enclave where the water still runs. The Sons of Liberty know the way too. Sequel to Ghost Signal, and playable on its own.',
+    types: ['timed', 'rescue', 'defend'], needs: 'Base game', sequelOf: 'story-ghost-signal',
+    premise: 'Ida\'s map leads east to an old enclave where the water still runs. The Sons of Liberty know the way too. Sequel to Story 02: Ghost Signal, and playable on its own.',
     testNotes: [
-      'Part 1, start: which setup did you use (signal silenced, signal left running, or Story 01 not played)?',
+      'Part 1, start: which setup did you use (signal silenced, signal left running, or Story 02 not played)?',
       'The convoy clock: it arrives at 3 markers. On which day did it arrive, and was that before or after you reached the enclave? Did the race feel real?',
       'Part 2, the outer ruins: does the +1 AP to enter a ruin tile slow you down too much?',
       'Part 3, the guards: 1 SoL Elite plus Drifters equal to the number of players. Too easy or too hard at your player count?',
@@ -38,7 +56,7 @@ export const DISPATCHES = [
     ],
     changes: ['1.1: enemies on Ida\'s tile can attack her; the convoy arrives at 3 markers instead of 4 (2 markers at the start if the signal was left running) so the race matters; last stand waves halved to fit the enemy standees in the box.'],
     playtests: [] },
-  { id: 'story-03-the-informant', file: 'dispatches/03-the-informant.json', number: '03', title: 'The Informant',
+  { id: 'story-the-informant', file: 'stories/the-informant.json', number: '04', title: 'The Informant',
     status: 'untested', version: '1.0', diff: 2, parts: 6, players: '1-6', time: '120-180', mode: 'both', genre: 'Thriller',
     types: ['investigate', 'hunt', 'timed'], needs: 'Base game',
     premise: 'Someone in New Haven is selling patrol routes to the Sons of Liberty. A scout has run with a satchel of maps. Bring her back before more people die.',

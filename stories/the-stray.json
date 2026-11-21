@@ -1,0 +1,192 @@
+{
+ "format": "uos-missions",
+ "version": 1,
+ "exported": "2026-11-21T02:56:49Z",
+ "missions": [
+  {
+   "schema": 1,
+   "id": "story-the-stray",
+   "title": "The Stray",
+   "label": "Story",
+   "number": "01",
+   "author": "",
+   "community": false,
+   "difficulty": 1,
+   "mode": "coop",
+   "players": "1-6",
+   "playtime": "45-90",
+   "summary": "Something is raiding New Haven's food stores at night. Track it to its den and deal with it. A gentle first mission.",
+   "notes": "Story 01, version 1.0. Base game components only: objective token, a Desert Dog enemy card.\nIntroductory mission: teaches campfires, night cards and sneaking, with little combat.",
+   "types": [
+    "hunt"
+   ],
+   "art": {
+    "preset": "wasteland",
+    "front": null,
+    "back": null,
+    "frontPos": {
+     "x": 50,
+     "y": 40,
+     "zoom": 1
+    },
+    "backPos": {
+     "x": 50,
+     "y": 50,
+     "zoom": 1
+    }
+   },
+   "parts": [
+    {
+     "id": "p-77525502",
+     "label": "",
+     "art": null,
+     "blocks": [
+      {
+       "id": "b-section-71189456",
+       "kind": "section",
+       "heading": "BRIEFING",
+       "text": "For three nights something has been getting into the food stores. A torn sack, paw prints the size of a fist, and a trail of spilled grain leading out past the east wall.\nMara, who keeps the stores, wants it found before the children are too scared to sleep.\n*\"Whatever it is, it's hungry,\"* she says. *\"So are we.\"*",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-section-51198590",
+       "kind": "section",
+       "heading": "SETUP",
+       "text": "Form 2 stacks of map tiles and shuffle each:\n- **Stack 1:** 3 random map tiles\n- **Stack 2:** 3 random map tiles + 1 target map tile\nPlace stack 1 on top of stack 2.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-goal-23485329",
+       "kind": "goal",
+       "heading": "",
+       "text": "Find the creature's den and stop the raids on New Haven's stores.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-objectives-56239963",
+       "kind": "objectives",
+       "heading": "",
+       "text": "Follow the trail. Once the target map tile is revealed, read **{mission} - Part 2**.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-tip-37661486",
+       "kind": "tip",
+       "heading": "",
+       "text": "A campfire keeps ANIMAL enemies away, and ANIMAL night cards have no effect on its tile.",
+       "image": null,
+       "caption": ""
+      }
+     ]
+    },
+    {
+     "id": "p-55357549",
+     "label": "",
+     "art": null,
+     "blocks": [
+      {
+       "id": "b-section-21020911",
+       "kind": "section",
+       "heading": "THE CULVERT",
+       "text": "The trail ends at a collapsed drainage culvert under the old highway. The grain is here, and bones, and a smell like wet fur. From deep inside comes a low, steady growl.\nWhatever lives here will not come out while you stand in the open.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-section-42581989",
+       "kind": "section",
+       "heading": "SETUP",
+       "text": "Place 1 objective token (the den) on the target map tile.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-section-5798872",
+       "kind": "section",
+       "heading": "MISSION RULES",
+       "text": "- **Lure it out:** during the night phase, a character on the target map tile can put 1 {food} on the tile. Read **{mission} - Part 3** at the start of that character's next turn.\n- A campfire on the target map tile scares it off: it will not come out while the fire burns.\n- **Force it out:** a character on the target map tile can attack the den instead. Read **{mission} - Part 3** at once.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-tip-7080189",
+       "kind": "tip",
+       "heading": "",
+       "text": "It is hungry, not angry. Sneaking onto a tile at night means no night card for that tile.",
+       "image": null,
+       "caption": ""
+      }
+     ]
+    },
+    {
+     "id": "p-3873154",
+     "label": "",
+     "art": null,
+     "blocks": [
+      {
+       "id": "b-section-93297688",
+       "kind": "section",
+       "heading": "THE STRAY",
+       "text": "**If you left food:** a thin desert dog creeps out, takes the food and slips back inside. In the dark behind her, four pairs of small eyes. Pups. She is no monster. She is a mother, and she is starving.\n**If you attacked:** a desert dog bursts out, all teeth and ribs, and fights like she has nothing left to lose. Spawn **1 Desert Dog** with +2 HP on the target map tile. When she falls, you hear whimpering inside.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-section-26238157",
+       "kind": "section",
+       "heading": "MISSION RULES",
+       "text": "- **Take them home (optional):** the dogs are 1 objective token that takes 1 item slot. At the start of each night phase, the carrier discards 1 {food} or takes 1 damage.\n- **Leave them:** the den stays. Mara can put scraps out instead.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-objectives-89491373",
+       "kind": "objectives",
+       "heading": "",
+       "text": "Return to New Haven before the **morning of day 3**, then read **{mission} - Part 4: Success**. If all characters are dead, read **{mission} - Part 4: Failure**.",
+       "image": null,
+       "caption": ""
+      }
+     ]
+    },
+    {
+     "id": "p-19045777",
+     "label": "",
+     "art": null,
+     "blocks": [
+      {
+       "id": "b-success-29348632",
+       "kind": "success",
+       "heading": "",
+       "text": "**If you brought the dogs home:** the children name the pups before you have even put them down. The mother sleeps by the east gate now, and nothing has touched the stores since.\n**If you left them:** every evening Mara walks a bowl of scraps out past the east wall. The raids stop. Some nights, a thin shape watches the gate from the dunes.\n**If you fought her:** the stores are safe. Nobody asks what happened to the pups.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-roguelike-35036515",
+       "kind": "roguelike",
+       "heading": "",
+       "text": "The group receives 1 additional {star}. **If you brought the dogs home:** once per mission, the group may ignore one ANIMAL night card. The dog hears it coming.",
+       "image": null,
+       "caption": ""
+      },
+      {
+       "id": "b-failure-17300841",
+       "kind": "failure",
+       "heading": "",
+       "text": "The trail goes cold, and the raids go on. New Haven starts locking its food away at night, and the children stop playing near the east wall.",
+       "image": null,
+       "caption": ""
+      }
+     ]
+    }
+   ],
+   "created": "2026-11-21T02:56:49Z",
+   "updated": "2026-11-21T02:56:49Z"
+  }
+ ]
+}

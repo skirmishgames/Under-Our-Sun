@@ -1,14 +1,14 @@
 {
  "format": "uos-missions",
  "version": 1,
- "exported": "2026-11-21T02:19:16Z",
+ "exported": "2026-11-21T02:57:03Z",
  "missions": [
   {
    "schema": 1,
-   "id": "story-03-the-informant",
+   "id": "story-the-informant",
    "title": "The Informant",
    "label": "Story",
-   "number": "03",
+   "number": "04",
    "author": "",
    "community": false,
    "difficulty": 2,
@@ -16,7 +16,7 @@
    "players": "1-6",
    "playtime": "120-180",
    "summary": "Someone in New Haven is selling patrol routes to the Sons of Liberty. A scout has run. Bring her back before more people die.",
-   "notes": "Story 03, version 1.0. Base game components only: allocation markers A-C, universal markers, SoL enemy cards.\nThriller: the briefing officer is the informant. Semi-cooperative play adds to the paranoia.",
+   "notes": "Story 04, version 1.0. Base game components only: allocation markers A-C, universal markers, SoL enemy cards.\nThriller: the briefing officer is the informant. Semi-cooperative play adds to the paranoia.",
    "types": [
     "investigate",
     "hunt",
@@ -39,12 +39,12 @@
    },
    "parts": [
     {
-     "id": "p-66301748",
+     "id": "p-62337061",
      "label": "",
      "art": null,
      "blocks": [
       {
-       "id": "b-section-71511676",
+       "id": "b-section-40596604",
        "kind": "section",
        "heading": "BRIEFING",
        "text": "The old veteran does not sit down this morning.\n*\"Two patrols lost in a week. Both times the Sons knew exactly where to wait. Someone here is selling our routes.\"* He lays a scout's badge on the table. *\"Ren. She left before dawn with a satchel full of maps. Bring her back. Alive, if she lets you.\"*\nNobody in the room meets anyone else's eyes.",
@@ -52,7 +52,7 @@
        "caption": ""
       },
       {
-       "id": "b-section-3744191",
+       "id": "b-section-82816170",
        "kind": "section",
        "heading": "SETUP",
        "text": "Form 2 stacks of map tiles and shuffle each:\n- **Stack 1:** 4 random map tiles\n- **Stack 2:** 6 random map tiles + 1 target map tile\nPlace stack 1 on top of stack 2.\nThe first 3 map tiles revealed with an enemy symbol get allocation markers **A**, **B** and **C**, in that order.",
@@ -60,7 +60,7 @@
        "caption": ""
       },
       {
-       "id": "b-section-78368639",
+       "id": "b-section-75831307",
        "kind": "section",
        "heading": "SPECIAL RULES",
        "text": "**Search a lead:** on a tile with an allocation marker and no enemies, spend 2 AP and pass a Dexterity check. Read only that lead on **{mission} - Part 2**, then remove the marker. Each lead found is 1 clue: place a universal marker next to this card.",
@@ -68,7 +68,7 @@
        "caption": ""
       },
       {
-       "id": "b-objectives-90623085",
+       "id": "b-objectives-81678336",
        "kind": "objectives",
        "heading": "",
        "text": "Once the target map tile is revealed, read **{mission} - Part 3**. If day 4 begins before that, read **{mission} - Part 6: Failure**.",
@@ -78,12 +78,12 @@
      ]
     },
     {
-     "id": "p-21053088",
+     "id": "p-257675",
      "label": "",
      "art": null,
      "blocks": [
       {
-       "id": "b-story-9176799",
+       "id": "b-story-55610154",
        "kind": "story",
        "heading": "",
        "text": "*Read only the lead you have just found.*",
@@ -91,7 +91,7 @@
        "caption": ""
       },
       {
-       "id": "b-section-83718029",
+       "id": "b-section-82755465",
        "kind": "section",
        "heading": "LEAD A",
        "text": "Ren's small footprints run east. A second set follows hers, heavy and evenly spaced. New Haven issue boots.",
@@ -99,7 +99,7 @@
        "caption": ""
       },
       {
-       "id": "b-section-74631293",
+       "id": "b-section-59050069",
        "kind": "section",
        "heading": "LEAD B",
        "text": "A dead SoL Drifter lies in the shade with a folded note in his fist: patrol times, in neat block letters. You have seen that handwriting before, on the duty roster pinned by the briefing room door.",
@@ -107,7 +107,7 @@
        "caption": ""
       },
       {
-       "id": "b-section-36022923",
+       "id": "b-section-47924920",
        "kind": "section",
        "heading": "LEAD C",
        "text": "Ren's cold camp. Her satchel is gone, but she left a torn page behind. The maps she copied are not New Haven routes. They are SoL routes. She was not selling secrets. She was watching someone.",
@@ -115,7 +115,7 @@
        "caption": ""
       },
       {
-       "id": "b-tip-73391094",
+       "id": "b-tip-27918840",
        "kind": "tip",
        "heading": "",
        "text": "Two clues or more, and Ren alive, and people may believe you.",
@@ -125,12 +125,12 @@
      ]
     },
     {
-     "id": "p-65273622",
+     "id": "p-68330618",
      "label": "",
      "art": null,
      "blocks": [
       {
-       "id": "b-section-25614446",
+       "id": "b-section-22837970",
        "kind": "section",
        "heading": "THE HIDEOUT",
        "text": "Ren is wedged into a rock crevice, a bandage soaked through, a pistol pointed at your chest.\n*\"He sent you, didn't he? The veteran. He knows I've seen his notes.\"* Her eyes go past your shoulder and widen.\nBehind you, boots on gravel. You did not find Ren. You led them to her.",
@@ -138,7 +138,7 @@
        "caption": ""
       },
       {
-       "id": "b-section-2086240",
+       "id": "b-section-26367955",
        "kind": "section",
        "heading": "SETUP",
        "text": "Ren has 3 HP, tracked on this card. She moves with one character, who pays +1 AP for each map tile, and enemies on her tile can attack her like a character.\nSpawn **1 SoL Elite** and **SoL Soldiers** equal to the number of players on the target map tile. Gain 1 clue: Ren's word.",
@@ -146,7 +146,7 @@
        "caption": ""
       },
       {
-       "id": "b-objectives-82476864",
+       "id": "b-objectives-65928406",
        "kind": "objectives",
        "heading": "",
        "text": "Defeat every enemy on the target map tile, then read **{mission} - Part 4**. If Ren's HP drops to 0, keep playing without her.",
@@ -156,12 +156,12 @@
      ]
     },
     {
-     "id": "p-46466320",
+     "id": "p-19664071",
      "label": "",
      "art": null,
      "blocks": [
       {
-       "id": "b-section-60655037",
+       "id": "b-section-65391194",
        "kind": "section",
        "heading": "THE LONG WALK HOME",
        "text": "*\"He's opening the gate tonight,\"* Ren says through her teeth. *\"The Sons will be inside before morning. And who will they believe? A scout who ran, or the man who briefs them every day?\"*\nNew Haven is a long way off, and the sun is already sliding west.",
@@ -169,7 +169,7 @@
        "caption": ""
       },
       {
-       "id": "b-section-36834456",
+       "id": "b-section-76676378",
        "kind": "section",
        "heading": "MISSION RULES",
        "text": "- In each preparation phase, spawn **1 SoL Soldier** on the target map tile. SoL enemies move 1 map tile toward Ren, or toward the nearest character if she is dead, instead of rolling.\n- No night cards are drawn on a tile with Ren: she knows the quiet ways.",
@@ -177,7 +177,7 @@
        "caption": ""
       },
       {
-       "id": "b-objectives-34818307",
+       "id": "b-objectives-77857712",
        "kind": "objectives",
        "heading": "",
        "text": "Reach New Haven:\n- **With Ren alive and 2 or more clues:** read **{mission} - Part 5 A**.\n- **Otherwise:** read **{mission} - Part 5 B**.\n- **If the night phase of day 4 begins first:** read **{mission} - Part 5 B** at once, wherever you are.",
@@ -187,12 +187,12 @@
      ]
     },
     {
-     "id": "p-34517229",
+     "id": "p-5743051",
      "label": "5 A",
      "art": null,
      "blocks": [
       {
-       "id": "b-section-69701779",
+       "id": "b-section-91624368",
        "kind": "section",
        "heading": "THE ACCUSATION",
        "text": "Ren lays the torn page beside the duty roster. The handwriting matches. The room goes silent, and then the veteran is through the side door and running for the wasteland.",
@@ -200,7 +200,7 @@
        "caption": ""
       },
       {
-       "id": "b-section-6907432",
+       "id": "b-section-99383029",
        "kind": "section",
        "heading": "MISSION RULES",
        "text": "- **The veteran:** place an SoL Elite standee on New Haven. He uses the SoL Elite card with +2 HP.\n- At the start of each day phase he moves 1 explored map tile away from the nearest character. Each time he moves, spawn **1 SoL Soldier** on the tile he left.\n- New Haven's guards hold the gate: no enemies can enter the New Haven map tile.",
@@ -208,7 +208,7 @@
        "caption": ""
       },
       {
-       "id": "b-goal-36963567",
+       "id": "b-goal-93756325",
        "kind": "goal",
        "heading": "",
        "text": "Defeat the veteran within **3 day phases**: read **{mission} - Part 6: Success A**. If he is still standing after that, he is gone: read **{mission} - Part 6: Failure**.",
@@ -218,12 +218,12 @@
      ]
     },
     {
-     "id": "p-21871638",
+     "id": "p-11769338",
      "label": "5 B",
      "art": null,
      "blocks": [
       {
-       "id": "b-section-29126252",
+       "id": "b-section-33922262",
        "kind": "section",
        "heading": "THE OPEN GATE",
        "text": "Nobody listens, or nobody is left to listen. As darkness falls the bolt slides back from the inside, and the gate of New Haven swings open to the night.",
@@ -231,7 +231,7 @@
        "caption": ""
       },
       {
-       "id": "b-section-37605425",
+       "id": "b-section-8986459",
        "kind": "section",
        "heading": "MISSION RULES",
        "text": "- Move the day tracker to the night phase. Every character not yet in New Haven is placed on the map tile next to it.\n- Spawn **SoL Soldiers** equal to the number of players on New Haven, plus **the veteran**: an SoL Elite standee using the SoL Elite card with +2 HP.\n- No trading in New Haven until every enemy there is defeated.",
@@ -239,7 +239,7 @@
        "caption": ""
       },
       {
-       "id": "b-goal-33643453",
+       "id": "b-goal-2038674",
        "kind": "goal",
        "heading": "",
        "text": "Defeat every enemy on New Haven before the night phase ends: read **{mission} - Part 6: Success B**. Otherwise, read **{mission} - Part 6: Failure**.",
@@ -249,12 +249,12 @@
      ]
     },
     {
-     "id": "p-81247015",
+     "id": "p-82312597",
      "label": "",
      "art": null,
      "blocks": [
       {
-       "id": "b-success-63500901",
+       "id": "b-success-97439798",
        "kind": "success",
        "heading": "",
        "text": "**A:** they bring the veteran back in chains at dusk. **B:** by dawn the gate is shut again, and the veteran lies in the dust inside it.\nEither way, a folded list turns up in his boot, in the same neat block letters. Five names. His is the first.\nThe second belongs to someone who sat at the briefing table with you this morning.\n*If a traitor was revealed in this game, now you know who.*",
@@ -262,7 +262,7 @@
        "caption": ""
       },
       {
-       "id": "b-roguelike-23291147",
+       "id": "b-roguelike-28419393",
        "kind": "roguelike",
        "heading": "",
        "text": "The group receives 1 additional {star}. **A:** each character gains 1 karma die for the next mission. **B:** the group takes 1 **Light armor** from the gear deck.",
@@ -270,7 +270,7 @@
        "caption": ""
       },
       {
-       "id": "b-failure-76591049",
+       "id": "b-failure-59771006",
        "kind": "failure",
        "heading": "",
        "text": "Ren's badge is pinned to the wall as a warning to deserters. The patrols keep vanishing, and every morning the veteran stands at the front of the room and asks for volunteers.",
@@ -280,8 +280,8 @@
      ]
     }
    ],
-   "created": "2026-11-21T02:19:16Z",
-   "updated": "2026-11-21T02:19:16Z"
+   "created": "2026-11-21T02:57:03Z",
+   "updated": "2026-11-21T02:57:03Z"
   }
  ]
 }

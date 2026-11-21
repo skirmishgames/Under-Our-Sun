@@ -1,17 +1,17 @@
 // App shell: views, editor, library and print.
-import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, MISSION_TAGS, newMission, newBlock, newPart, normaliseMission, missionName, partLabel, partTotal, uid } from './data/schema.js?v=d4b9a02a';
-import { PATTERNS } from './data/patterns.js?v=d4b9a02a';
-import { ITEMS } from './data/items.js?v=d4b9a02a';
-import { sampleMission } from './data/sample.js?v=d4b9a02a';
-import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=d4b9a02a';
-import { fileToDataUrl } from './art.js?v=d4b9a02a';
-import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=d4b9a02a';
-import { DISPATCHES, DISPATCH_STATUS } from './data/dispatches.js?v=d4b9a02a';
-import { OFFICIAL_MISSIONS, COMMUNITY_MISSIONS, MISSION_TYPES } from './data/missions-index.js?v=d4b9a02a';
-import { rollSpark } from './data/design.js?v=d4b9a02a';
-import { FAQ, FAQ_TOPICS, FAQ_SOURCES, FAQ_LINKS, CONTENTS_1E } from './data/faq.js?v=d4b9a02a';
-import { renderSheet, buildSheetPdf, ROGUELIKE_TEXT } from './sheet.js?v=d4b9a02a';
-import { buildPdf, PAPERS, layoutFor } from './print.js?v=d4b9a02a';
+import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, MISSION_TAGS, newMission, newBlock, newPart, normaliseMission, missionName, partLabel, partTotal, uid } from './data/schema.js?v=b839a605';
+import { PATTERNS } from './data/patterns.js?v=b839a605';
+import { ITEMS } from './data/items.js?v=b839a605';
+import { sampleMission } from './data/sample.js?v=b839a605';
+import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=b839a605';
+import { fileToDataUrl } from './art.js?v=b839a605';
+import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=b839a605';
+import { DISPATCHES, DISPATCH_STATUS } from './data/dispatches.js?v=b839a605';
+import { OFFICIAL_MISSIONS, COMMUNITY_MISSIONS, MISSION_TYPES } from './data/missions-index.js?v=b839a605';
+import { rollSpark } from './data/design.js?v=b839a605';
+import { FAQ, FAQ_TOPICS, FAQ_SOURCES, FAQ_LINKS, CONTENTS_1E } from './data/faq.js?v=b839a605';
+import { renderSheet, buildSheetPdf, ROGUELIKE_TEXT } from './sheet.js?v=b839a605';
+import { buildPdf, PAPERS, layoutFor } from './print.js?v=b839a605';
 
 const VERSION = '1.0.0';
 const $ = (sel, root = document) => root.querySelector(sel);
