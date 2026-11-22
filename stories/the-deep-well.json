@@ -16,7 +16,7 @@
    "players": "2-4",
    "playtime": "120-180",
    "summary": "Ida's map leads east to an old enclave where the water still runs. The Sons of Liberty know the way too.",
-   "notes": "Version 1.2. 1.1: enemies can attack Ida, convoy arrives at 3 markers, last stand waves halved. 1.2: balanced for 2-4 players; last stand waves equal to the number of players again.\nSequel to Ghost Signal. Base game components only: objective tokens, allocation markers A-C, universal markers, SoL enemy cards.\nPlays on its own: use the setup for groups who did not play Ghost Signal.",
+   "notes": "Version 1.2. 1.1: enemies can attack Ida, convoy arrives at 3 markers, last stand waves halved. 1.2: balanced for 2-4 players and the enemy standees in the box; last stand waves equal to the number of players again.\nSequel to Ghost Signal. Base game components only: objective tokens, allocation markers A-C, universal markers, SoL enemy cards.\nPlays on its own: use the setup for groups who did not play Ghost Signal.",
    "types": [
     "timed",
     "rescue",
@@ -102,7 +102,7 @@
        "id": "b-section-31785488",
        "kind": "section",
        "heading": "SPECIAL RULES",
-       "text": "**The convoy arrives** when 3 universal markers are next to part 1: spawn **1 SoL Elite** and **2 SoL Soldiers** on ruin tile A. Then keep adding markers; every 2 more markers, spawn **1 SoL Soldier** on tile A.",
+       "text": "**The convoy arrives** when 3 universal markers are next to part 1: spawn **1 SoL Elite** and **2 SoL Soldiers** on ruin tile A. Then keep adding markers; every 2 more markers, spawn **1 SoL Soldier** on tile A. If no SoL Soldier standee is free, spawn an SoL Drifter instead.",
        "image": null,
        "caption": ""
       },
@@ -133,7 +133,7 @@
        "id": "b-section-73973140",
        "kind": "section",
        "heading": "SETUP",
-       "text": "Spawn **1 SoL Elite** and **SoL Drifters** equal to the number of players on the target map tile. Characters who sneaked onto the tile stay hidden.",
+       "text": "Spawn **1 SoL Elite**, **2 SoL Drifters** and 1 **SoL Soldier** for each player after the second on the target map tile. Characters who sneaked onto the tile stay hidden.",
        "image": null,
        "caption": ""
       },
@@ -203,7 +203,7 @@
        "id": "b-section-87268162",
        "kind": "section",
        "heading": "MISSION RULES",
-       "text": "- **The workers** have 6 HP and move with one character, who pays +1 AP for each map tile. Enemies on their tile attack the workers before anyone else.\n- In each preparation phase, spawn **1 SoL Soldier** on the target map tile. SoL enemies move 1 map tile toward the workers instead of rolling for movement.\n- Ida's map no longer works: you know the way home.",
+       "text": "- **The workers** have 6 HP and move with one character, who pays +1 AP for each map tile. Enemies on their tile attack the workers before anyone else.\n- In each preparation phase, spawn **1 SoL Soldier** on the target map tile. If no SoL Soldier standee is free, spawn an SoL Drifter instead. SoL enemies move 1 map tile toward the workers instead of rolling for movement.\n- Ida's map no longer works: you know the way home.",
        "image": null,
        "caption": ""
       },
@@ -234,7 +234,7 @@
        "id": "b-section-74448092",
        "kind": "section",
        "heading": "MISSION RULES",
-       "text": "- The target map tile is a camp. No night cards are drawn there.\n- At the start of each day phase, spawn enemies equal to the number of players. For each enemy roll a d8: **1-3** tile A, **4-6** tile B, **7-8** tile C.\n- Enemies move 1 map tile toward the target map tile at the start of each day phase. If an enemy is on the target map tile at the end of a day phase, a worker is lost: place 1 universal marker on the workers token.\n- **Shore up:** 1 AP and 1 {wood} or 1 {metal} removes 1 marker from the workers token.",
+       "text": "- The target map tile is a camp. No night cards are drawn there.\n- At the start of each day phase, spawn enemies equal to the number of players. If a drawn enemy has no free standee, draw again. For each enemy roll a d8: **1-3** tile A, **4-6** tile B, **7-8** tile C.\n- Enemies move 1 map tile toward the target map tile at the start of each day phase. If an enemy is on the target map tile at the end of a day phase, a worker is lost: place 1 universal marker on the workers token.\n- **Shore up:** 1 AP and 1 {wood} or 1 {metal} removes 1 marker from the workers token.",
        "image": null,
        "caption": ""
       },

@@ -18,7 +18,7 @@ export const DISPATCHES = [
       'Ending: which ending did you get, and did it land? Did anyone feel bad about the choice?',
       'Roguelike: is ignoring one ANIMAL night card per mission a fair reward, or too strong?'
     ],
-    changes: ['1.1: balanced for 2-4 players.'],
+    changes: ['1.1: balanced for 2-4 players and the enemy standees in the box.'],
     playtests: [] },
   { id: 'story-ghost-signal', file: 'stories/ghost-signal.json', title: 'Ghost Signal', genre: 'Rescue',
     status: 'untested', version: '1.2', diff: 2, parts: 5, players: '2-4', time: '90-150', mode: 'both',
@@ -36,7 +36,7 @@ export const DISPATCHES = [
       'Semi-cooperative games: did the traitor have meaningful ways to sabotage the escort?',
       'Reading aloud: did any card feel too long, or any rule unclear when you reached it?'
     ],
-    changes: ['1.1: enemies on Ida\'s tile can attack her like a character (the rule was missing).', '1.2: balanced for 2-4 players.'],
+    changes: ['1.1: enemies on Ida\'s tile can attack her like a character (the rule was missing).', '1.2: balanced for 2-4 players and the enemy standees in the box.'],
     playtests: [] },
   { id: 'story-the-deep-well', file: 'stories/the-deep-well.json', title: 'The Deep Well', genre: 'Race',
     status: 'untested', version: '1.2', diff: 3, parts: 6, players: '2-4', time: '120-180', mode: 'coop',
@@ -46,7 +46,7 @@ export const DISPATCHES = [
       'Part 1, start: which setup did you use (signal silenced, signal left running, or Ghost Signal not played)?',
       'The convoy clock: it arrives at 3 markers. On which day did it arrive, and was that before or after you reached the enclave? Did the race feel real?',
       'Part 2, the outer ruins: does the +1 AP to enter a ruin tile slow you down too much?',
-      'Part 3, the guards: 1 SoL Elite plus Drifters equal to the number of players. Too easy or too hard at your player count?',
+      'Part 3, the guards: 1 SoL Elite, 2 Drifters, and 1 Soldier per player after the second. Too easy or too hard at your player count?',
       'Part 4, the choice: which ending did you pick and why? Did both feel possible with the water and AP you had?',
       'Part 5 A, Exodus: the workers have 6 HP and enemies attack them first. Did they make it, and how close was the day 5 deadline?',
       'Part 5 B, Last stand: waves equal to the number of players each day phase, for 4 phases. Too many or too few at your player count?',
@@ -54,7 +54,7 @@ export const DISPATCHES = [
       'Balance: if you can, play both endings. Is one clearly easier?',
       'Ida: did she survive, and did her map ability matter?'
     ],
-    changes: ['1.1: enemies on Ida\'s tile can attack her; the convoy arrives at 3 markers instead of 4 (2 markers at the start if the signal was left running) so the race matters; last stand waves halved to fit the enemy standees in the box.', '1.2: balanced for 2-4 players; last stand waves are equal to the number of players again.'],
+    changes: ['1.1: enemies on Ida\'s tile can attack her; the convoy arrives at 3 markers instead of 4 (2 markers at the start if the signal was left running) so the race matters; last stand waves halved to fit the enemy standees in the box.', '1.2: balanced for 2-4 players and the enemy standees in the box; last stand waves are equal to the number of players again.'],
     playtests: [] },
   { id: 'story-the-informant', file: 'stories/the-informant.json', title: 'The Informant',
     status: 'untested', version: '1.1', diff: 2, parts: 6, players: '2-4', time: '120-180', mode: 'both', genre: 'Thriller',
@@ -64,7 +64,7 @@ export const DISPATCHES = [
       'Part 1, leads: did all three leads land on reachable tiles? How many did you find, and was 2 AP plus a Dexterity check a fair price?',
       'The reveal: when did your group suspect the truth? After a lead, at part 3, or not until the end? A thriller works best when someone guesses just before it is confirmed.',
       'Part 1 deadline: did you find Ren before day 4? How much time was left?',
-      'Part 3, the ambush: 1 SoL Elite plus Soldiers equal to the number of players. Did Ren (3 HP) survive it?',
+      'Part 3, the ambush: 1 SoL Elite, 1 Drifter and Soldiers equal to players minus 1. Did Ren (3 HP) survive it?',
       'Part 4, the walk home: did the pursuing Soldiers catch up? Did "no night cards on Ren\'s tile" make travelling at night too safe?',
       'Branch: which part 5 did you reach, and why (clues, Ren dead, or night fell)? Did it feel earned?',
       'Part 5 A, the chase: can the veteran be caught within 3 day phases, or does he escape too easily?',
@@ -72,7 +72,7 @@ export const DISPATCHES = [
       'Semi-cooperative games: did the ending line about the traitor land? Did the traitor\'s goals fit this mission?',
       'Story: were the leads clear enough to follow, and was the ending a surprise?'
     ],
-    changes: ['1.1: balanced for 2-4 players.'],
+    changes: ['1.1: balanced for 2-4 players and the enemy standees in the box.'],
     playtests: [] },
   { id: 'story-what-we-owe', file: 'stories/what-we-owe.json', title: 'What We Owe', genre: 'Drama',
     status: 'untested', version: '1.1', diff: 2, parts: 6, players: '2-4', time: '90-150', mode: 'both',
@@ -83,14 +83,14 @@ export const DISPATCHES = [
       'Was the choice hard? If one option felt obviously right, tell us which and why.',
       'Part 2, the camp: did meeting Sela and her children first make the camp feel like a real option?',
       'Distance: how far apart were New Haven and the camp? Did the day 5 deadline ever rule one of them out?',
-      'Part 3, the wreck: 1 Scavenger plus 1 Mischief of Rats for each player after the first. Too easy or too hard?',
+      'Part 3, the wreck: 1 Scavenger and 1 Mischief of Rats, more at 3 and 4 players. Too easy or too hard?',
       'The crate: is "it cannot be split" clear enough? Did anyone try to argue around it?',
       'Endings: did the one you read land emotionally? Too heavy, or just right?',
       'Semi-cooperative games: did the traitor try to carry the crate to the "wrong" place, or keep it from both? Did that make for a good game?',
       'Rewards: is a Medkit for New Haven against a Sun cape for the camp a fair pair?',
       'Pacing: how long did the game take, and did the search before the choice drag?'
     ],
-    changes: ['1.1: balanced for 2-4 players; Mischief of Rats named as on the card.'],
+    changes: ['1.1: balanced for 2-4 players and the enemy standees in the box; Mischief of Rats named as on the card.'],
     playtests: [] }
 ];
 

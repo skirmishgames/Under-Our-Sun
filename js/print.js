@@ -1,7 +1,7 @@
 // PDF sheets at 100% scale. Fronts are 70 x 120 mm portrait.
 // Backs are rendered landscape and rotated into the same slot,
 // mirrored left to right for long-edge duplex printing.
-import { renderFront, renderBack, CARD_W, CARD_H } from './render.js?v=9daa82f4';
+import { renderFront, renderBack, CARD_W, CARD_H } from './render.js?v=9d176db8';
 
 export const PAPERS = {
   letter: { label: 'Letter (8.5 x 11 in)', w: 215.9, h: 279.4 },

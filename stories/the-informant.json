@@ -16,7 +16,7 @@
    "players": "2-4",
    "playtime": "120-180",
    "summary": "Someone in New Haven is selling patrol routes to the Sons of Liberty. A scout has run. Bring her back before more people die.",
-   "notes": "Version 1.1. Base game components only: allocation markers A-C, universal markers, SoL enemy cards. 1.1: balanced for 2-4 players.\nThriller: the briefing officer is the informant. Semi-cooperative play adds to the paranoia.",
+   "notes": "Version 1.1. Base game components only: allocation markers A-C, universal markers, SoL enemy cards. 1.1: balanced for 2-4 players and the enemy standees in the box.\nThriller: the briefing officer is the informant. Semi-cooperative play adds to the paranoia.",
    "types": [
     "investigate",
     "hunt",
@@ -141,7 +141,7 @@
        "id": "b-section-26367955",
        "kind": "section",
        "heading": "SETUP",
-       "text": "Ren has 3 HP, tracked on this card. She moves with one character, who pays +1 AP for each map tile, and enemies on her tile can attack her like a character.\nSpawn **1 SoL Elite** and **SoL Soldiers** equal to the number of players on the target map tile. Gain 1 clue: Ren's word.",
+       "text": "Ren has 3 HP, tracked on this card. She moves with one character, who pays +1 AP for each map tile, and enemies on her tile can attack her like a character.\nSpawn **1 SoL Elite**, **1 SoL Drifter** and **SoL Soldiers** equal to the number of players minus 1 on the target map tile. Gain 1 clue: Ren's word.",
        "image": null,
        "caption": ""
       },
@@ -172,7 +172,7 @@
        "id": "b-section-76676378",
        "kind": "section",
        "heading": "MISSION RULES",
-       "text": "- In each preparation phase, spawn **1 SoL Soldier** on the target map tile. SoL enemies move 1 map tile toward Ren, or toward the nearest character if she is dead, instead of rolling.\n- No night cards are drawn on a tile with Ren: she knows the quiet ways.",
+       "text": "- In each preparation phase, spawn **1 SoL Soldier** on the target map tile. If no SoL Soldier standee is free, spawn an SoL Drifter instead. SoL enemies move 1 map tile toward Ren, or toward the nearest character if she is dead, instead of rolling.\n- No night cards are drawn on a tile with Ren: she knows the quiet ways.",
        "image": null,
        "caption": ""
       },
@@ -203,7 +203,7 @@
        "id": "b-section-99383029",
        "kind": "section",
        "heading": "MISSION RULES",
-       "text": "- **The veteran:** place an SoL Elite standee on New Haven. He uses the SoL Elite card with +2 HP.\n- At the start of each day phase he moves 1 explored map tile away from the nearest character. Each time he moves, spawn **1 SoL Soldier** on the tile he left.\n- New Haven's guards hold the gate: no enemies can enter the New Haven map tile.",
+       "text": "- **The veteran:** place an SoL Elite standee on New Haven. He uses the SoL Elite card with +2 HP.\n- At the start of each day phase he moves 1 explored map tile away from the nearest character. Each time he moves, spawn **1 SoL Soldier** on the tile he left, or an SoL Drifter if no Soldier standee is free.\n- New Haven's guards hold the gate: no enemies can enter the New Haven map tile.",
        "image": null,
        "caption": ""
       },
@@ -234,7 +234,7 @@
        "id": "b-section-8986459",
        "kind": "section",
        "heading": "MISSION RULES",
-       "text": "- Move the day tracker to the night phase. Every character not yet in New Haven is placed on the map tile next to it.\n- Spawn **SoL Soldiers** equal to the number of players on New Haven, plus **the veteran**: an SoL Elite standee using the SoL Elite card with +2 HP.\n- No trading in New Haven until every enemy there is defeated.",
+       "text": "- Move the day tracker to the night phase. Every character not yet in New Haven is placed on the map tile next to it.\n- Spawn **1 SoL Drifter** and **SoL Soldiers** equal to the number of players minus 1 on New Haven, plus **the veteran**: an SoL Elite standee using the SoL Elite card with +2 HP.\n- No trading in New Haven until every enemy there is defeated.",
        "image": null,
        "caption": ""
       },
