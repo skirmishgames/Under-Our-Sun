@@ -38,7 +38,7 @@ Under Our Sun is designed by Maximilian Lichtner and David Poluda and published 
 
 Made by Ivan ([slyfoxbgg on BoardGameGeek](https://boardgamegeek.com/profile/slyfoxbgg)).
 
-Contact: games@staroversky.com
+Contact: Ivan, skirmishgames.app@gmail.com
 
 ## Development
 

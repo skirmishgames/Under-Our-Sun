@@ -1,17 +1,17 @@
 // App shell: views, editor, library and print.
-import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, MISSION_TAGS, newMission, newBlock, newPart, normaliseMission, missionName, headerLabel, partLabel, partTotal, uid } from './data/schema.js?v=9d176db8';
-import { PATTERNS } from './data/patterns.js?v=9d176db8';
-import { ITEMS } from './data/items.js?v=9d176db8';
-import { sampleMission } from './data/sample.js?v=9d176db8';
-import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=9d176db8';
-import { fileToDataUrl } from './art.js?v=9d176db8';
-import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=9d176db8';
-import { DISPATCHES, DISPATCH_STATUS } from './data/dispatches.js?v=9d176db8';
-import { OFFICIAL_MISSIONS, COMMUNITY_MISSIONS, MISSION_TYPES } from './data/missions-index.js?v=9d176db8';
-import { rollSpark } from './data/design.js?v=9d176db8';
-import { FAQ, FAQ_TOPICS, FAQ_SOURCES, FAQ_LINKS, CONTENTS_1E } from './data/faq.js?v=9d176db8';
-import { renderSheet, buildSheetPdf, ROGUELIKE_TEXT } from './sheet.js?v=9d176db8';
-import { buildPdf, PAPERS, layoutFor } from './print.js?v=9d176db8';
+import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, MISSION_TAGS, newMission, newBlock, newPart, normaliseMission, missionName, headerLabel, partLabel, partTotal, uid } from './data/schema.js?v=bcd2b22a';
+import { PATTERNS } from './data/patterns.js?v=bcd2b22a';
+import { ITEMS } from './data/items.js?v=bcd2b22a';
+import { sampleMission } from './data/sample.js?v=bcd2b22a';
+import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=bcd2b22a';
+import { fileToDataUrl } from './art.js?v=bcd2b22a';
+import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=bcd2b22a';
+import { DISPATCHES, DISPATCH_STATUS } from './data/dispatches.js?v=bcd2b22a';
+import { OFFICIAL_MISSIONS, COMMUNITY_MISSIONS, MISSION_TYPES } from './data/missions-index.js?v=bcd2b22a';
+import { rollSpark } from './data/design.js?v=bcd2b22a';
+import { FAQ, FAQ_TOPICS, FAQ_SOURCES, FAQ_LINKS, CONTENTS_1E } from './data/faq.js?v=bcd2b22a';
+import { renderSheet, buildSheetPdf, ROGUELIKE_TEXT } from './sheet.js?v=bcd2b22a';
+import { buildPdf, PAPERS, layoutFor } from './print.js?v=bcd2b22a';
 
 const VERSION = '1.0.0';
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -783,7 +783,7 @@ function renderDispatches(openId) {
           const got = await importJson(JSON.stringify(exportPayload([m])));
           toast(`"${got[0].title}" added to My missions.`);
         } }, 'Add to My missions'),
-        el('a', { class: 'btn mini', href: `mailto:games@staroversky.com?subject=${encodeURIComponent(`Playtest: ${d.title} v${d.version}`)}&body=${encodeURIComponent(['Players:', 'Characters:', 'Game mode (co-op or semi-co-op):', 'Playing time:', 'Result (won or lost, and on which part):', '', ...(d.testNotes || []).map((t, k) => `${k + 1}. ${t}\nAnswer:\n`), 'Anything else:'].join('\n'))}` }, 'Send feedback'),
+        el('a', { class: 'btn mini', href: `mailto:skirmishgames.app@gmail.com?subject=${encodeURIComponent(`Playtest: ${d.title} v${d.version}`)}&body=${encodeURIComponent(['Players:', 'Characters:', 'Game mode (co-op or semi-co-op):', 'Playing time:', 'Result (won or lost, and on which part):', '', ...(d.testNotes || []).map((t, k) => `${k + 1}. ${t}\nAnswer:\n`), 'Anything else:'].join('\n'))}` }, 'Send feedback'),
         el('a', { class: 'btn mini', href: '#stories/' + d.id, title: 'Link to this story' }, 'Link')),
       d.playtests.length ? el('p', { class: 'muted small', text: `Playtested ${d.playtests.length} time${d.playtests.length === 1 ? '' : 's'}.` }) : null);
     list.append(card);
