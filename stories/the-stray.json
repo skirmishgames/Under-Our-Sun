@@ -13,10 +13,10 @@
    "community": false,
    "difficulty": 1,
    "mode": "coop",
-   "players": "1-6",
+   "players": "2-4",
    "playtime": "45-90",
    "summary": "Something is raiding New Haven's food stores at night. Track it to its den and deal with it. A gentle first mission.",
-   "notes": "Version 1.0. Base game components only: objective token, a Desert Dog enemy card.\nIntroductory mission: teaches campfires, night cards and sneaking, with little combat.",
+   "notes": "Version 1.1. Base game components only: objective token, a Desert Dog enemy card. 1.1: balanced for 2-4 players.\nIntroductory mission: teaches campfires, night cards and sneaking, with little combat.",
    "types": [
     "hunt"
    ],

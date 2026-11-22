@@ -13,10 +13,10 @@
    "community": false,
    "difficulty": 2,
    "mode": "both",
-   "players": "1-6",
+   "players": "2-4",
    "playtime": "90-150",
    "summary": "Someone is broadcasting a promise of clean water. Find the voice before the desperate follow it.",
-   "notes": "Version 1.1. Base game components only. 1.1: enemies can attack Ida.",
+   "notes": "Version 1.2. Base game components only. 1.1: enemies can attack Ida. 1.2: balanced for 2-4 players.",
    "types": [
     "rescue",
     "escort",
@@ -141,7 +141,7 @@
        "id": "b-section-29964730",
        "kind": "section",
        "heading": "SETUP",
-       "text": "Spawn **1 SoL Elite** and **SoL Soldiers** equal to the number of players minus 1 (at least 1) on the target map tile. Every character on the tile who is not hidden faces an initial combat round.",
+       "text": "Spawn **1 SoL Elite** and **SoL Soldiers** equal to the number of players minus 1 on the target map tile. Every character on the tile who is not hidden faces an initial combat round.",
        "image": null,
        "caption": ""
       },

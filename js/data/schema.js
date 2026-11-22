@@ -93,7 +93,7 @@ export function newMission() {
     community: true,
     difficulty: 2,
     mode: 'coop',
-    players: '1-6',
+    players: '2-4',
     playtime: '90-120',
     summary: '',
     notes: '',

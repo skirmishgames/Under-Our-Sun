@@ -13,10 +13,10 @@
    "community": false,
    "difficulty": 2,
    "mode": "both",
-   "players": "1-6",
+   "players": "2-4",
    "playtime": "120-180",
    "summary": "Someone in New Haven is selling patrol routes to the Sons of Liberty. A scout has run. Bring her back before more people die.",
-   "notes": "Version 1.0. Base game components only: allocation markers A-C, universal markers, SoL enemy cards.\nThriller: the briefing officer is the informant. Semi-cooperative play adds to the paranoia.",
+   "notes": "Version 1.1. Base game components only: allocation markers A-C, universal markers, SoL enemy cards. 1.1: balanced for 2-4 players.\nThriller: the briefing officer is the informant. Semi-cooperative play adds to the paranoia.",
    "types": [
     "investigate",
     "hunt",

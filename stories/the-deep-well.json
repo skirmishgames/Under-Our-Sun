@@ -13,10 +13,10 @@
    "community": false,
    "difficulty": 3,
    "mode": "coop",
-   "players": "1-6",
+   "players": "2-4",
    "playtime": "120-180",
    "summary": "Ida's map leads east to an old enclave where the water still runs. The Sons of Liberty know the way too.",
-   "notes": "Version 1.1. 1.1: enemies can attack Ida, convoy arrives at 3 markers, last stand waves halved.\nSequel to Ghost Signal. Base game components only: objective tokens, allocation markers A-C, universal markers, SoL enemy cards.\nPlays on its own: use the setup for groups who did not play Ghost Signal.",
+   "notes": "Version 1.2. 1.1: enemies can attack Ida, convoy arrives at 3 markers, last stand waves halved. 1.2: balanced for 2-4 players; last stand waves equal to the number of players again.\nSequel to Ghost Signal. Base game components only: objective tokens, allocation markers A-C, universal markers, SoL enemy cards.\nPlays on its own: use the setup for groups who did not play Ghost Signal.",
    "types": [
     "timed",
     "rescue",
@@ -234,7 +234,7 @@
        "id": "b-section-74448092",
        "kind": "section",
        "heading": "MISSION RULES",
-       "text": "- The target map tile is a camp. No night cards are drawn there.\n- At the start of each day phase, spawn enemies equal to half the number of players, rounded up. For each enemy roll a d8: **1-3** tile A, **4-6** tile B, **7-8** tile C.\n- Enemies move 1 map tile toward the target map tile at the start of each day phase. If an enemy is on the target map tile at the end of a day phase, a worker is lost: place 1 universal marker on the workers token.\n- **Shore up:** 1 AP and 1 {wood} or 1 {metal} removes 1 marker from the workers token.",
+       "text": "- The target map tile is a camp. No night cards are drawn there.\n- At the start of each day phase, spawn enemies equal to the number of players. For each enemy roll a d8: **1-3** tile A, **4-6** tile B, **7-8** tile C.\n- Enemies move 1 map tile toward the target map tile at the start of each day phase. If an enemy is on the target map tile at the end of a day phase, a worker is lost: place 1 universal marker on the workers token.\n- **Shore up:** 1 AP and 1 {wood} or 1 {metal} removes 1 marker from the workers token.",
        "image": null,
        "caption": ""
       },

@@ -21,7 +21,7 @@ export const PATTERNS = [
   { label: 'Enemies: boss HP by player count',
     text: '**[Enemy]** has 5 HP + 1 per player.' },
   { label: 'Enemies: spawn roll on movement',
-    text: 'Each time [it] enters a new map tile, roll 1 {blue} (1-2 players) or 1 {yellow} (3-6 players). On a {success}, an enemy spawns on that tile.' },
+    text: 'Each time [it] enters a new map tile, roll 1 {blue} (2 players) or 1 {yellow} (3-4 players). On a {success}, an enemy spawns on that tile.' },
   { label: 'Rule exception',
     text: 'In this mission, enemies do not move in response to ranged attacks.' },
   { label: 'Clock: deadline on the day tracker',

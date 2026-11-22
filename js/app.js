@@ -1,17 +1,17 @@
 // App shell: views, editor, library and print.
-import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, MISSION_TAGS, newMission, newBlock, newPart, normaliseMission, missionName, headerLabel, partLabel, partTotal, uid } from './data/schema.js?v=f8c9b218';
-import { PATTERNS } from './data/patterns.js?v=f8c9b218';
-import { ITEMS } from './data/items.js?v=f8c9b218';
-import { sampleMission } from './data/sample.js?v=f8c9b218';
-import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=f8c9b218';
-import { fileToDataUrl } from './art.js?v=f8c9b218';
-import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=f8c9b218';
-import { DISPATCHES, DISPATCH_STATUS } from './data/dispatches.js?v=f8c9b218';
-import { OFFICIAL_MISSIONS, COMMUNITY_MISSIONS, MISSION_TYPES } from './data/missions-index.js?v=f8c9b218';
-import { rollSpark } from './data/design.js?v=f8c9b218';
-import { FAQ, FAQ_TOPICS, FAQ_SOURCES, FAQ_LINKS, CONTENTS_1E } from './data/faq.js?v=f8c9b218';
-import { renderSheet, buildSheetPdf, ROGUELIKE_TEXT } from './sheet.js?v=f8c9b218';
-import { buildPdf, PAPERS, layoutFor } from './print.js?v=f8c9b218';
+import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, MISSION_TAGS, newMission, newBlock, newPart, normaliseMission, missionName, headerLabel, partLabel, partTotal, uid } from './data/schema.js?v=9daa82f4';
+import { PATTERNS } from './data/patterns.js?v=9daa82f4';
+import { ITEMS } from './data/items.js?v=9daa82f4';
+import { sampleMission } from './data/sample.js?v=9daa82f4';
+import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=9daa82f4';
+import { fileToDataUrl } from './art.js?v=9daa82f4';
+import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=9daa82f4';
+import { DISPATCHES, DISPATCH_STATUS } from './data/dispatches.js?v=9daa82f4';
+import { OFFICIAL_MISSIONS, COMMUNITY_MISSIONS, MISSION_TYPES } from './data/missions-index.js?v=9daa82f4';
+import { rollSpark } from './data/design.js?v=9daa82f4';
+import { FAQ, FAQ_TOPICS, FAQ_SOURCES, FAQ_LINKS, CONTENTS_1E } from './data/faq.js?v=9daa82f4';
+import { renderSheet, buildSheetPdf, ROGUELIKE_TEXT } from './sheet.js?v=9daa82f4';
+import { buildPdf, PAPERS, layoutFor } from './print.js?v=9daa82f4';
 
 const VERSION = '1.0.0';
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -203,7 +203,7 @@ function renderDetails() {
     field('Label (Mission, or a genre such as Thriller)', bindText(el('input', { type: 'text', placeholder: 'Mission' }), m, 'label')),
     field('Number (blank: part links use the mission name)', bindText(el('input', { type: 'text', placeholder: '15, CM-3 or blank' }), m, 'number')),
     field('Author', bindText(el('input', { type: 'text', placeholder: 'Your name or handle' }), m, 'author')),
-    field('Players', bindText(el('input', { type: 'text', placeholder: '1-6' }), m, 'players')),
+    field('Players', bindText(el('input', { type: 'text', placeholder: '2-4' }), m, 'players')),
     field('Playing time (minutes)', bindText(el('input', { type: 'text', placeholder: '90-180' }), m, 'playtime')),
     field('Game mode', mode),
     el('div', { class: 'field wide' }, el('span', { class: 'muted small', text: 'Difficulty' }), el('div', {}, diff)),
