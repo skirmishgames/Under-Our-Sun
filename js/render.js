@@ -1,7 +1,7 @@
 // Canvas card renderer. All positions are in millimetres.
 // Front: 70 x 120 mm portrait. Back: 120 x 70 mm landscape.
-import { DIFFICULTY, MODES, BLOCK_KINDS, ICON_TOKENS, missionName, headerLabel, partLabel, partTotal } from './data/schema.js?v=71d907df';
-import { drawPreset, loadImage, drawCover } from './art.js?v=71d907df';
+import { DIFFICULTY, MODES, BLOCK_KINDS, ICON_TOKENS, missionName, headerLabel, partLabel, partTotal } from './data/schema.js?v=dab0f1b8';
+import { drawPreset, loadImage, drawCover } from './art.js?v=dab0f1b8';
 
 export const CARD_W = 70;
 export const CARD_H = 120;
@@ -494,7 +494,7 @@ export async function renderFront(mission, partIdx, opts = {}) {
   ctx.font = `400 ${1.9 * s}px ${BODY_FONT}`;
   ctx.fillStyle = 'rgba(242,228,200,0.75)';
   ctx.textAlign = 'left';
-  if (mission.author) ctx.fillText(`Author: ${mission.author}`, 4.4 * s, (H - 3.3) * s);
+  if (mission.author) ctx.fillText(`Created by ${mission.author}`, 4.4 * s, (H - 3.3) * s);
   if (overflow && opts.markOverflow) {
     ctx.fillStyle = 'rgba(200,30,30,0.9)';
     ctx.fillRect(0, (H - 1.4) * s, W * s, 1.4 * s);
