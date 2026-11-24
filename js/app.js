@@ -1,17 +1,17 @@
 // App shell: views, editor, library and print.
-import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, MISSION_TAGS, newMission, newBlock, newPart, normaliseMission, missionName, headerLabel, partLabel, partTotal, uid } from './data/schema.js?v=028b51ca';
-import { PATTERNS } from './data/patterns.js?v=028b51ca';
-import { ITEMS } from './data/items.js?v=028b51ca';
-import { sampleMission } from './data/sample.js?v=028b51ca';
-import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=028b51ca';
-import { fileToDataUrl } from './art.js?v=028b51ca';
-import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=028b51ca';
-import { DISPATCHES, DISPATCH_STATUS, PLAYTESTS_NEEDED } from './data/dispatches.js?v=028b51ca';
-import { OFFICIAL_MISSIONS, COMMUNITY_MISSIONS, MISSION_TYPES } from './data/missions-index.js?v=028b51ca';
-import { rollSpark } from './data/design.js?v=028b51ca';
-import { FAQ, FAQ_TOPICS, FAQ_SOURCES, FAQ_LINKS, CONTENTS_1E } from './data/faq.js?v=028b51ca';
-import { renderSheet, buildSheetPdf, ROGUELIKE_TEXT } from './sheet.js?v=028b51ca';
-import { buildPdf, PAPERS, layoutFor } from './print.js?v=028b51ca';
+import { DIFFICULTY, MODES, BLOCK_KINDS, HEADING_SUGGESTIONS, ART_PRESETS, ICON_TOKENS, MISSION_TAGS, newMission, newBlock, newPart, normaliseMission, missionName, headerLabel, partLabel, partTotal, uid } from './data/schema.js?v=f2e9eaee';
+import { PATTERNS } from './data/patterns.js?v=f2e9eaee';
+import { ITEMS } from './data/items.js?v=f2e9eaee';
+import { sampleMission } from './data/sample.js?v=f2e9eaee';
+import { renderFront, renderBack, drawIcon, ensureFonts, fitReport } from './render.js?v=f2e9eaee';
+import { fileToDataUrl } from './art.js?v=f2e9eaee';
+import { listMissions, getMission, saveMission, deleteMission, exportPayload, downloadJson, importJson, getSetting, setSetting, slug } from './store.js?v=f2e9eaee';
+import { DISPATCHES, DISPATCH_STATUS, PLAYTESTS_NEEDED } from './data/dispatches.js?v=f2e9eaee';
+import { OFFICIAL_MISSIONS, COMMUNITY_MISSIONS, MISSION_TYPES } from './data/missions-index.js?v=f2e9eaee';
+import { rollSpark } from './data/design.js?v=f2e9eaee';
+import { FAQ, FAQ_TOPICS, FAQ_SOURCES, FAQ_LINKS, CONTENTS_1E } from './data/faq.js?v=f2e9eaee';
+import { renderSheet, buildSheetPdf, ROGUELIKE_TEXT } from './sheet.js?v=f2e9eaee';
+import { buildPdf, PAPERS, layoutFor } from './print.js?v=f2e9eaee';
 
 const VERSION = '1.0.0';
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -765,7 +765,8 @@ function renderDispatches(openId) {
       el('div', { class: 'thumbs' }, front, back),
       d.status === 'untested' ? el('details', { class: 'focus' }, el('summary', {}, el('strong', { text: `What to test (${d.testNotes.length})` })),
         el('ol', {}, d.testNotes.map(t => el('li', { text: t })))) : null,
-      d.changes && d.changes.length ? el('p', { class: 'muted small', text: 'Changes: ' + d.changes.join(' ') }) : null,
+      d.changes && d.changes.length ? el('details', { class: 'focus' }, el('summary', {}, el('strong', { text: `Changes (${d.changes.length})` })),
+        el('ul', {}, d.changes.map(t => el('li', { text: t })))) : null,
       el('div', { class: 'tile-actions', style: 'padding:0' },
         el('button', { class: 'btn mini primary', type: 'button', onclick: () => view('front') }, 'View cards'),
         el('button', { class: 'btn mini', type: 'button', onclick: async e => {
