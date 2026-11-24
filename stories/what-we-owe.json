@@ -16,7 +16,7 @@
    "players": "2-4",
    "playtime": "90-150",
    "summary": "A fever is spreading and there is only one crate of medicine in the wasteland. Two places need it. You can only save one.",
-   "notes": "Version 1.1. Base game components only: objective token, Scavenger and Mischief of Rats enemy cards. 1.1: balanced for 2-4 players and the enemy standees in the box; Mischief of Rats named as on the card.\nDrama: the choice is mutually exclusive by rule, the crate cannot be split.",
+   "notes": "Version 1.0. Base game components only: objective token, Scavenger and Mischief of Rats enemy cards.\nDrama: the choice is mutually exclusive by rule, the crate cannot be split.",
    "types": [
     "fetch",
     "timed"

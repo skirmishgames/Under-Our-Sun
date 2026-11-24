@@ -3,7 +3,7 @@
 // testNotes: what playtesters should watch for, part by part. Mission files live in /stories/. Listed in suggested play order.
 export const DISPATCHES = [
   { id: 'story-the-stray', file: 'stories/the-stray.json', title: 'The Stray',
-    version: '1.2', diff: 1, parts: 4, players: '2-4', time: '45-90', mode: 'coop', genre: 'Mystery',
+    version: '1.1', diff: 1, parts: 4, players: '2-4', time: '45-90', mode: 'coop', genre: 'Mystery',
     types: ['hunt'], needs: 'Base game',
     premise: 'Something is raiding New Haven\'s food stores at night. Track it to its den. A gentle first mission for new players, with little combat.',
     testNotes: [
@@ -18,13 +18,13 @@ export const DISPATCHES = [
       'Ending: which ending did you get, and did it land? Did anyone feel bad about the choice?',
       'Roguelike: is ignoring one ANIMAL night card per mission a fair reward, or too strong?'
     ],
-    changes: ['1.1: balanced for 2-4 players and the enemy standees in the box.', '1.2: stack 1 has 5 tiles instead of 3, so the den turns up further from New Haven and the group spends a night out (playtest feedback).'],
+    changes: ['1.1: stack 1 has 5 tiles instead of 3, so the den turns up further from New Haven and the group spends a night out (first playtest).'],
     playtests: [
-      { date: '2026-11-24', version: '1.1', players: '1 player, 3 characters (Scout, Medic, Thickskin)', mode: 'coop', time: 'under 1 hour', result: 'Won, took the dogs home',
+      { date: '2026-11-24', version: '1.0', players: '1 player, 3 characters (Scout, Medic, Thickskin)', mode: 'coop', time: 'under 1 hour', result: 'Won, took the dogs home',
         notes: 'Good first mission that shows the core mechanics quickly. The den turned up next to New Haven, so the group never spent a night out; more tiles before the target suggested.' }
     ] },
   { id: 'story-ghost-signal', file: 'stories/ghost-signal.json', title: 'Ghost Signal', genre: 'Rescue',
-    version: '1.2', diff: 2, parts: 5, players: '2-4', time: '90-150', mode: 'both',
+    version: '1.0', diff: 2, parts: 5, players: '2-4', time: '90-150', mode: 'both',
     types: ['rescue', 'escort', 'timed'], needs: 'Base game',
     premise: 'A forbidden radio picks up a woman\'s voice promising clean water to anyone who comes east. Three families are already packing.',
     testNotes: [
@@ -39,10 +39,10 @@ export const DISPATCHES = [
       'Semi-cooperative games: did the traitor have meaningful ways to sabotage the escort?',
       'Reading aloud: did any card feel too long, or any rule unclear when you reached it?'
     ],
-    changes: ['1.1: enemies on Ida\'s tile can attack her like a character (the rule was missing).', '1.2: balanced for 2-4 players and the enemy standees in the box.'],
+    changes: [],
     playtests: [] },
   { id: 'story-the-deep-well', file: 'stories/the-deep-well.json', title: 'The Deep Well', genre: 'Race',
-    version: '1.2', diff: 3, parts: 6, players: '2-4', time: '120-180', mode: 'coop',
+    version: '1.0', diff: 3, parts: 6, players: '2-4', time: '120-180', mode: 'coop',
     types: ['timed', 'rescue', 'defend'], needs: 'Base game', sequelOf: 'story-ghost-signal',
     premise: 'Ida\'s map leads east to an old enclave where the water still runs. The Sons of Liberty know the way too. Sequel to Ghost Signal, and playable on its own.',
     testNotes: [
@@ -57,10 +57,10 @@ export const DISPATCHES = [
       'Balance: if you can, play both endings. Is one clearly easier?',
       'Ida: did she survive, and did her map ability matter?'
     ],
-    changes: ['1.1: enemies on Ida\'s tile can attack her; the convoy arrives at 3 markers instead of 4 (2 markers at the start if the signal was left running) so the race matters; last stand waves halved to fit the enemy standees in the box.', '1.2: balanced for 2-4 players and the enemy standees in the box; last stand waves are equal to the number of players again.'],
+    changes: [],
     playtests: [] },
   { id: 'story-the-informant', file: 'stories/the-informant.json', title: 'The Informant',
-    version: '1.1', diff: 2, parts: 6, players: '2-4', time: '120-180', mode: 'both', genre: 'Thriller',
+    version: '1.0', diff: 2, parts: 6, players: '2-4', time: '120-180', mode: 'both', genre: 'Thriller',
     types: ['investigate', 'hunt', 'timed'], needs: 'Base game',
     premise: 'Someone in New Haven is selling patrol routes to the Sons of Liberty. A scout has run with a satchel of maps. Bring her back before more people die.',
     testNotes: [
@@ -75,10 +75,10 @@ export const DISPATCHES = [
       'Semi-cooperative games: did the ending line about the traitor land? Did the traitor\'s goals fit this mission?',
       'Story: were the leads clear enough to follow, and was the ending a surprise?'
     ],
-    changes: ['1.1: balanced for 2-4 players and the enemy standees in the box.'],
+    changes: [],
     playtests: [] },
   { id: 'story-what-we-owe', file: 'stories/what-we-owe.json', title: 'What We Owe', genre: 'Drama',
-    version: '1.1', diff: 2, parts: 6, players: '2-4', time: '90-150', mode: 'both',
+    version: '1.0', diff: 2, parts: 6, players: '2-4', time: '90-150', mode: 'both',
     types: ['fetch', 'timed'], needs: 'Base game',
     premise: 'A fever is spreading, and there is only one crate of medicine in the wasteland. Two places need it. You can only save one.',
     testNotes: [
@@ -93,7 +93,7 @@ export const DISPATCHES = [
       'Rewards: is a Medkit for New Haven against a Sun cape for the camp a fair pair?',
       'Pacing: how long did the game take, and did the search before the choice drag?'
     ],
-    changes: ['1.1: balanced for 2-4 players and the enemy standees in the box; Mischief of Rats named as on the card.'],
+    changes: [],
     playtests: [] }
 ];
 

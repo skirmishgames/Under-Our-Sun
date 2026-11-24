@@ -16,7 +16,7 @@
    "players": "2-4",
    "playtime": "90-150",
    "summary": "Someone is broadcasting a promise of clean water. Find the voice before the desperate follow it.",
-   "notes": "Version 1.2. Base game components only. 1.1: enemies can attack Ida. 1.2: balanced for 2-4 players and the enemy standees in the box.",
+   "notes": "Version 1.0. Base game components only.",
    "types": [
     "rescue",
     "escort",
