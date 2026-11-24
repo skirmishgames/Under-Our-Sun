@@ -1,9 +1,9 @@
 // Stories: new missions written for the site. Cards show the genre in the header, with no number.
-// status: 'untested' until a group has played it and sent feedback, then 'playtested'.
+// status is worked out below: 'playtested' once a story has PLAYTESTS_NEEDED logged playtests, otherwise 'untested'.
 // testNotes: what playtesters should watch for, part by part. Mission files live in /stories/. Listed in suggested play order.
 export const DISPATCHES = [
   { id: 'story-the-stray', file: 'stories/the-stray.json', title: 'The Stray',
-    status: 'playtested', version: '1.2', diff: 1, parts: 4, players: '2-4', time: '45-90', mode: 'coop', genre: 'Mystery',
+    version: '1.2', diff: 1, parts: 4, players: '2-4', time: '45-90', mode: 'coop', genre: 'Mystery',
     types: ['hunt'], needs: 'Base game',
     premise: 'Something is raiding New Haven\'s food stores at night. Track it to its den. A gentle first mission for new players, with little combat.',
     testNotes: [
@@ -24,7 +24,7 @@ export const DISPATCHES = [
         notes: 'Good first mission that shows the core mechanics quickly. The den turned up next to New Haven, so the group never spent a night out; more tiles before the target suggested.' }
     ] },
   { id: 'story-ghost-signal', file: 'stories/ghost-signal.json', title: 'Ghost Signal', genre: 'Rescue',
-    status: 'untested', version: '1.2', diff: 2, parts: 5, players: '2-4', time: '90-150', mode: 'both',
+    version: '1.2', diff: 2, parts: 5, players: '2-4', time: '90-150', mode: 'both',
     types: ['rescue', 'escort', 'timed'], needs: 'Base game',
     premise: 'A forbidden radio picks up a woman\'s voice promising clean water to anyone who comes east. Three families are already packing.',
     testNotes: [
@@ -42,7 +42,7 @@ export const DISPATCHES = [
     changes: ['1.1: enemies on Ida\'s tile can attack her like a character (the rule was missing).', '1.2: balanced for 2-4 players and the enemy standees in the box.'],
     playtests: [] },
   { id: 'story-the-deep-well', file: 'stories/the-deep-well.json', title: 'The Deep Well', genre: 'Race',
-    status: 'untested', version: '1.2', diff: 3, parts: 6, players: '2-4', time: '120-180', mode: 'coop',
+    version: '1.2', diff: 3, parts: 6, players: '2-4', time: '120-180', mode: 'coop',
     types: ['timed', 'rescue', 'defend'], needs: 'Base game', sequelOf: 'story-ghost-signal',
     premise: 'Ida\'s map leads east to an old enclave where the water still runs. The Sons of Liberty know the way too. Sequel to Ghost Signal, and playable on its own.',
     testNotes: [
@@ -60,7 +60,7 @@ export const DISPATCHES = [
     changes: ['1.1: enemies on Ida\'s tile can attack her; the convoy arrives at 3 markers instead of 4 (2 markers at the start if the signal was left running) so the race matters; last stand waves halved to fit the enemy standees in the box.', '1.2: balanced for 2-4 players and the enemy standees in the box; last stand waves are equal to the number of players again.'],
     playtests: [] },
   { id: 'story-the-informant', file: 'stories/the-informant.json', title: 'The Informant',
-    status: 'untested', version: '1.1', diff: 2, parts: 6, players: '2-4', time: '120-180', mode: 'both', genre: 'Thriller',
+    version: '1.1', diff: 2, parts: 6, players: '2-4', time: '120-180', mode: 'both', genre: 'Thriller',
     types: ['investigate', 'hunt', 'timed'], needs: 'Base game',
     premise: 'Someone in New Haven is selling patrol routes to the Sons of Liberty. A scout has run with a satchel of maps. Bring her back before more people die.',
     testNotes: [
@@ -78,7 +78,7 @@ export const DISPATCHES = [
     changes: ['1.1: balanced for 2-4 players and the enemy standees in the box.'],
     playtests: [] },
   { id: 'story-what-we-owe', file: 'stories/what-we-owe.json', title: 'What We Owe', genre: 'Drama',
-    status: 'untested', version: '1.1', diff: 2, parts: 6, players: '2-4', time: '90-150', mode: 'both',
+    version: '1.1', diff: 2, parts: 6, players: '2-4', time: '90-150', mode: 'both',
     types: ['fetch', 'timed'], needs: 'Base game',
     premise: 'A fever is spreading, and there is only one crate of medicine in the wasteland. Two places need it. You can only save one.',
     testNotes: [
@@ -97,7 +97,10 @@ export const DISPATCHES = [
     playtests: [] }
 ];
 
+export const PLAYTESTS_NEEDED = 3;
+DISPATCHES.forEach(d => { d.status = (d.playtests || []).length >= PLAYTESTS_NEEDED ? 'playtested' : 'untested'; });
+
 export const DISPATCH_STATUS = {
-  untested: { label: 'Needs playtest', note: 'Not played yet. Rules may change after feedback.' },
-  playtested: { label: 'Playtested', note: 'Played and adjusted after feedback.' }
+  untested: { label: 'Needs playtest', note: 'Fewer than 3 playtests so far. Rules may change after feedback.' },
+  playtested: { label: 'Playtested', note: 'Played at least 3 times and adjusted after feedback.' }
 };
