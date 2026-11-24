@@ -16,7 +16,7 @@
    "players": "2-4",
    "playtime": "45-90",
    "summary": "Something is raiding New Haven's food stores at night. Track it to its den and deal with it. A gentle first mission.",
-   "notes": "Version 1.1. Base game components only: objective token, a Desert Dog enemy card. 1.1: balanced for 2-4 players.\nIntroductory mission: teaches campfires, night cards and sneaking, with little combat.",
+   "notes": "Version 1.2. Base game components only: objective token, a Desert Dog enemy card. 1.1: balanced for 2-4 players.\nIntroductory mission: teaches campfires, night cards and sneaking, with little combat.",
    "types": [
     "hunt"
    ],
@@ -53,7 +53,7 @@
        "id": "b-section-51198590",
        "kind": "section",
        "heading": "SETUP",
-       "text": "Form 2 stacks of map tiles and shuffle each:\n- **Stack 1:** 3 random map tiles\n- **Stack 2:** 3 random map tiles + 1 target map tile\nPlace stack 1 on top of stack 2.",
+       "text": "Form 2 stacks of map tiles and shuffle each:\n- **Stack 1:** 5 random map tiles\n- **Stack 2:** 3 random map tiles + 1 target map tile\nPlace stack 1 on top of stack 2.",
        "image": null,
        "caption": ""
       },

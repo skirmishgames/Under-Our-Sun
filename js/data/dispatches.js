@@ -3,12 +3,12 @@
 // testNotes: what playtesters should watch for, part by part. Mission files live in /stories/. Listed in suggested play order.
 export const DISPATCHES = [
   { id: 'story-the-stray', file: 'stories/the-stray.json', title: 'The Stray',
-    status: 'untested', version: '1.1', diff: 1, parts: 4, players: '2-4', time: '45-90', mode: 'coop', genre: 'Mystery',
+    status: 'playtested', version: '1.2', diff: 1, parts: 4, players: '2-4', time: '45-90', mode: 'coop', genre: 'Mystery',
     types: ['hunt'], needs: 'Base game',
     premise: 'Something is raiding New Haven\'s food stores at night. Track it to its den. A gentle first mission for new players, with little combat.',
     testNotes: [
       'New players: was this a good first game? Which rules did you have to look up?',
-      'Part 1, the trail: with 3 + 3 tiles plus the target, on which day and phase did you find the den? Too quick or too slow?',
+      'Part 1, the trail: with 5 + 3 tiles plus the target, on which day and phase did you find the den? Did you spend a night out before reaching it?',
       'Tips: did the campfire and sneaking tips help, or did you already know them?',
       'Part 2, the lure: did your group work out to leave food at night without a fire, or did you attack? Was the hint ("hungry, not angry") too obvious or too vague?',
       'Night: did night cards make the wait at the den feel tense but fair?',
@@ -18,8 +18,11 @@ export const DISPATCHES = [
       'Ending: which ending did you get, and did it land? Did anyone feel bad about the choice?',
       'Roguelike: is ignoring one ANIMAL night card per mission a fair reward, or too strong?'
     ],
-    changes: ['1.1: balanced for 2-4 players and the enemy standees in the box.'],
-    playtests: [] },
+    changes: ['1.1: balanced for 2-4 players and the enemy standees in the box.', '1.2: stack 1 has 5 tiles instead of 3, so the den turns up further from New Haven and the group spends a night out (playtest feedback).'],
+    playtests: [
+      { date: '2026-11-24', version: '1.1', players: '1 player, 3 characters (Scout, Medic, Thickskin)', mode: 'coop', time: 'under 1 hour', result: 'Won, took the dogs home',
+        notes: 'Good first mission that shows the core mechanics quickly. The den turned up next to New Haven, so the group never spent a night out; more tiles before the target suggested.' }
+    ] },
   { id: 'story-ghost-signal', file: 'stories/ghost-signal.json', title: 'Ghost Signal', genre: 'Rescue',
     status: 'untested', version: '1.2', diff: 2, parts: 5, players: '2-4', time: '90-150', mode: 'both',
     types: ['rescue', 'escort', 'timed'], needs: 'Base game',
